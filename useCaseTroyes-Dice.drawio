@@ -1,29 +1,64 @@
 <mxfile host="app.diagrams.net" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36" version="24.9.0">
   <diagram name="Page-1" id="SSMdGqV66un1ues1H1LF">
-    <mxGraphModel dx="1167" dy="580" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
+    <mxGraphModel dx="3686" dy="1609" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
       <root>
         <mxCell id="0" />
         <mxCell id="1" parent="0" />
+        <mxCell id="pE3MrQd4a998rbX4YYhi-1" value="Crieur" style="shape=umlActor;verticalLabelPosition=bottom;verticalAlign=top;html=1;outlineConnect=0;" vertex="1" parent="1">
+          <mxGeometry x="40" y="4400" width="30" height="60" as="geometry" />
+        </mxCell>
         <mxCell id="Ci0lGtwht_oeSIMEB8GQ-7" style="rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0;entryY=0.5;entryDx=0;entryDy=0;edgeStyle=orthogonalEdgeStyle;endArrow=none;endFill=0;" edge="1" parent="1" source="Ci0lGtwht_oeSIMEB8GQ-4" target="Ci0lGtwht_oeSIMEB8GQ-5">
           <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="pE3MrQd4a998rbX4YYhi-2" value="" style="endArrow=none;html=1;rounded=0;" edge="1" parent="1">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="80" y="4430" as="sourcePoint" />
+            <mxPoint x="190" y="4430" as="targetPoint" />
+          </mxGeometry>
         </mxCell>
         <mxCell id="Ci0lGtwht_oeSIMEB8GQ-8" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=0.5;exitDx=0;exitDy=0;exitPerimeter=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;endArrow=none;endFill=0;" edge="1" parent="1" source="Ci0lGtwht_oeSIMEB8GQ-4" target="Ci0lGtwht_oeSIMEB8GQ-6">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
+        <mxCell id="pE3MrQd4a998rbX4YYhi-3" value="Positionner les dés" style="ellipse;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="190" y="4390" width="120" height="80" as="geometry" />
+        </mxCell>
         <mxCell id="Ci0lGtwht_oeSIMEB8GQ-4" value="Joueur" style="shape=umlActor;verticalLabelPosition=bottom;verticalAlign=top;html=1;outlineConnect=0;" vertex="1" parent="1">
           <mxGeometry x="80" y="150" width="30" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="pE3MrQd4a998rbX4YYhi-4" value="Lancer les dés" style="ellipse;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="120" y="4500" width="120" height="80" as="geometry" />
         </mxCell>
         <mxCell id="Ci0lGtwht_oeSIMEB8GQ-5" value="Voir le Jeu" style="ellipse;whiteSpace=wrap;html=1;" vertex="1" parent="1">
           <mxGeometry x="230" y="110" width="80" height="50" as="geometry" />
         </mxCell>
+        <mxCell id="pE3MrQd4a998rbX4YYhi-5" value="Choisir Ordre" style="ellipse;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="280" y="4500" width="120" height="80" as="geometry" />
+        </mxCell>
         <mxCell id="Ci0lGtwht_oeSIMEB8GQ-14" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0;entryY=0.5;entryDx=0;entryDy=0;dashed=1;" edge="1" parent="1" source="Ci0lGtwht_oeSIMEB8GQ-6" target="Ci0lGtwht_oeSIMEB8GQ-9">
           <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="pE3MrQd4a998rbX4YYhi-7" value="&amp;lt;&amp;lt; include &amp;gt;&amp;gt;" style="html=1;verticalAlign=bottom;endArrow=open;dashed=1;endSize=8;curved=0;rounded=0;" edge="1" parent="1" source="pE3MrQd4a998rbX4YYhi-3" target="pE3MrQd4a998rbX4YYhi-4">
+          <mxGeometry x="0.5703" y="-10" relative="1" as="geometry">
+            <mxPoint x="210" y="4470" as="sourcePoint" />
+            <mxPoint x="130" y="4470" as="targetPoint" />
+            <mxPoint as="offset" />
+          </mxGeometry>
         </mxCell>
         <mxCell id="Ci0lGtwht_oeSIMEB8GQ-6" value="Joueur une action" style="ellipse;whiteSpace=wrap;html=1;" vertex="1" parent="1">
           <mxGeometry x="230" y="190" width="80" height="50" as="geometry" />
         </mxCell>
+        <mxCell id="pE3MrQd4a998rbX4YYhi-8" value="&amp;lt;&amp;lt; include &amp;gt;&amp;gt;" style="html=1;verticalAlign=bottom;endArrow=open;dashed=1;endSize=8;curved=0;rounded=0;" edge="1" parent="1" source="pE3MrQd4a998rbX4YYhi-3" target="pE3MrQd4a998rbX4YYhi-5">
+          <mxGeometry x="0.2742" y="1" relative="1" as="geometry">
+            <mxPoint x="237" y="4477" as="sourcePoint" />
+            <mxPoint x="213" y="4513" as="targetPoint" />
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
         <mxCell id="Ci0lGtwht_oeSIMEB8GQ-16" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;dashed=1;" edge="1" parent="1" source="Ci0lGtwht_oeSIMEB8GQ-9" target="Ci0lGtwht_oeSIMEB8GQ-10">
           <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="pE3MrQd4a998rbX4YYhi-9" value="Système" style="shape=umlActor;verticalLabelPosition=bottom;verticalAlign=top;html=1;outlineConnect=0;" vertex="1" parent="1">
+          <mxGeometry x="390" y="4270" width="30" height="60" as="geometry" />
         </mxCell>
         <mxCell id="Ci0lGtwht_oeSIMEB8GQ-9" value="Choisir une case" style="ellipse;whiteSpace=wrap;html=1;" vertex="1" parent="1">
           <mxGeometry x="374" y="190" width="80" height="50" as="geometry" />
