@@ -1,8 +1,10 @@
 package main.java.model;
 
-public class BPEtudiant extends BatimentPrestige {
-    public BPEtudiant(){
-        super();
+public class BatimentFonction implements Batiment{
+    private Etat etat;
+    
+    public BatimentFonction() {
+        this.etat = Etat.VIDE;
     }
 
     @Override
@@ -13,7 +15,6 @@ public class BPEtudiant extends BatimentPrestige {
     @Override
     public void onBuild() {
         etat = Etat.CONSTRUIT;
-
     }
 
     @Override
@@ -26,9 +27,8 @@ public class BPEtudiant extends BatimentPrestige {
         }
     }
 
-    public void buildBPEtudiant(int valDe){
-        if (etat == Etat.INCONSTRUCTIBLE){
-            onBuild();
-        }
+    @Override
+    public Etat getEtat() {
+        return etat;
     }
 }
