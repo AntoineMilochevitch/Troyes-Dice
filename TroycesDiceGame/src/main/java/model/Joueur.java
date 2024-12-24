@@ -140,6 +140,10 @@ public class Joueur implements Actionnable {
         panel.addRessource(valDeLocal);
     }
 
+    public Feuille getFeuille(){
+        return feuille;
+    }
+
     public void execute() {
         if (actionChoisie != null) {
             actionChoisie.execute();

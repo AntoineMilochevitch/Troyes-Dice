@@ -37,6 +37,7 @@ public class Feuille {
     }
 
     public void detruireColonne(int col){
+        
         etudiant.rendreInconstructible(col);
         administration.rendreInconstructible(col);
         enseignant.rendreInconstructible(col);

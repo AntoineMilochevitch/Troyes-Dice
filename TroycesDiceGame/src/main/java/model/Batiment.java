@@ -10,7 +10,8 @@ public class Batiment {
     }
 
     public void rendreInconstructible() {
-        etat = Etat.INCONSTRUCTIBLE;
+        if(this.etat == Etat.VIDE)
+            etat = Etat.INCONSTRUCTIBLE;
     }
 
     public void onBuild() {
@@ -24,7 +25,4 @@ public class Batiment {
     public Etat getEtat() {
         return etat;
     }
-
-    
-    
 }
