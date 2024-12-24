@@ -1,10 +1,15 @@
 package main.java.model;
 
-public class Joueur implements Actionnable{
+import java.util.Scanner;
+
+public class Joueur implements Actionnable {
     private String nom;
     private int id;
     private Feuille feuille;
     private Case caseChoisie;
+    private int valDeLocal;
+    private Couleur couleurLocal;
+    private Actionnable actionChoisie;
 
     public Joueur(String nom, int id) {
         this.nom = nom;
@@ -12,24 +17,103 @@ public class Joueur implements Actionnable{
         this.feuille = new Feuille();
     }
 
-    public Case choisirCase() {
-        //TODO
+    public Case choisirCase(Plateau plateau) {
+        try (Scanner scanner = new Scanner(System.in)) {
+            System.out.println("Entrez le numéro de la case choisie : ");
+            int numCase = scanner.nextInt();
+            if (numCase >= 0 && numCase < plateau.getRoue().size()) {
+                caseChoisie = plateau.getCase(numCase);
+                couleurLocal = caseChoisie.getSenseCase() == 1 ? caseChoisie.getCouleurRecto() : caseChoisie.getCouleurVerso();
+                valDeLocal = caseChoisie.getValDe();
+
+                Panel panel = choosePanel();
+                if (panel.getRessource() < caseChoisie.getCout()) {
+                    System.out.println("Pas assez de ressources pour cette case. Veuillez réessayer.");
+                    return choisirCase(plateau);
+                } else {
+                    int ressourceDepense = 0;
+                    if (couleurLocal == Couleur.BLANC) {
+                        modifierCouleurDe();
+                    } else if (couleurLocal == Couleur.ROUGE) {
+                        try (Scanner scanner2 = new Scanner(System.in)) {
+                            System.out.println("Combien de ressource voulez vous dépenser ? : ");
+                            ressourceDepense = scanner2.nextInt();
+                        }
+                        modifierValeurDe(ressourceDepense);
+                    }
+                    feuille.utiliserRessource(couleurLocal, caseChoisie.getCout(), ressourceDepense);
+                }
+            } else {
+                System.out.println("Numéro de case invalide. Veuillez réessayer.");
+                return choisirCase(plateau);
+            }
+        }
         return caseChoisie;
     }
 
+    public void modifierCouleurDe() {
+        try (Scanner scanner = new Scanner(System.in)) {
+            System.out.println("Vous avez utilisé une ressource blanche. Choisissez la nouvelle couleur du dé : 1. Rouge, 2. Jaune, 3. Blanc");
+            int choix = scanner.nextInt();
+            switch (choix) {
+                case 1:
+                    couleurLocal = Couleur.ROUGE;
+                    break;
+                case 2:
+                    couleurLocal = Couleur.JAUNE;
+                    break;
+                case 3:
+                    couleurLocal = Couleur.BLANC;
+                    break;
+                default:
+                    System.out.println("Choix invalide. Veuillez réessayer.");
+                    modifierCouleurDe();
+            }
+        }
+    }
+
+    public void modifierValeurDe(int ressourceDepense) {
+        try (Scanner scanner = new Scanner(System.in)) {
+            System.out.println("Vous avez utilisé une ressource rouge. Choisissez l'action : 1. Augmenter la valeur du dé, 2. Diminuer la valeur du dé");
+            int choix = scanner.nextInt();
+            switch (choix) {
+                case 1:
+                    valDeLocal = Math.min(valDeLocal + 1*ressourceDepense, 6); // La valeur maximale d'un dé est 6
+                    break;
+                case 2:
+                    valDeLocal = Math.max(valDeLocal - 1*ressourceDepense, 1); // La valeur minimale d'un dé est 1
+                    break;
+                default:
+                    System.out.println("Choix invalide. Veuillez réessayer.");
+                    modifierValeurDe(ressourceDepense);
+            }
+        }
+    }
+
     public Actionnable choisirAction() {
-        //TODO
-        return null;
+        try (Scanner scanner = new Scanner(System.in)) {
+            System.out.println("Choisissez une action : 1. Construire un bâtiment de prestige, 2. Construire un bâtiment de fonction, 3. Récolter des ressources");
+            int choix = scanner.nextInt();
+            switch (choix) {
+                case 1:
+                    actionChoisie = this::buildBP;
+                    break;
+                case 2:
+                    actionChoisie = this::buildBF;
+                    break;
+                case 3:
+                    actionChoisie = this::getRessource;
+                    break;
+                default:
+                    System.out.println("Choix invalide. Veuillez réessayer.");
+                    return choisirAction();
+            }
+        }
+        return actionChoisie;
     }
 
     public Panel choosePanel() {
-        Couleur couleurPanel;
-        if (caseChoisie.getSenseCase() == 1) {
-            couleurPanel = caseChoisie.getCouleurRecto();
-        } else {
-            couleurPanel = caseChoisie.getCouleurVerso();
-        }
-        switch (couleurPanel) {
+        switch (couleurLocal) {
             case ROUGE:
                 return feuille.getAdministration();
             case JAUNE:
@@ -39,26 +123,26 @@ public class Joueur implements Actionnable{
             default:
                 return null;
         }
-
     }
 
-    @Override
     public void buildBP() {
         Panel panel = choosePanel();
-        //TODO
+        panel.buildBP(valDeLocal);
     }
 
-    @Override
     public void buildBF() {
         Panel panel = choosePanel();
-        int valDe = caseChoisie.getValDe();
-        panel.buildBF(valDe);
+        panel.buildBF(valDeLocal);
     }
 
-    @Override
     public void getRessource() {
         Panel panel = choosePanel();
-        int valDe = caseChoisie.getValDe();
-        panel.addRessource(valDe);
+        panel.addRessource(valDeLocal);
+    }
+
+    public void execute() {
+        if (actionChoisie != null) {
+            actionChoisie.execute();
+        }
     }
 }

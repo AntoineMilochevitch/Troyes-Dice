@@ -1,6 +1,8 @@
 package main.java.model;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 public class Plateau {
     private List<Case> roue;
@@ -9,6 +11,20 @@ public class Plateau {
     public Plateau(List<Case> roue) {
         this.roue = roue;
         this.compteurDemiJournee = 0;
+    }
+
+    public void initialiserCases(int nombreDeCases) {
+        Random random = new Random();
+        roue = new ArrayList<>();
+        Couleur[] couleurs = Couleur.values();
+
+        for (int i = 0; i < nombreDeCases; i++) {
+            Couleur couleurRecto = couleurs[random.nextInt(couleurs.length)];
+            Couleur couleurVerso = couleurs[random.nextInt(couleurs.length)];
+            int cout = random.nextInt(3) + 1; 
+            Case nouvelleCase = new Case(couleurRecto, couleurVerso, 1, 0, cout, DemiJournee.MATIN);
+            roue.add(nouvelleCase);
+        }
     }
 
     public void tournerRoue() {
@@ -57,5 +73,19 @@ public class Plateau {
 
     public int getCompteurDemiJournee() {
         return compteurDemiJournee;
+    }
+
+    public Case getCase(int index) {
+        return roue.get(index);
+    }
+
+    public List<Case> getRoue() {
+        return roue;
+    }
+
+    public void afficherRoue() {
+        for (int i = 0; i < roue.size(); i++) {
+            System.out.println(i + " : " + roue.get(i).getCouleurRecto() + " " + roue.get(i).getCouleurVerso() + " " + roue.get(i).getCout() + " " + roue.get(i).getDemiJournee());
+        }
     }
 }

@@ -58,6 +58,7 @@ public class Case implements Cloneable{
         this.sensCase = sensCase;
     }
 
-
-
+    public void setValDe(int valDe) {
+        this.valDe = valDe;
+    }
 }

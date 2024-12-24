@@ -6,7 +6,7 @@ public class Feuille {
     private Panel enseignant;
     private int nbPointEtudiant;
     private int nbPointAdministration;
-    private int nbPointEnseignant;
+    private int nbPointEnseignant;  
 
     public Feuille(){
         this.etudiant = new Panel();
@@ -14,8 +14,32 @@ public class Feuille {
         this.enseignant = new Panel();
     }
     
-    public void utiliserRessource(Couleur type){
-        //TODO
+    public void utiliserRessource(Couleur type, int cout, int ressourceDepense) {
+        switch (type) {
+            case JAUNE:
+                if (etudiant.getRessource() >= cout) {
+                    etudiant.setRessource(etudiant.getRessource() - cout);
+                }
+                break;
+            case BLANC:
+                if (enseignant.getRessource() >= 2) {
+                    enseignant.setRessource(enseignant.getRessource() - 2);
+                }
+                break;
+            case ROUGE:
+                if (administration.getRessource() >= ressourceDepense) {
+                    administration.setRessource(administration.getRessource() - ressourceDepense);
+                }
+                break;
+            default:
+                break;
+        }
+    }
+
+    public void detruireColonne(int col){
+        etudiant.rendreInconstructible(col);
+        administration.rendreInconstructible(col);
+        enseignant.rendreInconstructible(col);
     }
 
     public Panel getEtudiant() {

@@ -15,20 +15,13 @@ public class Panel {
     public Panel(){
         this.couleur = Couleur.VIDE;
         this.ressource = 0;
-        // 2 administration, 2 etudiant, 2 enseignant
         this.batimentsPrestige = new ArrayList<>();
-        this.batimentsPrestige.add(new BPAdministration());
-        this.batimentsPrestige.add(new BPAdministration());
-        this.batimentsPrestige.add(new BPEtudiant());
-        this.batimentsPrestige.add(new BPEtudiant());
-        this.batimentsPrestige.add(new BPEnseignant());
-        this.batimentsPrestige.add(new BPEnseignant());
         this.batimentsFonction = new ArrayList<>();
         this.multiplicateur1 = 0;
         this.multiplicateur2 = 0;
     }
 
-    public Panel(Couleur couleur, int ressource, List<Batiment> batimentsPrestige,List<Batiment> batimentsFonction, int multiplicateur1, int multiplicateur2) {
+    public Panel(Couleur couleur, int ressource, List<Batiment> batimentsPrestige, List<Batiment> batimentsFonction, int multiplicateur1, int multiplicateur2) {
         this.couleur = couleur;
         this.ressource = ressource;
         this.batimentsPrestige = batimentsPrestige;
@@ -38,11 +31,25 @@ public class Panel {
     }
 
     public int decomptePoints(){
-        //TODO
-        return 0;
+        //get number of batiments prestige built
+        int nbBP = 0;
+        for (Batiment bat : batimentsPrestige){
+            if (bat.getEtat() == Etat.CONSTRUIT){
+                nbBP++;
+            }
+        }
+        //get number of batiments fonction built
+        int nbBF = 0;
+        for (Batiment bat : batimentsFonction){
+            if (bat.getEtat() == Etat.CONSTRUIT){
+                nbBF++;
+            }
+        }
+        int points = nbBF * multiplicateur1 + nbBP * multiplicateur2 + ressource;
+        return points;
     }
 
-    public void detruireColonne(int col){
+    public void rendreInconstructible(int col){
         batimentsFonction.get(col).rendreInconstructible();
         batimentsPrestige.get(col).rendreInconstructible();
     }
@@ -56,10 +63,9 @@ public class Panel {
         if (batimentsFonction.get(valDe).getEtat() != Etat.INCONSTRUCTIBLE){
             return;
         }
-        BatimentFonction bat = new BatimentFonction();
+        BatimentFonction bat = new BatimentFonction(valDe, null);
         bat.onBuild();
         batimentsFonction.add(valDe, bat);
-
     }
 
     public void buildBP(int valDe) {
@@ -67,15 +73,15 @@ public class Panel {
             return;
         }
         Batiment bat = batimentsPrestige.get(valDe);
-        if (bat instanceof BPAdministration){
-            ((BPAdministration) bat).buildBPAdministration(valDe);
-        }
-        else if (bat instanceof BPEtudiant){
-            ((BPEtudiant) bat).buildBPEtudiant(valDe);
-        }
-        else if (bat instanceof BPEnseignant){
-            ((BPEnseignant) bat).buildBPEnseignant(valDe);
-        }
+        bat.onBuild();
+    }
+
+    public int getRessource() {
+        return ressource;
+    }
+
+    public void setRessource(int ressource) {
+        this.ressource = ressource;
     }
 
     public void addRessource(int ressource){
