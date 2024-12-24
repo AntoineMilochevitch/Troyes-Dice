@@ -68,12 +68,16 @@ public class Panel {
         batimentsFonction.add(valDe, bat);
     }
 
-    public void buildBP(int valDe) {
-        if (batimentsPrestige.get(valDe).getEtat() != Etat.INCONSTRUCTIBLE){
+    public void buildBP(int valDe, Panel panel, Feuille feuille) {
+        if (batimentsPrestige.get(valDe).getEtat() != Etat.INCONSTRUCTIBLE) {
             return;
         }
-        Batiment bat = batimentsPrestige.get(valDe);
+        BatimentPrestige bat = new BatimentPrestige(valDe, null, null);
         bat.onBuild();
+        int nbBP = (int) batimentsPrestige.stream().filter(b -> b.getEtat() == Etat.CONSTRUIT).count();
+        int multiplicateur = (nbBP <= 1) ? 1 : (nbBP <= 3) ? 2 : 3;
+
+        bat.appliquerEffet(valDe, multiplicateur, panel, feuille);
     }
 
     public int getRessource() {
@@ -91,6 +95,16 @@ public class Panel {
     public void addRessource(int ressource){
         this.ressource += ressource;
     }
+
+    public void ajouterMultiplicateur(int valDe, int multiplicateur){
+        if (valDe == 1 || valDe == 3 || valDe == 5){
+            this.multiplicateur1 = multiplicateur;
+        } else {
+            this.multiplicateur2 = multiplicateur;
+        }
+
+    }
+
 
     public void afficherPanel(){
         System.out.println("Ressource : " + ressource);

@@ -1,8 +1,9 @@
 package main.java.model;
 
-public abstract class BatimentPrestige extends Batiment {
+public class BatimentPrestige extends Batiment {
     private Effet effet;
     private Recompense recompense;
+
 
     public BatimentPrestige(int ID, Effet effet, Recompense recompense) {
         super(ID);
@@ -10,13 +11,15 @@ public abstract class BatimentPrestige extends Batiment {
         this.recompense = recompense;
     }
 
-    public void appliquerEffet() {
+    public void appliquerEffet(int valDe, int multiplicateur, Panel panel, Feuille feuille) {
         switch (effet) {
-            case PROTEGEr:
-                proteger();
+            case PROTEGER:
+                feuille.getEtudiant().protegerColonne(valDe);
+                feuille.getAdministration().protegerColonne(valDe);
+                feuille.getEnseignant().protegerColonne(valDe);
                 break;
             case MULTIPLICATEUR:
-                
+                panel.ajouterMultiplicateur(valDe, multiplicateur);
                 break;
             case RIEN:
                 // TODO
@@ -24,5 +27,7 @@ public abstract class BatimentPrestige extends Batiment {
         }
     }
 
-
+    public Effet getEffet() {
+        return effet;
+    }
 }
