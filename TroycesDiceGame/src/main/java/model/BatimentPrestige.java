@@ -16,7 +16,7 @@ public abstract class BatimentPrestige extends Batiment {
                 proteger();
                 break;
             case MULTIPLICATEUR:
-                // TODO
+                
                 break;
             case RIEN:
                 // TODO

@@ -145,4 +145,9 @@ public class Joueur implements Actionnable {
             actionChoisie.execute();
         }
     }
+
+    public void afficherFeuille() {
+        System.out.println("Feuille de " + nom + " : ");
+        feuille.afficherFeuille();
+    }
 }

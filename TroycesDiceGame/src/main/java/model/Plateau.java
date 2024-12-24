@@ -21,7 +21,7 @@ public class Plateau {
         for (int i = 0; i < nombreDeCases; i++) {
             Couleur couleurRecto = couleurs[random.nextInt(couleurs.length)];
             Couleur couleurVerso = couleurs[random.nextInt(couleurs.length)];
-            int cout = random.nextInt(3) + 1; 
+            int cout = random.nextInt(3) + 1; // Coût compris entre 1 et 3
             Case nouvelleCase = new Case(couleurRecto, couleurVerso, 1, 0, cout, DemiJournee.MATIN);
             roue.add(nouvelleCase);
         }

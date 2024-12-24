@@ -1,10 +1,10 @@
 package main.java.model;
-import main.java.window.*;
+//import main.java.window.*;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class main {
+public class Main {
     public static void main(String[] args) {
         List<Joueur> joueurs = new ArrayList<>();
         List<Case> cases = new ArrayList<>();

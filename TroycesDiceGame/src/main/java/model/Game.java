@@ -33,16 +33,18 @@ public class Game {
             }
 
             // Initialiser les cases du plateau
-            plateau.initialiserCases(9); 
+            plateau.initialiserCases(9);
         }
+
         gameLoop();
     }
 
     public void gameLoop() {
-        listDE = new ArrayList<>();
         listDE = lancerDe();
         for (int i = 0; i < 4; i++) {
-            plateau.getRoue().get(i).setValDe(listDE.get(i));
+            if (i < plateau.getRoue().size() && i < listDE.size()) {
+                plateau.getRoue().get(i).setValDe(listDE.get(i));
+            }
         }
         while (!finDePartie()) {
             for (Joueur joueur : joueurs) {
@@ -50,24 +52,32 @@ public class Game {
                 joueur.choisirAction();
                 // Exécutez l'action choisie par le joueur
                 joueur.execute();
+                joueur.afficherFeuille();
             }
             plateau.incrementerCompteurDemiJournee();
             if (plateau.getCompteurDemiJournee() % 2 == 0) {
                 plateau.tournerRoue();
             }
             listDE = lancerDe();
+            for (int i = 0; i < 4; i++) {
+                if (i < plateau.getRoue().size() && i < listDE.size()) {
+                    plateau.getRoue().get(i).setValDe(listDE.get(i));
+                }
+            }
             indexDeNoir = tirerDeNoir();
             if (plateau.getCompteurDemiJournee() > 3 && !deNoirActif) {
                 System.out.println("Dé noir actif");
                 deNoirActif = true;
                 indexDeNoir = tirerDeNoir();
+                plateau.retournerCase(indexDeNoir);
             }
+            plateau.afficherRoue();
         }
     }
 
     public List<Integer> lancerDe() {
         List<Integer> des = new ArrayList<>();
-        for (int i = 0; i < 3; i++) {
+        for (int i = 0; i < 4; i++) {
             // Génère un nombre aléatoire entre 1 et 6
             int de = (int) (Math.random() * 6 + 1);
             des.add(de);

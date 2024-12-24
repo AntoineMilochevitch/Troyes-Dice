@@ -53,4 +53,13 @@ public class Feuille {
     public Panel getEnseignant() {
         return enseignant;
     }
+
+    public void afficherFeuille(){
+        System.out.println("Feuille de l'étudiant : ");
+        etudiant.afficherPanel();
+        System.out.println("Feuille de l'administration : ");
+        administration.afficherPanel();
+        System.out.println("Feuille de l'enseignant : ");
+        enseignant.afficherPanel();
+    }
 }

@@ -87,4 +87,17 @@ public class Panel {
     public void addRessource(int ressource){
         this.ressource += ressource;
     }
+
+    public void afficherPanel(){
+        System.out.println("Ressource : " + ressource);
+        System.out.println("Batiments de prestige : ");
+        for (Batiment bat : batimentsPrestige){
+            System.out.println(bat.toString());
+        }
+        System.out.println("Batiments de fonction : ");
+        for (Batiment bat : batimentsFonction){
+            System.out.println(bat.toString());
+        }
+    }
+    
 }
