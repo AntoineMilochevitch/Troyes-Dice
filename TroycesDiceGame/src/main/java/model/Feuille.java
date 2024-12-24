@@ -62,4 +62,11 @@ public class Feuille {
         System.out.println("Feuille de l'enseignant : ");
         enseignant.afficherPanel();
     }
+
+    public int calculerPoints() {
+        int pointsEtudiant = etudiant.decomptePoints();
+        int pointsAdministration = administration.decomptePoints();
+        int pointsEnseignant = enseignant.decomptePoints();
+        return pointsEtudiant + pointsAdministration + pointsEnseignant;
+    }
 }
