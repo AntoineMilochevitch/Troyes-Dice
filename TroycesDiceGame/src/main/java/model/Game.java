@@ -47,6 +47,8 @@ public class Game {
             }
         }
         while (!finDePartie()) {
+
+            // ACTION POUR CHAQUE JOUEURS
             for (Joueur joueur : joueurs) {
                 Case caseChoisie = joueur.choisirCase(plateau);
                 joueur.choisirAction();
@@ -54,23 +56,33 @@ public class Game {
                 joueur.execute();
                 joueur.afficherFeuille();
             }
+
+            // INCREMENTE COMPTEUR DE DEMI-JOURNéES
             plateau.incrementerCompteurDemiJournee();
             if (plateau.getCompteurDemiJournee() % 2 == 0) {
                 plateau.tournerRoue();
             }
+
+            // LOGIQUE LANCE DES DéS
             listDE = lancerDe();
             for (int i = 0; i < 4; i++) {
                 if (i < plateau.getRoue().size() && i < listDE.size()) {
                     plateau.getRoue().get(i).setValDe(listDE.get(i));
                 }
             }
-            indexDeNoir = tirerDeNoir();
+
+            // LOGIQUE DES NOIR
             if (plateau.getCompteurDemiJournee() > 3 && !deNoirActif) {
-                System.out.println("Dé noir actif");
-                deNoirActif = true;
                 indexDeNoir = tirerDeNoir();
+                System.out.println("Dé noir actif et la colonne " + indexDeNoir + " a été détruite !");
                 plateau.retournerCase(indexDeNoir);
+                for (Joueur joueur : joueurs) {
+                    joueur.getFeuille().detruireColonne(indexDeNoir);
+                }
+                deNoirActif = true;
             }
+
+            // AFFICHE LA ROUE
             plateau.afficherRoue();
         }
     }

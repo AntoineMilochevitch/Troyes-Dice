@@ -4,7 +4,7 @@ package main.java.model;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Main {
+public class main {
     public static void main(String[] args) {
         List<Joueur> joueurs = new ArrayList<>();
         List<Case> cases = new ArrayList<>();
