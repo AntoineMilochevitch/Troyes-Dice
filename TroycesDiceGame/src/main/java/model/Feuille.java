@@ -9,9 +9,9 @@ public class Feuille {
     private int nbPointEnseignant;  
 
     public Feuille(){
-        this.etudiant = new Panel();
-        this.administration = new Panel();
-        this.enseignant = new Panel();
+        this.etudiant = new Panel(this);
+        this.administration = new Panel(this);
+        this.enseignant = new Panel(this);
     }
     
     public void utiliserRessource(Couleur type, int cout, int ressourceDepense) {
@@ -69,5 +69,33 @@ public class Feuille {
         int pointsAdministration = administration.decomptePoints();
         int pointsEnseignant = enseignant.decomptePoints();
         return pointsEtudiant + pointsAdministration + pointsEnseignant;
+    }
+
+    private void addNBPointEtudiant(int points) {
+        this.nbPointEtudiant += points;
+    }
+
+    private void addNBPointAdministration(int points) {
+        this.nbPointAdministration += points;
+    }
+
+    private void addNBPointEnseignant(int points) {
+        this.nbPointEnseignant += points;
+    }
+
+    public void addPoints(Couleur type, int points) {
+        switch (type) {
+            case JAUNE:
+                addNBPointEtudiant(points);
+                break;
+            case BLANC:
+                addNBPointEnseignant(points);
+                break;
+            case ROUGE:
+                addNBPointAdministration(points);
+                break;
+            default:
+                break;
+        }
     }
 }

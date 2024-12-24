@@ -7,7 +7,7 @@ public class BatimentFonction extends Batiment{
 
     public BatimentFonction(int ID, Recompense recompense) {
         super(ID);
-        this.recompense = recompense;
+        this.recompense = Recompense.HABITANT;
     }
     
     public Couleur getCouleur(){

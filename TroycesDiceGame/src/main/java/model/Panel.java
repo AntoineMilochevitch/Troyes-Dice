@@ -9,21 +9,25 @@ public class Panel {
     private List<Batiment> batimentsPrestige;
     private List<Batiment> batimentsFonction;
 
+    private Feuille feuille;
+
     private int multiplicateur1;
     private int multiplicateur2;
 
-    public Panel(){
+    public Panel(Feuille feuille){
         this.couleur = Couleur.VIDE;
         this.ressource = 0;
+        this.feuille = feuille;
         this.batimentsPrestige = new ArrayList<>();
         this.batimentsFonction = new ArrayList<>();
         this.multiplicateur1 = 0;
         this.multiplicateur2 = 0;
     }
 
-    public Panel(Couleur couleur, int ressource, List<Batiment> batimentsPrestige, List<Batiment> batimentsFonction, int multiplicateur1, int multiplicateur2) {
+    public Panel(Couleur couleur, int ressource, Feuille feuille, List<Batiment> batimentsPrestige, List<Batiment> batimentsFonction, int multiplicateur1, int multiplicateur2) {
         this.couleur = couleur;
         this.ressource = ressource;
+        this.feuille = feuille;
         this.batimentsPrestige = batimentsPrestige;
         this.batimentsFonction = batimentsFonction;
         this.multiplicateur1 = multiplicateur1;
@@ -65,7 +69,7 @@ public class Panel {
         }
         BatimentFonction bat = new BatimentFonction(valDe, null);
         bat.onBuild();
-        batimentsFonction.add(valDe, bat);
+        feuille.addPoints(this.couleur, bat.getNombre());
     }
 
     public void buildBP(int valDe, Panel panel, Feuille feuille) {
