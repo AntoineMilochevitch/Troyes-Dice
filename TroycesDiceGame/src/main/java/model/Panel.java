@@ -80,6 +80,10 @@ public class Panel {
         return ressource;
     }
 
+    public Couleur getCouleur(){
+        return couleur;
+    }
+
     public void setRessource(int ressource) {
         this.ressource = ressource;
     }

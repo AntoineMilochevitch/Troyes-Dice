@@ -19,7 +19,8 @@ public class Batiment {
     }
 
     public void proteger() {
-        etat = Etat.PROTEGE;
+        if(this.etat == etat.VIDE)
+            etat = Etat.PROTEGE;
     }
 
     public Etat getEtat() {

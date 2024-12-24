@@ -3,9 +3,9 @@ package main.java.model;
 import java.util.Scanner;
 
 public class Joueur implements Actionnable {
-    private String nom;
-    private int id;
-    private Feuille feuille;
+    private final String nom;
+    private final int id;
+    private final Feuille feuille;
     private Case caseChoisie;
     private int valDeLocal;
     private Couleur couleurLocal;
@@ -21,17 +21,19 @@ public class Joueur implements Actionnable {
         try (Scanner scanner = new Scanner(System.in)) {
             System.out.println("Entrez le numéro de la case choisie : ");
             int numCase = scanner.nextInt();
+            
             if (numCase >= 0 && numCase < plateau.getRoue().size()) {
                 caseChoisie = plateau.getCase(numCase);
                 couleurLocal = caseChoisie.getSenseCase() == 1 ? caseChoisie.getCouleurRecto() : caseChoisie.getCouleurVerso();
                 valDeLocal = caseChoisie.getValDe();
-
                 Panel panel = choosePanel();
+
                 if (panel.getRessource() < caseChoisie.getCout()) {
                     System.out.println("Pas assez de ressources pour cette case. Veuillez réessayer.");
                     return choisirCase(plateau);
                 } else {
                     int ressourceDepense = 0;
+
                     if (couleurLocal == Couleur.BLANC) {
                         modifierCouleurDe();
                     } else if (couleurLocal == Couleur.ROUGE) {
@@ -43,6 +45,7 @@ public class Joueur implements Actionnable {
                     }
                     feuille.utiliserRessource(couleurLocal, caseChoisie.getCout(), ressourceDepense);
                 }
+
             } else {
                 System.out.println("Numéro de case invalide. Veuillez réessayer.");
                 return choisirCase(plateau);
