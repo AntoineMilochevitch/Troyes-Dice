@@ -1,11 +1,6 @@
 package main.java.model;
 import main.java.window.*;
 
-public class main{
-    public static void main(String[] args) {
-        GameWindow game = GameWindow.getInstance();
-    }
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -17,5 +12,7 @@ public class main {
 
         Game game = new Game(joueurs, plateau);
         game.startGame();
+
+        //GameWindow game = GameWindow.getInstance();
     }
 }
