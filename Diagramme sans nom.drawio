@@ -1,6 +1,6 @@
 <mxfile host="app.diagrams.net" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36" version="25.0.3">
   <diagram id="C5RBs43oDa-KdzZeNtuy" name="Page-1">
-    <mxGraphModel dx="1518" dy="662" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
+    <mxGraphModel dx="1674" dy="744" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
       <root>
         <mxCell id="WIyWlLk6GJQsqaUBKTNV-0" />
         <mxCell id="WIyWlLk6GJQsqaUBKTNV-1" parent="WIyWlLk6GJQsqaUBKTNV-0" />
@@ -84,7 +84,7 @@
             <mxPoint x="1" y="-13" as="offset" />
           </mxGeometry>
         </mxCell>
-        <mxCell id="TZeOdReT3XaZ68PAR1Hr-5" value="" style="endArrow=diamondThin;endFill=0;endSize=24;html=1;rounded=0;" parent="WIyWlLk6GJQsqaUBKTNV-1" source="tozDfpOHW-PwTMBGfrxw-0" edge="1" target="prbnaIQwTLVuY6m0kxXh-9">
+        <mxCell id="TZeOdReT3XaZ68PAR1Hr-5" value="" style="endArrow=diamondThin;endFill=0;endSize=24;html=1;rounded=0;" parent="WIyWlLk6GJQsqaUBKTNV-1" source="tozDfpOHW-PwTMBGfrxw-0" target="prbnaIQwTLVuY6m0kxXh-9" edge="1">
           <mxGeometry width="160" relative="1" as="geometry">
             <mxPoint x="1140" y="320" as="sourcePoint" />
             <mxPoint x="1041" y="588" as="targetPoint" />
@@ -99,7 +99,7 @@
         <mxCell id="TZeOdReT3XaZ68PAR1Hr-16" value="&lt;p style=&quot;margin:0px;margin-top:4px;text-align:center;&quot;&gt;&lt;b&gt;(enum) Etat&lt;/b&gt;&lt;/p&gt;&lt;hr size=&quot;1&quot; style=&quot;border-style:solid;&quot;&gt;&lt;p style=&quot;margin:0px;margin-left:4px;&quot;&gt;- CONSTRUIT&lt;span style=&quot;white-space: pre;&quot;&gt;&lt;span style=&quot;white-space: pre;&quot;&gt;&#x9;&lt;/span&gt;                        : &lt;/span&gt;1&lt;/p&gt;&lt;p style=&quot;margin:0px;margin-left:4px;&quot;&gt;- INCONSTRUCTIBLE&lt;span style=&quot;white-space: pre;&quot;&gt;&#x9;&lt;/span&gt;&amp;nbsp;&lt;span style=&quot;white-space: pre;&quot;&gt;&#x9;&lt;/span&gt;: 2&lt;/p&gt;&lt;p style=&quot;margin:0px;margin-left:4px;&quot;&gt;- VIDE&amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp;&amp;nbsp;&lt;span style=&quot;white-space: pre;&quot;&gt;&#x9;&lt;/span&gt;&lt;span style=&quot;white-space: pre;&quot;&gt;&#x9;&lt;/span&gt;: 3&lt;/p&gt;&lt;p style=&quot;margin:0px;margin-left:4px;&quot;&gt;- PROTEGE&lt;span style=&quot;white-space: pre;&quot;&gt;&#x9;&lt;/span&gt;&lt;span style=&quot;white-space: pre;&quot;&gt;&#x9;&lt;/span&gt;&lt;span style=&quot;white-space: pre;&quot;&gt;&#x9;&lt;/span&gt;&lt;span style=&quot;white-space: pre;&quot;&gt;&#x9;&lt;/span&gt;: 4&lt;/p&gt;" style="verticalAlign=top;align=left;overflow=fill;html=1;whiteSpace=wrap;" parent="WIyWlLk6GJQsqaUBKTNV-1" vertex="1">
           <mxGeometry x="1060" y="905" width="200" height="100" as="geometry" />
         </mxCell>
-        <mxCell id="TZeOdReT3XaZ68PAR1Hr-28" value="&amp;nbsp;Dépenser la ressource [...]&amp;nbsp;" style="endArrow=open;endSize=12;dashed=1;html=1;rounded=0;exitX=0.477;exitY=-0.001;exitDx=0;exitDy=0;exitPerimeter=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" parent="WIyWlLk6GJQsqaUBKTNV-1" source="prbnaIQwTLVuY6m0kxXh-2" edge="1" target="tozDfpOHW-PwTMBGfrxw-0">
+        <mxCell id="TZeOdReT3XaZ68PAR1Hr-28" value="&amp;nbsp;Dépenser la ressource [...]&amp;nbsp;" style="endArrow=open;endSize=12;dashed=1;html=1;rounded=0;exitX=0.477;exitY=-0.001;exitDx=0;exitDy=0;exitPerimeter=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" parent="WIyWlLk6GJQsqaUBKTNV-1" source="prbnaIQwTLVuY6m0kxXh-2" target="tozDfpOHW-PwTMBGfrxw-0" edge="1">
           <mxGeometry x="0.169" width="160" relative="1" as="geometry">
             <mxPoint x="600" y="500" as="sourcePoint" />
             <mxPoint x="1100" y="320" as="targetPoint" />
@@ -124,7 +124,7 @@
         <mxCell id="mYImT9DTRVhKWWlhAnGR-3" value="+ startGame : void&lt;div&gt;+ joueurRotation : void&lt;/div&gt;&lt;div&gt;+ finPartie : void&lt;/div&gt;&lt;div&gt;+ lancerDe : int[]&lt;/div&gt;&lt;div&gt;+ tirerDeNoir : int&lt;/div&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=wrap;html=1;" parent="mYImT9DTRVhKWWlhAnGR-0" vertex="1">
           <mxGeometry y="98" width="170" height="100" as="geometry" />
         </mxCell>
-        <mxCell id="mYImT9DTRVhKWWlhAnGR-4" value="" style="endArrow=diamondThin;endFill=1;endSize=24;html=1;rounded=0;" parent="WIyWlLk6GJQsqaUBKTNV-1" target="prbnaIQwTLVuY6m0kxXh-7" edge="1" source="mYImT9DTRVhKWWlhAnGR-0">
+        <mxCell id="mYImT9DTRVhKWWlhAnGR-4" value="" style="endArrow=diamondThin;endFill=1;endSize=24;html=1;rounded=0;" parent="WIyWlLk6GJQsqaUBKTNV-1" source="mYImT9DTRVhKWWlhAnGR-0" target="prbnaIQwTLVuY6m0kxXh-7" edge="1">
           <mxGeometry width="160" relative="1" as="geometry">
             <mxPoint x="520" y="110" as="sourcePoint" />
             <mxPoint x="750" y="112" as="targetPoint" />
@@ -225,22 +225,22 @@
             <mxPoint x="1000" y="905" as="targetPoint" />
           </mxGeometry>
         </mxCell>
-        <mxCell id="BU0Z-WKppoLpp9yXCjXK-0" value="&lt;p style=&quot;margin:0px;margin-top:4px;text-align:center;&quot;&gt;&lt;b&gt;(enum) Recompense&lt;/b&gt;&lt;/p&gt;&lt;hr size=&quot;1&quot; style=&quot;border-style:solid;&quot;&gt;&lt;p style=&quot;margin:0px;margin-left:4px;&quot;&gt;&lt;span style=&quot;background-color: initial;&quot;&gt;- RESSOURCE&lt;/span&gt;&lt;span style=&quot;background-color: initial; white-space: pre;&quot;&gt;&#x9;&lt;/span&gt;&lt;span style=&quot;background-color: initial; white-space: pre;&quot;&gt;&#x9;&lt;/span&gt;&lt;span style=&quot;background-color: initial;&quot;&gt;&amp;nbsp;&lt;/span&gt;&lt;span style=&quot;background-color: initial; white-space: pre;&quot;&gt;&#x9;&lt;/span&gt;&lt;span style=&quot;background-color: initial;&quot;&gt;: 1&lt;/span&gt;&lt;/p&gt;&lt;p style=&quot;margin:0px;margin-left:4px;&quot;&gt;- HABITANT&amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp;&lt;span style=&quot;white-space: pre;&quot;&gt;&#x9;&lt;/span&gt;: 2&lt;/p&gt;&lt;p style=&quot;margin:0px;margin-left:4px;&quot;&gt;- RIEN&amp;nbsp;&lt;span style=&quot;white-space: pre;&quot;&gt;&#x9;&lt;/span&gt;&lt;span style=&quot;white-space: pre;&quot;&gt;&#x9;&lt;/span&gt;&lt;span style=&quot;white-space: pre;&quot;&gt;&#x9;&lt;/span&gt;&lt;span style=&quot;white-space: pre;&quot;&gt;&#x9;&lt;/span&gt;&lt;span style=&quot;white-space: pre;&quot;&gt;&#x9;&lt;/span&gt;: 3&lt;/p&gt;" style="verticalAlign=top;align=left;overflow=fill;html=1;whiteSpace=wrap;" vertex="1" parent="WIyWlLk6GJQsqaUBKTNV-1">
+        <mxCell id="BU0Z-WKppoLpp9yXCjXK-0" value="&lt;p style=&quot;margin:0px;margin-top:4px;text-align:center;&quot;&gt;&lt;b&gt;(enum) Recompense&lt;/b&gt;&lt;/p&gt;&lt;hr size=&quot;1&quot; style=&quot;border-style:solid;&quot;&gt;&lt;p style=&quot;margin:0px;margin-left:4px;&quot;&gt;&lt;span style=&quot;background-color: initial;&quot;&gt;- RESSOURCE&lt;/span&gt;&lt;span style=&quot;background-color: initial; white-space: pre;&quot;&gt;&#x9;&lt;/span&gt;&lt;span style=&quot;background-color: initial; white-space: pre;&quot;&gt;&#x9;&lt;/span&gt;&lt;span style=&quot;background-color: initial;&quot;&gt;&amp;nbsp;&lt;/span&gt;&lt;span style=&quot;background-color: initial; white-space: pre;&quot;&gt;&#x9;&lt;/span&gt;&lt;span style=&quot;background-color: initial;&quot;&gt;: 1&lt;/span&gt;&lt;/p&gt;&lt;p style=&quot;margin:0px;margin-left:4px;&quot;&gt;- HABITANT&amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp;&lt;span style=&quot;white-space: pre;&quot;&gt;&#x9;&lt;/span&gt;: 2&lt;/p&gt;&lt;p style=&quot;margin:0px;margin-left:4px;&quot;&gt;- RIEN&amp;nbsp;&lt;span style=&quot;white-space: pre;&quot;&gt;&#x9;&lt;/span&gt;&lt;span style=&quot;white-space: pre;&quot;&gt;&#x9;&lt;/span&gt;&lt;span style=&quot;white-space: pre;&quot;&gt;&#x9;&lt;/span&gt;&lt;span style=&quot;white-space: pre;&quot;&gt;&#x9;&lt;/span&gt;&lt;span style=&quot;white-space: pre;&quot;&gt;&#x9;&lt;/span&gt;: 3&lt;/p&gt;" style="verticalAlign=top;align=left;overflow=fill;html=1;whiteSpace=wrap;" parent="WIyWlLk6GJQsqaUBKTNV-1" vertex="1">
           <mxGeometry x="920" y="1290" width="200" height="80" as="geometry" />
         </mxCell>
-        <mxCell id="BU0Z-WKppoLpp9yXCjXK-1" value="" style="endArrow=diamondThin;endFill=0;endSize=24;html=1;rounded=0;" edge="1" parent="WIyWlLk6GJQsqaUBKTNV-1" source="BU0Z-WKppoLpp9yXCjXK-0" target="q9ej8JJjJTbI9zSAhyHJ-4">
+        <mxCell id="BU0Z-WKppoLpp9yXCjXK-1" value="" style="endArrow=diamondThin;endFill=0;endSize=24;html=1;rounded=0;" parent="WIyWlLk6GJQsqaUBKTNV-1" source="BU0Z-WKppoLpp9yXCjXK-0" target="q9ej8JJjJTbI9zSAhyHJ-4" edge="1">
           <mxGeometry width="160" relative="1" as="geometry">
             <mxPoint x="509" y="1109" as="sourcePoint" />
             <mxPoint x="620" y="1153" as="targetPoint" />
           </mxGeometry>
         </mxCell>
-        <mxCell id="BU0Z-WKppoLpp9yXCjXK-5" value="" style="endArrow=diamondThin;endFill=0;endSize=24;html=1;rounded=0;exitX=0.75;exitY=0;exitDx=0;exitDy=0;" edge="1" parent="WIyWlLk6GJQsqaUBKTNV-1" source="BU0Z-WKppoLpp9yXCjXK-0" target="BU0Z-WKppoLpp9yXCjXK-8">
+        <mxCell id="BU0Z-WKppoLpp9yXCjXK-5" value="" style="endArrow=diamondThin;endFill=0;endSize=24;html=1;rounded=0;exitX=0.75;exitY=0;exitDx=0;exitDy=0;" parent="WIyWlLk6GJQsqaUBKTNV-1" source="BU0Z-WKppoLpp9yXCjXK-0" target="BU0Z-WKppoLpp9yXCjXK-8" edge="1">
           <mxGeometry width="160" relative="1" as="geometry">
             <mxPoint x="853" y="1290" as="sourcePoint" />
             <mxPoint x="1007.5" y="1220" as="targetPoint" />
           </mxGeometry>
         </mxCell>
-        <mxCell id="BU0Z-WKppoLpp9yXCjXK-8" value="&lt;p style=&quot;margin:0px;margin-top:4px;text-align:center;&quot;&gt;&lt;span style=&quot;font-weight: 700;&quot;&gt;BatimentFonction&lt;/span&gt;&lt;/p&gt;&lt;hr size=&quot;1&quot; style=&quot;border-style:solid;&quot;&gt;&lt;p style=&quot;margin:0px;margin-left:4px;&quot;&gt;- recompense : Recompense&lt;/p&gt;&lt;p style=&quot;margin:0px;margin-left:4px;&quot;&gt;- couleur : Couleur&lt;/p&gt;&lt;p style=&quot;margin:0px;margin-left:4px;&quot;&gt;- nombre : int&lt;/p&gt;&lt;hr size=&quot;1&quot; style=&quot;border-style:solid;&quot;&gt;&lt;p style=&quot;margin:0px;margin-left:4px;&quot;&gt;+ onBuild : void&lt;/p&gt;" style="verticalAlign=top;align=left;overflow=fill;html=1;whiteSpace=wrap;" vertex="1" parent="WIyWlLk6GJQsqaUBKTNV-1">
+        <mxCell id="BU0Z-WKppoLpp9yXCjXK-8" value="&lt;p style=&quot;margin:0px;margin-top:4px;text-align:center;&quot;&gt;&lt;span style=&quot;font-weight: 700;&quot;&gt;BatimentFonction&lt;/span&gt;&lt;/p&gt;&lt;hr size=&quot;1&quot; style=&quot;border-style:solid;&quot;&gt;&lt;p style=&quot;margin:0px;margin-left:4px;&quot;&gt;- recompense : Recompense&lt;/p&gt;&lt;p style=&quot;margin:0px;margin-left:4px;&quot;&gt;- couleur : Couleur&lt;/p&gt;&lt;p style=&quot;margin:0px;margin-left:4px;&quot;&gt;- nombre : int&lt;/p&gt;&lt;hr size=&quot;1&quot; style=&quot;border-style:solid;&quot;&gt;&lt;p style=&quot;margin:0px;margin-left:4px;&quot;&gt;+ onBuild : void&lt;/p&gt;" style="verticalAlign=top;align=left;overflow=fill;html=1;whiteSpace=wrap;" parent="WIyWlLk6GJQsqaUBKTNV-1" vertex="1">
           <mxGeometry x="990" y="1100" width="160" height="112" as="geometry" />
         </mxCell>
       </root>

@@ -1,0 +1,54 @@
+<mxfile host="app.diagrams.net" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36" version="25.0.3">
+  <diagram name="Page-1" id="nn5YYuCkOS0IQOaNncqC">
+    <mxGraphModel dx="717" dy="313" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="3300" pageHeight="4681" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="_L5AaIc3o5FXhw3g5Z6F-1" value="&lt;font size=&quot;3&quot;&gt;Vide&lt;/font&gt;" style="ellipse;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="180" y="140" width="70" height="50" as="geometry" />
+        </mxCell>
+        <mxCell id="_L5AaIc3o5FXhw3g5Z6F-2" value="début de&lt;div&gt;partie&lt;/div&gt;" style="html=1;verticalAlign=bottom;startArrow=oval;startFill=1;endArrow=block;startSize=8;curved=0;rounded=0;" edge="1" parent="1" target="_L5AaIc3o5FXhw3g5Z6F-1">
+          <mxGeometry x="-0.1429" y="5" width="60" relative="1" as="geometry">
+            <mxPoint x="110" y="165" as="sourcePoint" />
+            <mxPoint x="170" y="160" as="targetPoint" />
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="_L5AaIc3o5FXhw3g5Z6F-3" value="&lt;font size=&quot;3&quot;&gt;Détruit&lt;/font&gt;" style="ellipse;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="340" y="140" width="70" height="50" as="geometry" />
+        </mxCell>
+        <mxCell id="_L5AaIc3o5FXhw3g5Z6F-4" value="Tombe sur dé noir" style="html=1;verticalAlign=bottom;endArrow=block;curved=0;rounded=0;" edge="1" parent="1" source="_L5AaIc3o5FXhw3g5Z6F-1" target="_L5AaIc3o5FXhw3g5Z6F-3">
+          <mxGeometry width="80" relative="1" as="geometry">
+            <mxPoint x="250" y="165" as="sourcePoint" />
+            <mxPoint x="330" y="165" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="_L5AaIc3o5FXhw3g5Z6F-5" value="&lt;font size=&quot;3&quot;&gt;Construit&lt;/font&gt;" style="ellipse;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="180" y="290" width="70" height="50" as="geometry" />
+        </mxCell>
+        <mxCell id="_L5AaIc3o5FXhw3g5Z6F-6" value="Construit" style="html=1;verticalAlign=bottom;endArrow=block;curved=0;rounded=0;" edge="1" parent="1" source="_L5AaIc3o5FXhw3g5Z6F-1" target="_L5AaIc3o5FXhw3g5Z6F-5">
+          <mxGeometry width="80" relative="1" as="geometry">
+            <mxPoint x="230" y="220" as="sourcePoint" />
+            <mxPoint x="340" y="220" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="_L5AaIc3o5FXhw3g5Z6F-7" value="Construit un&amp;nbsp;&lt;div&gt;Bâtiment de fonction&lt;/div&gt;&lt;div&gt;Rouge&lt;/div&gt;" style="html=1;verticalAlign=bottom;endArrow=block;curved=0;rounded=0;" edge="1" parent="1" source="_L5AaIc3o5FXhw3g5Z6F-1" target="_L5AaIc3o5FXhw3g5Z6F-8">
+          <mxGeometry x="0.7637" y="44" width="80" relative="1" as="geometry">
+            <mxPoint x="260" y="175" as="sourcePoint" />
+            <mxPoint x="360" y="280" as="targetPoint" />
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="_L5AaIc3o5FXhw3g5Z6F-8" value="&lt;font size=&quot;3&quot;&gt;Protégé&lt;/font&gt;" style="ellipse;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="340" y="290" width="70" height="50" as="geometry" />
+        </mxCell>
+        <mxCell id="_L5AaIc3o5FXhw3g5Z6F-9" value="Construit" style="html=1;verticalAlign=bottom;endArrow=block;curved=0;rounded=0;" edge="1" parent="1" source="_L5AaIc3o5FXhw3g5Z6F-8" target="_L5AaIc3o5FXhw3g5Z6F-5">
+          <mxGeometry width="80" relative="1" as="geometry">
+            <mxPoint x="225" y="200" as="sourcePoint" />
+            <mxPoint x="225" y="300" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>
