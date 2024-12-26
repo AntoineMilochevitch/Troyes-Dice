@@ -34,4 +34,12 @@ public class BatimentPrestige extends Batiment {
     public Effet getEffet() {
         return effet;
     }
+
+    public int getNombre() {
+        return nombre;
+    }
+
+    public Couleur getCouleur() {
+        return couleur;
+    }
 }

@@ -6,8 +6,8 @@ import java.util.List;
 public class Panel {
     private Couleur couleur;
     private int ressource;
-    private List<Batiment> batimentsPrestige;
-    private List<Batiment> batimentsFonction;
+    private List<BatimentPrestige> batimentsPrestige;
+    private List<BatimentFonction> batimentsFonction;
 
     private Feuille feuille;
 
@@ -41,7 +41,7 @@ public class Panel {
 
     private void initRouge(){
 
-        for (int i = 0; i < 6; i++) {
+        for (int i = 1; i < 7; i++) {
             batimentsFonction.add(new BatimentFonction(i, Recompense.HABITANT, Couleur.ROUGE, 2));
         }
 
@@ -55,7 +55,7 @@ public class Panel {
 
     private void initJaune(){
 
-        for (int i = 0; i < 6; i++) {
+        for (int i = 1; i < 7; i++) {
             batimentsFonction.add(new BatimentFonction(i, Recompense.HABITANT, Couleur.JAUNE, 2));
         }
 
@@ -69,7 +69,7 @@ public class Panel {
 
     private void initBlanc(){
 
-        for (int i = 0; i < 6; i++) {
+        for (int i = 1; i < 7; i++) {
             batimentsFonction.add(new BatimentFonction(i, Recompense.HABITANT, Couleur.BLANC, 2));
         }
 
@@ -82,7 +82,7 @@ public class Panel {
         batimentsPrestige.add(new BatimentPrestige(6, Effet.MULTIPLICATEUR, Recompense.RIEN, Couleur.BLANC, 2));
     }
 
-    public Panel(Couleur couleur, int ressource, Feuille feuille, List<Batiment> batimentsPrestige, List<Batiment> batimentsFonction, int multiplicateur1, int multiplicateur2) {
+    public Panel(Couleur couleur, int ressource, Feuille feuille, List<BatimentPrestige> batimentsPrestige, List<BatimentFonction> batimentsFonction, int multiplicateur1, int multiplicateur2) {
         this.couleur = couleur;
         this.ressource = ressource;
         this.feuille = feuille;
@@ -121,28 +121,23 @@ public class Panel {
         batimentsFonction.get(col).proteger();
     }
 
-    /// A REVOIR ///
-
-    /*public void buildBF(int valDe){
-        if (batimentsFonction.get(valDe).getEtat() != Etat.INCONSTRUCTIBLE){
-            return;
+    public void buildBF(int valDe){
+        BatimentFonction bat = batimentsFonction.get(valDe);
+        // Si le batiment est vide ou la parcelle est protégée (donc implicitement non construite)
+        if (bat.getEtat() == Etat.VIDE || bat.getEtat() == Etat.PROTEGE){ 
+            bat.onBuild();
+            feuille.addPoints(this.couleur, bat.getNombre());
         }
-        BatimentFonction bat = new BatimentFonction(valDe, R);
-        bat.onBuild();
-        feuille.addPoints(this.couleur, bat.getNombre());
     }
 
     public void buildBP(int valDe, Panel panel, Feuille feuille) {
-        if (batimentsPrestige.get(valDe).getEtat() != Etat.INCONSTRUCTIBLE) {
-            return;
+        BatimentPrestige bat = batimentsPrestige.get(valDe);
+        if (bat.getEtat() == Etat.VIDE || bat.getEtat() == Etat.PROTEGE){ 
+            bat.onBuild();
+            feuille.addPoints(bat.getCouleur(), bat.getNombre());
         }
-        BatimentPrestige bat = new BatimentPrestige(valDe, null, null);
-        bat.onBuild();
-        int nbBP = (int) batimentsPrestige.stream().filter(b -> b.getEtat() == Etat.CONSTRUIT).count();
-        int multiplicateur = (nbBP <= 1) ? 1 : (nbBP <= 3) ? 2 : 3;
-
-        bat.appliquerEffet(valDe, multiplicateur, panel, feuille);
-    }*/
+        bat.appliquerEffet(valDe, 0, panel, feuille);
+    }
 
     public int getRessource() {
         return ressource;
