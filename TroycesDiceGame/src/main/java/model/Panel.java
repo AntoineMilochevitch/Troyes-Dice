@@ -14,7 +14,7 @@ public class Panel {
     private int multiplicateur1;
     private int multiplicateur2;
 
-    public Panel(Feuille feuille){
+    public Panel(Feuille feuille, Couleur couleur) {
         this.couleur = Couleur.VIDE;
         this.ressource = 0;
         this.feuille = feuille;
@@ -22,6 +22,64 @@ public class Panel {
         this.batimentsFonction = new ArrayList<>();
         this.multiplicateur1 = 0;
         this.multiplicateur2 = 0;
+        initLists();
+    }
+
+    private void initLists(){
+        switch (this.couleur){
+            case ROUGE:
+                initRouge();
+                break;
+            case JAUNE:
+                initJaune();
+                break;
+            case BLANC:
+                initBlanc();
+                break;
+        }
+    }
+
+    private void initRouge(){
+
+        for (int i = 0; i < 6; i++) {
+            batimentsFonction.add(new BatimentFonction(i, Recompense.HABITANT, Couleur.ROUGE, 2));
+        }
+
+        batimentsPrestige.add(new BatimentPrestige(1, Effet.PROTEGER, Recompense.HABITANT, Couleur.ROUGE, 1));
+        batimentsPrestige.add(new BatimentPrestige(2, Effet.PROTEGER, Recompense.HABITANT, Couleur.ROUGE, 1));
+        batimentsPrestige.add(new BatimentPrestige(3, Effet.PROTEGER, Recompense.HABITANT, Couleur.JAUNE, 1));
+        batimentsPrestige.add(new BatimentPrestige(4, Effet.PROTEGER, Recompense.HABITANT, Couleur.JAUNE, 1));
+        batimentsPrestige.add(new BatimentPrestige(5, Effet.PROTEGER, Recompense.HABITANT, Couleur.BLANC, 1));
+        batimentsPrestige.add(new BatimentPrestige(6, Effet.PROTEGER, Recompense.HABITANT, Couleur.BLANC, 1));
+    }
+
+    private void initJaune(){
+
+        for (int i = 0; i < 6; i++) {
+            batimentsFonction.add(new BatimentFonction(i, Recompense.HABITANT, Couleur.JAUNE, 2));
+        }
+
+        batimentsPrestige.add(new BatimentPrestige(1, Effet.RIEN, Recompense.RESSOURCE, Couleur.ROUGE, 3));
+        batimentsPrestige.add(new BatimentPrestige(2, Effet.RIEN, Recompense.HABITANT, Couleur.ROUGE, 2));
+        batimentsPrestige.add(new BatimentPrestige(3, Effet.RIEN, Recompense.RESSOURCE, Couleur.JAUNE, 3));
+        batimentsPrestige.add(new BatimentPrestige(4, Effet.RIEN, Recompense.HABITANT, Couleur.JAUNE, 2));
+        batimentsPrestige.add(new BatimentPrestige(5, Effet.RIEN, Recompense.RESSOURCE, Couleur.BLANC, 3));
+        batimentsPrestige.add(new BatimentPrestige(6, Effet.RIEN, Recompense.HABITANT, Couleur.BLANC, 2));
+    }
+
+    private void initBlanc(){
+
+        for (int i = 0; i < 6; i++) {
+            batimentsFonction.add(new BatimentFonction(i, Recompense.HABITANT, Couleur.BLANC, 2));
+        }
+
+        // Si nombre = 1, prend effet sur le multiplicateur 1, si nombre = 2 prend effet sur le multiplicateur 2
+        batimentsPrestige.add(new BatimentPrestige(1, Effet.MULTIPLICATEUR, Recompense.RIEN, Couleur.ROUGE, 1));
+        batimentsPrestige.add(new BatimentPrestige(2, Effet.MULTIPLICATEUR, Recompense.RIEN, Couleur.ROUGE, 2));
+        batimentsPrestige.add(new BatimentPrestige(3, Effet.MULTIPLICATEUR, Recompense.RIEN, Couleur.JAUNE, 1));
+        batimentsPrestige.add(new BatimentPrestige(4, Effet.MULTIPLICATEUR, Recompense.RIEN, Couleur.JAUNE, 2));
+        batimentsPrestige.add(new BatimentPrestige(5, Effet.MULTIPLICATEUR, Recompense.RIEN, Couleur.BLANC, 1));
+        batimentsPrestige.add(new BatimentPrestige(6, Effet.MULTIPLICATEUR, Recompense.RIEN, Couleur.BLANC, 2));
     }
 
     public Panel(Couleur couleur, int ressource, Feuille feuille, List<Batiment> batimentsPrestige, List<Batiment> batimentsFonction, int multiplicateur1, int multiplicateur2) {

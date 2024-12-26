@@ -9,9 +9,9 @@ public class Feuille {
     private int nbPointEnseignant;  
 
     public Feuille(){
-        this.etudiant = new Panel(this);
-        this.administration = new Panel(this);
-        this.enseignant = new Panel(this);
+        this.etudiant = new Panel(this, Couleur.JAUNE);
+        this.administration = new Panel(this, Couleur.ROUGE);
+        this.enseignant = new Panel(this, Couleur.BLANC);
     }
     
     public void utiliserRessource(Couleur type, int cout, int ressourceDepense) {

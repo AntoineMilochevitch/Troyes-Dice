@@ -3,12 +3,16 @@ package main.java.model;
 public class BatimentPrestige extends Batiment {
     private Effet effet;
     private Recompense recompense;
+    private Couleur couleur;
+    private int nombre;
 
 
-    public BatimentPrestige(int ID, Effet effet, Recompense recompense) {
+    public BatimentPrestige(int ID, Effet effet, Recompense recompense, Couleur couleur, int nombre) {
         super(ID);
         this.effet = effet;
         this.recompense = recompense;
+        this.couleur = couleur;
+        this.nombre = nombre;
     }
 
     public void appliquerEffet(int valDe, int multiplicateur, Panel panel, Feuille feuille) {
