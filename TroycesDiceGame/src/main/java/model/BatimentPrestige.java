@@ -1,10 +1,10 @@
 package main.java.model;
 
 public class BatimentPrestige extends Batiment {
-    private Effet effet;
-    private Recompense recompense;
-    private Couleur couleur;
-    private int nombre;
+    private final Effet effet;
+    private final Recompense recompense;
+    private final Couleur couleur;
+    private final int nombre;
 
 
     public BatimentPrestige(int ID, Effet effet, Recompense recompense, Couleur couleur, int nombre) {
@@ -15,7 +15,7 @@ public class BatimentPrestige extends Batiment {
         this.nombre = nombre;
     }
 
-    public void appliquerEffet(int valDe, int multiplicateur, Panel panel, Feuille feuille) {
+    public void appliquerEffet(int valDe, Panel panel, Feuille feuille) {
         switch (effet) {
             case PROTEGER:
                 feuille.getEtudiant().protegerColonne(valDe);
@@ -23,10 +23,9 @@ public class BatimentPrestige extends Batiment {
                 feuille.getEnseignant().protegerColonne(valDe);
                 break;
             case MULTIPLICATEUR:
-                panel.ajouterMultiplicateur(valDe, multiplicateur);
+                panel.ajouterMultiplicateur(valDe);
                 break;
             case RIEN:
-                // TODO
                 break;
         }
     }
@@ -37,6 +36,10 @@ public class BatimentPrestige extends Batiment {
 
     public int getNombre() {
         return nombre;
+    }
+
+    public Recompense getRecompense() {
+        return recompense;
     }
 
     public Couleur getCouleur() {
