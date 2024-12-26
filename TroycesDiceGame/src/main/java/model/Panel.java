@@ -121,11 +121,13 @@ public class Panel {
         batimentsFonction.get(col).proteger();
     }
 
-    public void buildBF(int valDe){
+    /// A REVOIR ///
+
+    /*public void buildBF(int valDe){
         if (batimentsFonction.get(valDe).getEtat() != Etat.INCONSTRUCTIBLE){
             return;
         }
-        BatimentFonction bat = new BatimentFonction(valDe, null);
+        BatimentFonction bat = new BatimentFonction(valDe, R);
         bat.onBuild();
         feuille.addPoints(this.couleur, bat.getNombre());
     }
@@ -140,7 +142,7 @@ public class Panel {
         int multiplicateur = (nbBP <= 1) ? 1 : (nbBP <= 3) ? 2 : 3;
 
         bat.appliquerEffet(valDe, multiplicateur, panel, feuille);
-    }
+    }*/
 
     public int getRessource() {
         return ressource;
