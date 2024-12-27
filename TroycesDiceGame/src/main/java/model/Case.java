@@ -25,10 +25,11 @@ public class Case implements Cloneable{
     public Couleur getCouleurRecto() {
         return couleurRecto;
     }
-
+    
     public Couleur getCouleurVerso() {
         return couleurVerso;
     }
+    
 
     public int getSenseCase() {
         return sensCase;

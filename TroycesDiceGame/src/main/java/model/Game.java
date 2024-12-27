@@ -1,6 +1,7 @@
 package main.java.model;
 
 import java.util.ArrayList;
+import java.util.InputMismatchException;
 import java.util.List;
 import java.util.Scanner;
 
@@ -18,30 +19,40 @@ public class Game {
     }
 
     public void startGame() {
-        int nbJoueurs;
-        try (Scanner scanner = new Scanner(System.in)) {
-            System.out.println("Entrez le nombre de joueurs : ");
-            nbJoueurs = scanner.nextInt();
+    int nbJoueurs;
+    try (Scanner scanner = new Scanner(System.in)) {
+        System.out.println("Entrez le nombre de joueurs : ");
+        nbJoueurs = scanner.nextInt();
+        scanner.nextLine(); // Consomme la nouvelle ligne après nextInt()
 
-            // Créez les joueurs
-            joueurs = new ArrayList<>();
-            for (int i = 0; i < nbJoueurs; i++) {
-                System.out.println("Entrez le nom du joueur " + i + " : ");
-                String nom = scanner.next();
-                Joueur joueur = new Joueur(nom, i);
-                joueurs.add(joueur);
-            }
-
-            // Initialiser les cases du plateau
-            plateau.initialiserCases(9);
-        } catch (Exception e) {
-            System.out.println("Erreur lors de la saisie du nombre de joueurs");
+        // Créez les joueurs
+        joueurs = new ArrayList<>();
+        for (int i = 0; i < nbJoueurs; i++) {
+            System.out.println("Entrez le nom du joueur " + (i + 1) + " : ");
+            String nom = scanner.nextLine();
+            Joueur joueur = new Joueur(nom, i);
+            joueurs.add(joueur);
         }
 
-        gameLoop();
+        // Initialiser les cases du plateau
+        plateau.initialiserCases(9);
+    } catch (InputMismatchException e) {
+        System.out.println("Erreur: Veuillez entrer un nombre valide pour le nombre de joueurs.");
+        return;
+    } catch (Exception e) {
+        System.out.println("Erreur lors de la saisie du nombre de joueurs: " + e.getMessage());
+        return;
     }
 
+    deNoirActif = false;
+
+    gameLoop();
+}
+
     public void gameLoop() {
+        System.out.println("Début de la partie");
+        System.out.println("Compteur de demi-journée : " + plateau.getCompteurDemiJournee());
+        System.out.println("Dé noir actif : " + deNoirActif);
         listDE = lancerDe();
         for (int i = 0; i < 4; i++) {
             if (i < plateau.getRoue().size() && i < listDE.size()) {
@@ -54,9 +65,8 @@ public class Game {
             for (Joueur joueur : joueurs) {
                 Case caseChoisie = joueur.choisirCase(plateau);
                 joueur.choisirAction();
-                // Exécutez l'action choisie par le joueur
                 joueur.execute();
-                joueur.afficherFeuille();
+                //joueur.afficherFeuille();
             }
 
             // INCREMENTE COMPTEUR DE DEMI-JOURNéES
@@ -74,6 +84,8 @@ public class Game {
             }
 
             // LOGIQUE DES NOIR
+            System.out.println("Compteur de demi-journée : " + plateau.getCompteurDemiJournee());
+            System.out.println("Dé noir actif : " + deNoirActif);
             if (plateau.getCompteurDemiJournee() > 3 && !deNoirActif) {
                 indexDeNoir = tirerDeNoir();
                 System.out.println("Dé noir actif et la colonne " + indexDeNoir + " a été détruite !");
@@ -85,7 +97,7 @@ public class Game {
             }
 
             // AFFICHE LA ROUE
-            plateau.afficherRoue();
+            //plateau.afficherRoue();
         }
     }
 
