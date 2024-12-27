@@ -21,7 +21,7 @@ public class Plateau {
         Couleur[] couleurs = Couleur.values();
 
         for (int i = 0; i < nombreDeCases; i++) {
-            Couleur couleurRecto = couleurs[random.nextInt(couleurs.length-1)];
+            Couleur couleurRecto = couleurs[random.nextInt(couleurs.length-1)]; // N'inclut pas VIDE dans la couleur donc -1
             Couleur couleurVerso = couleurs[random.nextInt(couleurs.length-1)];
             int cout = random.nextInt(3) + 1; // Coût compris entre 1 et 3
             Case nouvelleCase;
@@ -92,7 +92,7 @@ public class Plateau {
         return roue;
     }
 
-    public void afficherRoue() {
+    public final void afficherRoue() {
         for (int i = 0; i < roue.size(); i++) {
             System.out.println(i + " : " + roue.get(i).getCouleurRecto() + " " + roue.get(i).getCouleurVerso() + " " + roue.get(i).getCout() + " " + roue.get(i).getDemiJournee());
         }

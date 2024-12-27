@@ -19,25 +19,21 @@ public class Game {
 
     public void startGame() {
         int nbJoueurs;
-        try (Scanner scanner = new Scanner(System.in)) {
-            System.out.println("Entrez le nombre de joueurs : ");
-            nbJoueurs = scanner.nextInt();
+            try (Scanner scanner = new Scanner(System.in)) {
+                System.out.println("Entrez le nombre de joueurs : ");
+                nbJoueurs = scanner.nextInt();
 
-            // Créez les joueurs
-            joueurs = new ArrayList<>();
-            for (int i = 0; i < nbJoueurs; i++) {
-                System.out.println("Entrez le nom du joueur " + i + " : ");
-                String nom = scanner.next();
-                Joueur joueur = new Joueur(nom, i);
-                joueurs.add(joueur);
+                // Créez les joueurs
+                for (int i = 0; i < nbJoueurs; i++) {
+                    System.out.println("Entrez le nom du joueur " + i + " : ");
+                    String nom = scanner.next();
+                    scanner.remove();
+                    Joueur joueur = new Joueur(nom, i);
+                    this.joueurs.add(joueur);
+                }
+            } catch (Exception e) {
+                System.out.println("Erreur lors de la saisie du nombre de joueurs.");
             }
-
-            // Initialiser les cases du plateau
-            plateau.initialiserCases(9);
-        } catch (Exception e) {
-            System.out.println("Erreur lors de la saisie du nombre de joueurs");
-        }
-
         gameLoop();
     }
 

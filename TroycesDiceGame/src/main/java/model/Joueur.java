@@ -12,6 +12,7 @@ public class Joueur implements Actionnable {
     private Actionnable actionChoisie;
 
     public Joueur(String nom, int id) {
+        System.err.println("HERE2");
         this.nom = nom;
         this.id = id;
         this.feuille = new Feuille();
@@ -19,6 +20,7 @@ public class Joueur implements Actionnable {
         valDeLocal = 0;
         couleurLocal = null;
         actionChoisie = null;
+        System.err.println("HERE2");
     }
 
     public Case choisirCase(Plateau plateau) {
