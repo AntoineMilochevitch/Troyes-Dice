@@ -20,10 +20,10 @@ public class Game {
     public void startGame() {
         Joueur joueur1 = new Joueur("Joueur 1", 1);
         Joueur joueur2 = new Joueur("Joueur 2", 2);
-        Joueur joueur3 = new Joueur("Joueur 3", 3);
+        //Joueur joueur3 = new Joueur("Joueur 3", 3);
         this.joueurs.add(joueur1);
         this.joueurs.add(joueur2);
-        this.joueurs.add(joueur3);
+        //this.joueurs.add(joueur3);
         gameLoop();
     }
 
@@ -37,6 +37,8 @@ public class Game {
                 plateau.getRoue().get(i).setValDe(listDE.get(i));
             }
         }
+        // AFFICHE LA ROUE
+        plateau.afficherRoue();
         while (!finDePartie()) {
 
             // ACTION POUR CHAQUE JOUEURS
@@ -50,6 +52,7 @@ public class Game {
             // INCREMENTE COMPTEUR DE DEMI-JOURNéES
             plateau.incrementerCompteurDemiJournee();
             if (plateau.getCompteurDemiJournee() % 2 == 0) {
+                System.out.println("Tourner la roue");
                 plateau.tournerRoue();
             }
 
@@ -73,6 +76,7 @@ public class Game {
             }
 
             // AFFICHE LA ROUE
+            System.out.println("Compteur de demi-journée : " + plateau.getCompteurDemiJournee());
             plateau.afficherRoue();
         }
     }

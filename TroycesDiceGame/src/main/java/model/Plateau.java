@@ -27,10 +27,10 @@ public class Plateau {
             Case nouvelleCase;
             if(i < 4){
                 nouvelleCase = new Case(couleurRecto, couleurVerso, 1, 0, cout, DemiJournee.MATIN);
-            } else if(i == 4){
-                nouvelleCase = new Case(couleurRecto, couleurVerso, 1, 0, cout, DemiJournee.NEUTRE);
-            } else {
+            } else if(i < 8){
                 nouvelleCase = new Case(couleurRecto, couleurVerso, 1, 0, cout, DemiJournee.APRES_MIDI);
+            } else {
+                nouvelleCase = new Case(couleurRecto, couleurVerso, 1, 0, cout, DemiJournee.NEUTRE);
             }
             roue.add(nouvelleCase);
         }
@@ -41,27 +41,27 @@ public class Plateau {
             int jour = compteurDemiJournee / 2;
             // Calcule l'index de départ en fonction du jour actuel
             int indexDepart = jour % roue.size();
+            System.out.println("Index de départ : " + indexDepart);
             Case temp = roue.get((indexDepart + roue.size() - 1) % roue.size()).clone();
             Case premiereApresMidi = roue.get((indexDepart + 4) % roue.size()).clone();
             Case caseNeutrePrecedente = roue.get(indexDepart).clone();
-    
-            for (int i = 0; i < roue.size(); i++) {
+
+            for (int i = roue.size() - 1; i > 0; i--) {
                 // Calcule l'index actuel et l'index suivant de manière circulaire
                 int currentIndex = (indexDepart + i) % roue.size();
-                int nextIndex = (indexDepart + i + 1) % roue.size();
+                System.out.println("Index actuel : " + currentIndex);
+                int previousIndex = (indexDepart + i - 1) % roue.size();
                 // Met à jour le coût de la case actuelle avec le coût de la case suivante
-                roue.get(currentIndex).setCout(roue.get(nextIndex).getCout());
+                roue.get(currentIndex).setCout(roue.get(previousIndex).getCout());
+                System.out.println("Cout de la case " + currentIndex + " : " + roue.get(currentIndex).getCout());
             }
-    
-            // Met à jour la première case de la matinée avec la première case de l'après-midi de la journée précédente
-            roue.get((indexDepart + 3) % roue.size()).setCout(premiereApresMidi.getCout());
-            roue.get((indexDepart + 3) % roue.size()).setDemijournee(DemiJournee.MATIN);
-    
-            // Met à jour la dernière case de l'après-midi avec la case neutre précédente
-            roue.get((indexDepart + 7) % roue.size()).setCout(caseNeutrePrecedente.getCout());
-            roue.get((indexDepart + 7) % roue.size()).setDemijournee(DemiJournee.APRES_MIDI);
-    
-            // Met à jour le coût de la première case avec le coût sauvegardé
+
+            roue.get((indexDepart + 4) % roue.size()).setCout(premiereApresMidi.getCout());
+            roue.get((indexDepart + 4) % roue.size()).setDemijournee(DemiJournee.MATIN);
+
+            roue.get((indexDepart + 8) % roue.size()).setCout(caseNeutrePrecedente.getCout());
+            roue.get((indexDepart + 8) % roue.size()).setDemijournee(DemiJournee.APRES_MIDI);
+
             roue.get(indexDepart).setCout(temp.getCout());
             roue.get(indexDepart).setDemijournee(DemiJournee.NEUTRE);
         }

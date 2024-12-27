@@ -14,7 +14,7 @@ abstract class Panel {
     private int multiplicateur2;
 
     public Panel(Feuille feuille) {
-        this.ressource = 0;
+        this.ressource = 3;
         this.feuille = feuille;
         this.batimentsPrestige = new ArrayList<>();
         this.batimentsFonction = new ArrayList<>();
@@ -64,12 +64,18 @@ abstract class Panel {
         batimentsFonction.get(col).proteger();
     }
 
-    public void buildBF(int valDe){
-        BatimentFonction bat = batimentsFonction.get(valDe);
-        // Si le batiment est vide ou la parcelle est protégée (donc implicitement non construite)
-        if (bat.getEtat() == Etat.VIDE || bat.getEtat() == Etat.PROTEGE){ 
-            bat.onBuild();
-            feuille.addPoints(bat.getCouleur(), bat.getNombre());
+    public void buildBF(int valDe) {
+        if (valDe >= 1 && valDe <= batimentsFonction.size()) {
+            BatimentFonction bat = batimentsFonction.get(valDe - 1); // Adjusting index to be 0-based
+            System.out.println("valDe : " + valDe);
+            // Si le batiment est vide ou la parcelle est protégée (donc implicitement non construite)
+            if (bat.getEtat() == Etat.VIDE || bat.getEtat() == Etat.PROTEGE) {
+                bat.onBuild();
+                System.out.println("Batiment construit");
+                feuille.addPoints(bat.getCouleur(), bat.getNombre());
+            }
+        } else {
+            System.out.println("Valeur de dé invalide. Veuillez réessayer.");
         }
     }
 
@@ -139,15 +145,15 @@ abstract class Panel {
         return nbCathédrale;
     }
 
-    public final void afficherPanel(){
+    public final void afficherPanel() {
         System.out.println("Ressource : " + ressource);
         System.out.println("Batiments de prestige : ");
-        for (Batiment bat : batimentsPrestige){
-            System.out.println(bat.toString());
+        for (Batiment bat : batimentsPrestige) {
+            System.out.println("Etat : " + bat.getEtat());
         }
         System.out.println("Batiments de fonction : ");
-        for (Batiment bat : batimentsFonction){
-            System.out.println(bat.toString());
+        for (Batiment bat : batimentsFonction) {
+            System.out.println("Etat : " + bat.getEtat());
         }
     }
     
