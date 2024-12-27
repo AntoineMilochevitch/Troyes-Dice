@@ -3,24 +3,24 @@ package main.java.model;
 import java.util.Scanner;
 
 public class Joueur implements Actionnable {
-    private final String nom;
-    private final int id;
-    private final Feuille feuille;
+    private String nom;
+    private int id;
+    private Feuille feuille;
     private Case caseChoisie;
     private int valDeLocal;
     private Couleur couleurLocal;
     private Actionnable actionChoisie;
 
     public Joueur(String nom, int id) {
-        System.err.println("HERE2");
+        System.out.println("HERE2");
         this.nom = nom;
         this.id = id;
-        this.feuille = new Feuille();
+        feuille = new Feuille();
         caseChoisie = null;
         valDeLocal = 0;
         couleurLocal = null;
         actionChoisie = null;
-        System.err.println("HERE2");
+        System.out.println("HERE2");
     }
 
     public Case choisirCase(Plateau plateau) {
