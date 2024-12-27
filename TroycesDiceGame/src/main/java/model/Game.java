@@ -2,7 +2,6 @@ package main.java.model;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Scanner;
 
 public class Game {
     private List<Joueur> joueurs;
@@ -18,22 +17,12 @@ public class Game {
     }
 
     public void startGame() {
-        int nbJoueurs;
-            try (Scanner scanner = new Scanner(System.in)) {
-                System.out.println("Entrez le nombre de joueurs : ");
-                nbJoueurs = scanner.nextInt();
-
-                // Créez les joueurs
-                for (int i = 0; i < nbJoueurs; i++) {
-                    System.out.println("Entrez le nom du joueur " + i + " : ");
-                    String nom = scanner.next();
-                    scanner.remove();
-                    Joueur joueur = new Joueur(nom, i);
-                    this.joueurs.add(joueur);
-                }
-            } catch (Exception e) {
-                System.out.println("Erreur lors de la saisie du nombre de joueurs.");
-            }
+        Joueur joueur1 = new Joueur("Joueur 1", 1);
+        Joueur joueur2 = new Joueur("Joueur 2", 2);
+        Joueur joueur3 = new Joueur("Joueur 3", 3);
+        this.joueurs.add(joueur1);
+        this.joueurs.add(joueur2);
+        this.joueurs.add(joueur3);
         gameLoop();
     }
 
@@ -70,7 +59,7 @@ public class Game {
             }
 
             // LOGIQUE DES NOIR
-            if (plateau.getCompteurDemiJournee() > 3 && !deNoirActif) {
+            if (plateau.getCompteurDemiJournee() > 3) {
                 indexDeNoir = tirerDeNoir();
                 System.out.println("Dé noir actif et la colonne " + indexDeNoir + " a été détruite !");
                 plateau.retournerCase(indexDeNoir);
