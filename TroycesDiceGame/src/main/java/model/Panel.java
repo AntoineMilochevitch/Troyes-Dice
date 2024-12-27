@@ -5,17 +5,13 @@ import java.util.List;
 
 abstract class Panel {
     private int ressource;
-    protected  List<BatimentPrestige> batimentsPrestige;
-    protected  List<BatimentFonction> batimentsFonction;
+    protected List<BatimentPrestige> batimentsPrestige;
+    protected List<BatimentFonction> batimentsFonction;
 
     private final Feuille feuille;
 
     private int multiplicateur1;
     private int multiplicateur2;
-
-    {
-        initLists();
-    }
 
     public Panel(Feuille feuille) {
         this.ressource = 0;
@@ -24,6 +20,7 @@ abstract class Panel {
         this.batimentsFonction = new ArrayList<>();
         this.multiplicateur1 = 0;
         this.multiplicateur2 = 0;
+        initLists();
     }
 
     abstract void initLists();
@@ -35,6 +32,7 @@ abstract class Panel {
         this.batimentsFonction = batimentsFonction;
         this.multiplicateur1 = multiplicateur1;
         this.multiplicateur2 = multiplicateur2;
+        initLists();
     }
 
     public int decomptePoints(){

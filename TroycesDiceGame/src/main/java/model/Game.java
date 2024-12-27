@@ -44,7 +44,7 @@ public class Game {
                 Case caseChoisie = joueur.choisirCase(plateau);
                 joueur.choisirAction();
                 joueur.execute();
-                //joueur.afficherFeuille();
+                joueur.afficherFeuille();
             }
 
             // INCREMENTE COMPTEUR DE DEMI-JOURNéES
@@ -73,7 +73,7 @@ public class Game {
             }
 
             // AFFICHE LA ROUE
-            //plateau.afficherRoue();
+            plateau.afficherRoue();
         }
     }
 
