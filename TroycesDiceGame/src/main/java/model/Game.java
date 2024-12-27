@@ -20,22 +20,24 @@ public class Game {
 
     public void startGame() {
         int nbJoueurs;
-            try (Scanner scanner = new Scanner(System.in)) {
-                System.out.println("Entrez le nombre de joueurs : ");
-                nbJoueurs = scanner.nextInt();
+        try (Scanner scanner = new Scanner(System.in)) {
+            System.out.println("Entrez le nombre de joueurs : ");
+            nbJoueurs = scanner.nextInt();
+            scanner.nextLine(); // Consomme la nouvelle ligne
 
-                // Créez les joueurs
-                for (int i = 0; i < nbJoueurs; i++) {
-                    System.out.println("Entrez le nom du joueur " + i + " : ");
-                    String nom = scanner.next();
-                    scanner.remove();
-                    Joueur joueur = new Joueur(nom, i);
-                    this.joueurs.add(joueur);
-                }
-            } catch (Exception e) {
-                System.out.println("Erreur lors de la saisie du nombre de joueurs.");
+            // Créez les joueurs
+            for (int i = 0; i < nbJoueurs; i++) {
+                System.out.println("Entrez le nom du joueur " + i + " : ");
+                String nom = scanner.nextLine();
+                Joueur joueur = new Joueur(nom, i);
+                this.joueurs.add(joueur);
             }
-        gameLoop();
+        } catch (InputMismatchException e) {
+            System.out.println("Erreur lors de la saisie du nombre de joueurs.");
+        } catch (Exception e) {
+            System.out.println("Une erreur est survenue.");
+        }
+        //gameLoop();
     }
 
     public void gameLoop() {
