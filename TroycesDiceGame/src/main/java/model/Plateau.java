@@ -11,18 +11,27 @@ public class Plateau {
     public Plateau(List<Case> roue) {
         this.roue = roue;
         this.compteurDemiJournee = 0;
+        initialiserCases(9);
+        afficherRoue();
     }
 
-    public void initialiserCases(int nombreDeCases) {
+    public final void initialiserCases(int nombreDeCases) {
         Random random = new Random();
         roue = new ArrayList<>();
         Couleur[] couleurs = Couleur.values();
 
         for (int i = 0; i < nombreDeCases; i++) {
-            Couleur couleurRecto = couleurs[random.nextInt(couleurs.length)];
-            Couleur couleurVerso = couleurs[random.nextInt(couleurs.length)];
+            Couleur couleurRecto = couleurs[random.nextInt(couleurs.length-1)];
+            Couleur couleurVerso = couleurs[random.nextInt(couleurs.length-1)];
             int cout = random.nextInt(3) + 1; // Coût compris entre 1 et 3
-            Case nouvelleCase = new Case(couleurRecto, couleurVerso, 1, 0, cout, DemiJournee.MATIN);
+            Case nouvelleCase;
+            if(i < 4){
+                nouvelleCase = new Case(couleurRecto, couleurVerso, 1, 0, cout, DemiJournee.MATIN);
+            } else if(i == 4){
+                nouvelleCase = new Case(couleurRecto, couleurVerso, 1, 0, cout, DemiJournee.NEUTRE);
+            } else {
+                nouvelleCase = new Case(couleurRecto, couleurVerso, 1, 0, cout, DemiJournee.APRES_MIDI);
+            }
             roue.add(nouvelleCase);
         }
     }

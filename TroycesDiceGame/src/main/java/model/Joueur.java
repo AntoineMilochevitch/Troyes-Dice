@@ -15,6 +15,10 @@ public class Joueur implements Actionnable {
         this.nom = nom;
         this.id = id;
         this.feuille = new Feuille();
+        caseChoisie = null;
+        valDeLocal = 0;
+        couleurLocal = null;
+        actionChoisie = null;
     }
 
     public Case choisirCase(Plateau plateau) {

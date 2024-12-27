@@ -34,6 +34,8 @@ public class Game {
 
             // Initialiser les cases du plateau
             plateau.initialiserCases(9);
+        } catch (Exception e) {
+            System.out.println("Erreur lors de la saisie du nombre de joueurs");
         }
 
         gameLoop();
