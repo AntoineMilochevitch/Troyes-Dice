@@ -1,9 +1,9 @@
 package main.java.model;
 
 public class BatimentFonction extends Batiment{
-    private Recompense recompense;
-    private int nombre;
-    private Couleur couleur;
+    private final Recompense recompense;
+    private final int nombre;
+    private final Couleur couleur;
 
     public BatimentFonction(int ID, Recompense recompense, Couleur couleur, int nombre){
         super(ID);

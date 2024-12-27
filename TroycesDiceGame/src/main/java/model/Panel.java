@@ -141,7 +141,7 @@ abstract class Panel {
         return nbCathédrale;
     }
 
-    public void afficherPanel(){
+    public final void afficherPanel(){
         System.out.println("Ressource : " + ressource);
         System.out.println("Batiments de prestige : ");
         for (Batiment bat : batimentsPrestige){

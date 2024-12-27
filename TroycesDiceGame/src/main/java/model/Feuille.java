@@ -55,7 +55,7 @@ public class Feuille {
         return enseignant;
     }
 
-    public void afficherFeuille(){
+    public final void afficherFeuille(){
         System.out.println("Feuille de l'étudiant : ");
         etudiant.afficherPanel();
         System.out.println("Feuille de l'administration : ");
