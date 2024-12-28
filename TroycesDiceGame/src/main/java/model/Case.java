@@ -4,11 +4,11 @@ public class Case implements Cloneable{
     private Couleur couleurRecto;
     private Couleur couleurVerso;
     private int sensCase;
-    private int valDe;
+    private De valDe;
     private int cout;
     private DemiJournee demiJournee;
 
-    public Case(Couleur couleurRecto, Couleur couleurVerso, int sens, int valDe, int cout, DemiJournee demiJournee) {
+    public Case(Couleur couleurRecto, Couleur couleurVerso, int sens, De valDe, int cout, DemiJournee demiJournee) {
         this.couleurRecto = couleurRecto;
         this.couleurVerso = couleurVerso;
         this.sensCase = sens;
@@ -43,7 +43,7 @@ public class Case implements Cloneable{
         return demiJournee;
     }
 
-    public int getValDe() {
+    public De getValDe() {
         return valDe;
     }
 
@@ -59,7 +59,7 @@ public class Case implements Cloneable{
         this.sensCase = sensCase;
     }
 
-    public void setValDe(int valDe) {
+    public void setValDe(De valDe) {
         this.valDe = valDe;
     }
 }

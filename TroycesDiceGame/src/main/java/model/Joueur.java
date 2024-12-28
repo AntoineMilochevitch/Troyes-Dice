@@ -1,17 +1,16 @@
 package main.java.model;
 
-import java.util.InputMismatchException;
-import java.util.NoSuchElementException;
-import java.util.Scanner;
+import java.util.*;
 
 public class Joueur implements Actionnable {
     private String nom;
     private int id;
     private Feuille feuille;
     private Case caseChoisie;
-    private int valDeLocal;
+    private De valDeLocal;
     private Couleur couleurLocal;
     private Actionnable actionChoisie;
+    private List<De> des;
     private static final Scanner scanner = new Scanner(System.in); // Single Scanner instance
 
     public Joueur(String nom, int id) {
@@ -20,9 +19,10 @@ public class Joueur implements Actionnable {
         this.id = id;
         feuille = new Feuille();
         caseChoisie = null;
-        valDeLocal = 0;
+        valDeLocal = null;
         couleurLocal = null;
         actionChoisie = null;
+        des = null;
     }
 
     public Case choisirCase(Plateau plateau) {
@@ -30,9 +30,23 @@ public class Joueur implements Actionnable {
         int numCase = scanner.nextInt();
 
         if (numCase >= 0 && numCase < plateau.getRoue().size()) {
-            caseChoisie = plateau.getCase(numCase);
+            Case caseChoisie = plateau.getCase(numCase);
+            DemiJournee demiJourneeActuelle = plateau.getCompteurDemiJournee() % 2 == 1 ? DemiJournee.APRES_MIDI : DemiJournee.MATIN;
+
+            if (caseChoisie.getDemiJournee() == DemiJournee.NEUTRE) {
+                System.out.println("Impossible de choisir une case NEUTRE. Veuillez réessayer.");
+                return choisirCase(plateau);
+            }
+
+            if (caseChoisie.getDemiJournee() != demiJourneeActuelle) {
+                System.out.println("Vous ne pouvez choisir que les cases correspondant à la demi-journée actuelle (" + demiJourneeActuelle + "). Veuillez réessayer.");
+                return choisirCase(plateau);
+            }
+
+            this.caseChoisie = caseChoisie;
             couleurLocal = caseChoisie.getSenseCase() == 1 ? caseChoisie.getCouleurRecto() : caseChoisie.getCouleurVerso();
             valDeLocal = caseChoisie.getValDe();
+            System.out.println("Valeur du dé : " + valDeLocal);
             Panel panel = choosePanel();
 
             if (panel.getRessource() < caseChoisie.getCout()) {
@@ -85,10 +99,10 @@ public class Joueur implements Actionnable {
         int choix = scanner.nextInt();
         switch (choix) {
             case 1:
-                valDeLocal = Math.min(valDeLocal + 1 * ressourceDepense, 6); // La valeur maximale d'un dé est 6
+                valDeLocal.setValeur( Math.min(valDeLocal.getValeur() + ressourceDepense, 6)); // La valeur maximale d'un dé est 6
                 break;
             case 2:
-                valDeLocal = Math.max(valDeLocal - 1 * ressourceDepense, 1); // La valeur minimale d'un dé est 1
+                valDeLocal.setValeur(Math.max(valDeLocal.getValeur() - ressourceDepense, 1)); // La valeur minimale d'un dé est 1
                 break;
             default:
                 System.out.println("Choix invalide. Veuillez réessayer.");
@@ -130,7 +144,7 @@ public class Joueur implements Actionnable {
     }
 
     public Panel chooseMultiplicateurPanel() {
-        switch (valDeLocal) {
+        switch (valDeLocal.getValeur()) {
             case 1:
                 return feuille.getAdministration();
             case 2:
@@ -151,7 +165,7 @@ public class Joueur implements Actionnable {
     public void buildBP() {
         Panel panel = choosePanel();
         Panel panelMultiplicateur = chooseMultiplicateurPanel();
-        panel.buildBP(valDeLocal, panelMultiplicateur, feuille);
+        panel.buildBP(valDeLocal, panelMultiplicateur, feuille, des);
     }
 
     public void buildBF() {
@@ -162,7 +176,7 @@ public class Joueur implements Actionnable {
 
     public void getRessource() {
         Panel panel = choosePanel();
-        panel.addRessource(valDeLocal);
+        panel.addRessource(valDeLocal.getValeur());
     }
 
     public Feuille getFeuille() {
@@ -178,5 +192,9 @@ public class Joueur implements Actionnable {
     public void afficherFeuille() {
         System.out.println("Feuille de " + nom + " : ");
         feuille.afficherFeuille();
+    }
+
+    public void setListDe(List<De> des) {
+        this.des = des;
     }
 }

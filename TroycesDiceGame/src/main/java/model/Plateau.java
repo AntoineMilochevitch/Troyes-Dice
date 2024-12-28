@@ -25,12 +25,13 @@ public class Plateau {
             Couleur couleurVerso = couleurs[random.nextInt(couleurs.length-1)];
             int cout = random.nextInt(3) + 1; // Coût compris entre 1 et 3
             Case nouvelleCase;
+            De de = new De(0, Couleur.VIDE);
             if(i < 4){
-                nouvelleCase = new Case(couleurRecto, couleurVerso, 1, 0, cout, DemiJournee.MATIN);
+                nouvelleCase = new Case(couleurRecto, couleurVerso, 1, de , cout, DemiJournee.MATIN);
             } else if(i < 8){
-                nouvelleCase = new Case(couleurRecto, couleurVerso, 1, 0, cout, DemiJournee.APRES_MIDI);
+                nouvelleCase = new Case(couleurRecto, couleurVerso, 1, de, cout, DemiJournee.APRES_MIDI);
             } else {
-                nouvelleCase = new Case(couleurRecto, couleurVerso, 1, 0, cout, DemiJournee.NEUTRE);
+                nouvelleCase = new Case(couleurRecto, couleurVerso, 1, de, cout, DemiJournee.NEUTRE);
             }
             roue.add(nouvelleCase);
         }

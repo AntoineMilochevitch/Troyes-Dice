@@ -64,9 +64,9 @@ abstract class Panel {
         batimentsFonction.get(col).proteger();
     }
 
-    public void buildBF(int valDe) {
-        if (valDe >= 1 && valDe <= batimentsFonction.size()) {
-            BatimentFonction bat = batimentsFonction.get(valDe - 1); // Adjusting index to be 0-based
+    public void buildBF(De valDe) {
+        if (valDe.getValeur() >= 1 && valDe.getValeur() <= batimentsFonction.size()) {
+            BatimentFonction bat = batimentsFonction.get(valDe.getValeur() - 1); // Adjusting index to be 0-based
             System.out.println("valDe : " + valDe);
             // Si le batiment est vide ou la parcelle est protégée (donc implicitement non construite)
             if (bat.getEtat() == Etat.VIDE || bat.getEtat() == Etat.PROTEGE) {
@@ -79,14 +79,29 @@ abstract class Panel {
         }
     }
 
-    public void buildBP(int valDe, Panel panel, Feuille feuille) {
-        BatimentPrestige bat = batimentsPrestige.get(valDe);
-        if (bat.getEtat() == Etat.VIDE || bat.getEtat() == Etat.PROTEGE){ 
-            bat.onBuild(); // Set l'état a CONSTRUIT
-            feuille.addPoints(bat.getCouleur(), bat.getNombre());
-            bat.appliquerEffet(valDe, panel, feuille);
+    public int getNumberDe(Couleur couleur, List<De> des) {
+        int nb = 0;
+        for (De de : des) {
+            if (de.getCouleur() == couleur) {
+                nb++;
+            }
         }
-        
+        return nb;
+    }
+
+    public void buildBP(De valDe, Panel panel, Feuille feuille, List<De> des) {
+        if (valDe.getValeur() >= 1 && valDe.getValeur() <= batimentsPrestige.size()) {
+            BatimentPrestige bat = batimentsPrestige.get(valDe.getValeur() - 1); // Adjusting index to be 0-based
+            if (bat.getEtat() == Etat.VIDE || bat.getEtat() == Etat.PROTEGE) {
+                bat.onBuild(); // Set l'état a CONSTRUIT
+                int nombreDesRouge = getNumberDe(Couleur.ROUGE, des);
+                int nombreDesJaune = getNumberDe(Couleur.JAUNE, des);
+                int nombreDesBlanc = getNumberDe(Couleur.BLANC, des);
+                bat.appliquerEffet(valDe, panel, feuille, nombreDesRouge, nombreDesJaune, nombreDesBlanc);
+            }
+        } else {
+            System.out.println("Valeur de dé invalide. Veuillez réessayer.");
+        }
     }
 
     public int getRessource() {
@@ -155,6 +170,8 @@ abstract class Panel {
         for (Batiment bat : batimentsFonction) {
             System.out.println("Etat : " + bat.getEtat());
         }
+        System.out.println("Multiplicateur 1 : " + multiplicateur1);
+        System.out.println("Multiplicateur 2 : " + multiplicateur2);
     }
     
 }

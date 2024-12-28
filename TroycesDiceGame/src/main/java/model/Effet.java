@@ -1,5 +1,5 @@
 package main.java.model;
 
 public enum Effet {
-    PROTEGER, MULTIPLICATEUR, RIEN
+    PROTEGER, MULTIPLICATEUR, GAGNERHAB, RIEN
 }

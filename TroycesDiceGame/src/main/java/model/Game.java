@@ -1,6 +1,7 @@
 package main.java.model;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.InputMismatchException;
 import java.util.List;
 
@@ -8,7 +9,7 @@ public class Game {
     private List<Joueur> joueurs;
     private Plateau plateau;
     private boolean deNoirActif;
-    private List<Integer> listDE;
+    private List<De> listDE;
     private int indexDeNoir;
 
     public Game(List<Joueur> joueurs, Plateau plateau) {
@@ -32,17 +33,18 @@ public class Game {
         System.out.println("Compteur de demi-journée : " + plateau.getCompteurDemiJournee());
         System.out.println("Dé noir actif : " + deNoirActif);
         listDE = lancerDe();
-        for (int i = 0; i < 4; i++) {
-            if (i < plateau.getRoue().size() && i < listDE.size()) {
-                plateau.getRoue().get(i).setValDe(listDE.get(i));
-            }
-        }
+        listDE.sort(Comparator.comparingInt(De::getValeur)); // Trier les dés par valeur croissante
+        System.out.println("Les dés sont : " + listDE);
+
+        assignDiceToCases();
+
         // AFFICHE LA ROUE
         plateau.afficherRoue();
         while (!finDePartie()) {
 
             // ACTION POUR CHAQUE JOUEURS
             for (Joueur joueur : joueurs) {
+                joueur.setListDe(listDE);
                 Case caseChoisie = joueur.choisirCase(plateau);
                 joueur.choisirAction();
                 joueur.execute();
@@ -58,11 +60,8 @@ public class Game {
 
             // LOGIQUE LANCE DES DéS
             listDE = lancerDe();
-            for (int i = 0; i < 4; i++) {
-                if (i < plateau.getRoue().size() && i < listDE.size()) {
-                    plateau.getRoue().get(i).setValDe(listDE.get(i));
-                }
-            }
+            listDE.sort(Comparator.comparingInt(De::getValeur)); // Trier les dés par valeur croissante
+            assignDiceToCases();
 
             // LOGIQUE DES NOIR
             if (plateau.getCompteurDemiJournee() > 3) {
@@ -81,12 +80,26 @@ public class Game {
         }
     }
 
-    public List<Integer> lancerDe() {
-        List<Integer> des = new ArrayList<>();
+    private void assignDiceToCases() {
+        int dieIndex = 0;
+        DemiJournee demiJourneeActuelle = plateau.getCompteurDemiJournee() % 2 == 0 ? DemiJournee.MATIN : DemiJournee.APRES_MIDI;
+
+        for (int i = 0; i < plateau.getRoue().size(); i++) {
+            Case currentCase = plateau.getRoue().get(i);
+            if (currentCase.getDemiJournee() == demiJourneeActuelle && dieIndex < listDE.size()) {
+                listDE.get(dieIndex).setCouleur(currentCase.getSenseCase() == 1 ? currentCase.getCouleurRecto() : currentCase.getCouleurVerso());
+                currentCase.setValDe(listDE.get(dieIndex));
+                dieIndex++;
+            }
+        }
+    }
+
+    public List<De> lancerDe() {
+        List<De> des = new ArrayList<>();
         for (int i = 0; i < 4; i++) {
-            // Génère un nombre aléatoire entre 1 et 6
-            int de = (int) (Math.random() * 6 + 1);
-            des.add(de);
+            int valeur = (int) (Math.random() * 6 + 1);
+            Couleur couleur = Couleur.VIDE;
+            des.add(new De(valeur, couleur));
         }
         return des;
     }
