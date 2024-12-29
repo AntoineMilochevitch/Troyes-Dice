@@ -46,7 +46,7 @@ public class Joueur implements Actionnable {
             this.caseChoisie = caseChoisie;
             couleurLocal = caseChoisie.getSenseCase() == 1 ? caseChoisie.getCouleurRecto() : caseChoisie.getCouleurVerso();
             valDeLocal = caseChoisie.getValDe();
-            System.out.println("Valeur du dé : " + valDeLocal);
+            System.out.println("Valeur du dé : " + valDeLocal.getValeur());
             Panel panel = choosePanel();
 
             if (panel.getRessource() < caseChoisie.getCout()) {

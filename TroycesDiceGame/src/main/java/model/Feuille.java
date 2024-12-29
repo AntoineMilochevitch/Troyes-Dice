@@ -58,10 +58,13 @@ public class Feuille {
     public final void afficherFeuille(){
         System.out.println("Feuille de l'étudiant : ");
         etudiant.afficherPanel();
+        System.out.println("Nb point etudiant : " + nbPointEtudiant);
         System.out.println("Feuille de l'administration : ");
         administration.afficherPanel();
+        System.out.println("Nb point administration : " + nbPointAdministration);
         System.out.println("Feuille de l'enseignant : ");
         enseignant.afficherPanel();
+        System.out.println("Nb point enseignant : " + nbPointEnseignant);
     }
 
     public int calculerPoints() {

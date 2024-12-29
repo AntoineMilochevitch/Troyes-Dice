@@ -21,8 +21,8 @@ public class Plateau {
         Couleur[] couleurs = Couleur.values();
 
         for (int i = 0; i < nombreDeCases; i++) {
-            Couleur couleurRecto = couleurs[random.nextInt(couleurs.length-1)]; // N'inclut pas VIDE dans la couleur donc -1
-            Couleur couleurVerso = couleurs[random.nextInt(couleurs.length-1)];
+            Couleur couleurRecto = couleurs[random.nextInt(couleurs.length-2)]; // N'inclut pas VIDE dans la couleur donc -1
+            Couleur couleurVerso = couleurs[random.nextInt(couleurs.length-2)];
             int cout = random.nextInt(3) + 1; // Coût compris entre 1 et 3
             Case nouvelleCase;
             De de = new De(0, Couleur.VIDE);
