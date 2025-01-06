@@ -11,7 +11,8 @@ public class main {
         Plateau plateau = new Plateau(cases);
 
         Game game = new Game(joueurs, plateau);
-        game.startGame();
+        Thread gameThread = new Thread(game);
+        gameThread.start();
 
         //GameWindow game = GameWindow.getInstance();
     }

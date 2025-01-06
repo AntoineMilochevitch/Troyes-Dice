@@ -5,7 +5,7 @@ import java.util.Comparator;
 import java.util.InputMismatchException;
 import java.util.List;
 
-public class Game {
+public class Game implements Runnable{
     private List<Joueur> joueurs;
     private Plateau plateau;
     private boolean deNoirActif;
@@ -16,6 +16,11 @@ public class Game {
         this.joueurs = joueurs;
         this.plateau = plateau;
         this.deNoirActif = false;
+    }
+
+    @Override
+    public void run() {
+        startGame();
     }
 
     public void startGame() {
