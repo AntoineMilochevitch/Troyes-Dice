@@ -1,0 +1,55 @@
+/* Style global */
+.root {
+    -fx-padding: 10;
+    -fx-background-color: #f4f4e9;
+    -fx-border-color: #000000;
+    -fx-border-width: 2;
+}
+
+/* Style des panneaux */
+.panel-buildings {
+    -fx-background-color: #ff6666; /* Rouge */
+    -fx-padding: 10;
+    -fx-border-color: #000000;
+    -fx-border-width: 1;
+    -fx-alignment: center; /* Centre le contenu */
+}
+
+.panel-citizens {
+    -fx-background-color: #ffff99; /* Jaune */
+    -fx-padding: 10;
+    -fx-border-color: #000000;
+    -fx-border-width: 1;
+    -fx-alignment: center; /* Centre le contenu */
+}
+
+.panel-resources {
+    -fx-background-color: #ffffff; /* Blanc */
+    -fx-padding: 10;
+    -fx-border-color: #000000;
+    -fx-border-width: 1;
+    -fx-alignment: center; /* Centre le contenu */
+}
+
+/* Titre des panneaux */
+.panel-title {
+    -fx-font-size: 18px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #000000;
+    -fx-padding: 5;
+}
+
+/* Grille et cellules */
+.grid-cell {
+    -fx-background-color: #ffffff;
+    -fx-border-color: #000000;
+    -fx-border-width: 0.5;
+    -fx-alignment: center;
+    -fx-font-size: 12px;
+}
+
+.hbox {
+    -fx-alignment: center; /* Centre les petits carrés */
+    -fx-spacing: 10;
+    -fx-translate-y: 10; /* Descend légèrement les petits carrés */
+}
