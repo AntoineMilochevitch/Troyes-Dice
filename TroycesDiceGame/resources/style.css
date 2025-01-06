@@ -1,0 +1,22 @@
+.root {
+    -fx-background-color: #fff3e6;
+}
+
+.status-label {
+    -fx-font-size: 16px;
+    -fx-text-alignment: center;
+}
+
+.start-button, .confirmed-button {
+    -fx-font-size: 14px;
+    -fx-padding: 10px 20px;
+}
+
+.players-label, .player-label, .name-label {
+    -fx-font-size: 14px;
+}
+
+.players-text, .name-text {
+    -fx-font-size: 14px;
+    -fx-padding: 5px;
+}

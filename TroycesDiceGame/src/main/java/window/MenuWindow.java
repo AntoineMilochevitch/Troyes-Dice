@@ -1,124 +1,102 @@
 package main.java.window;
-import java.awt.*;
-import javax.swing.*;
 
-public class MenuWindow extends JFrame{
+import javafx.application.Application;
+import javafx.scene.Scene;
+import javafx.scene.control.*;
+import javafx.scene.layout.*;
+import javafx.stage.Stage;
 
-    // Access the GameInstance singleton
-    private static MenuWindow instance;
+public class MenuWindow extends Application {
+
     private GameInstance game;
-    
-    private MenuWindow(){
+
+    @Override
+    public void start(Stage primaryStage) {
         game = GameInstance.getInstance();
 
-        this.setTitle("Troyes Dice");
-        this.setSize(1500,1000);
-        this.setResizable(false);
-        this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        this.setLayout(new BorderLayout());
+        primaryStage.setTitle("Troyes Dice");
+        primaryStage.setWidth(1500);
+        primaryStage.setHeight(1000);
+        primaryStage.setResizable(false);
 
+        BorderPane root = new BorderPane();
+        root.setStyle("-fx-background-color: #fff3e6;");
 
-        JPanel menu = new JPanel();
-        menu.setLayout(null);
-        menu.setBackground(new Color(255, 243, 230));
+        VBox menu = new VBox(10);
+        menu.setStyle("-fx-alignment: center;");
 
-        JLabel statusLabel = new JLabel("Game Status: Not Started", SwingConstants.CENTER);
-        statusLabel.setBounds(675, 410, 150, 60);
+        Label statusLabel = new Label("Game Status: Not Started");
+        statusLabel.getStyleClass().add("status-label");
 
-        JButton startButton = new JButton("Start Game");
-        startButton.setBounds(675, 350, 150, 60);   
+        Button startButton = new Button("Start Game");
+        startButton.getStyleClass().add("start-button");
 
-        startButton.addActionListener( (e) -> {
-                clearPanel(menu);
-                this.numberPlayers(menu);
-            });
+        startButton.setOnAction(e -> {
+            menu.getChildren().clear();
+            numberPlayers(menu);
+        });
 
-        menu.add(startButton);
-        menu.add(statusLabel);
+        menu.getChildren().addAll(startButton, statusLabel);
+        root.setCenter(menu);
 
-        this.add(menu, BorderLayout.CENTER);
-
-        this.setVisible(true);
+        Scene scene = new Scene(root);
+        scene.getStylesheets().add(getClass().getResource("/style.css").toExternalForm());
+        primaryStage.setScene(scene);
+        primaryStage.show();
     }
 
-    public static MenuWindow getInstance() {
-        if (instance == null) {
-            instance = new MenuWindow();
+    private void numberPlayers(Pane panel) {
+        Label playersLabel = new Label("Number of Players:");
+        playersLabel.getStyleClass().add("players-label");
+
+        TextField playersText = new TextField("2");
+        playersText.getStyleClass().add("players-text");
+
+        Button confirmed = new Button("Confirmed");
+        confirmed.getStyleClass().add("confirmed-button");
+
+        confirmed.setOnAction(e -> {
+            panel.getChildren().clear();
+            Integer nbPlayers = Integer.parseInt(playersText.getText());
+            if (nbPlayers >= 2) {
+                panel.getChildren().clear();
+                addPlayers(panel, nbPlayers);
+            }
+        });
+
+        panel.getChildren().addAll(playersLabel, playersText, confirmed);
+    }
+
+    private void addPlayers(Pane panel, Integer id) {
+        if (id == 0) {
+            panel.getChildren().clear();
+            // TODO: next state
+        } else {
+            Label player = new Label("Player " + id);
+            player.getStyleClass().add("player-label");
+
+            Label nameLabel = new Label("Name:");
+            nameLabel.getStyleClass().add("name-label");
+
+            TextField nameText = new TextField("Player " + id);
+            nameText.getStyleClass().add("name-text");
+
+            Button confirmed = new Button("Confirmed");
+            confirmed.getStyleClass().add("confirmed-button");
+
+            confirmed.setOnAction(e -> {
+                panel.getChildren().clear();
+                String namePlayer = nameText.getText();
+                // TODO: add namePlayer to the list of players
+                panel.getChildren().clear();
+                addPlayers(panel, id - 1);
+            });
+
+            panel.getChildren().addAll(player, nameLabel, nameText, confirmed);
         }
-        return instance;
     }
 
     public static void main(String[] args) {
-        SwingUtilities.invokeLater(new Runnable() {
-            @Override
-            public void run() {
-                MenuWindow.getInstance();
-            }
-        });
-    }
-
-    private void clearPanel(JPanel panel){
-        panel.removeAll();
-        panel.revalidate();
-        panel.repaint();
-    }
-
-
-    private void numberPlayers(JPanel panel){
-        JLabel playersLabel = new JLabel("Number of Players:");
-        playersLabel.setBounds(555, 350, 110, 60);
-
-        JTextField playersText = new JTextField("2");
-        playersText.setBounds(675, 365, 150, 30);
-
-        JButton confirmed = new JButton("Confirmed");
-        confirmed.setBounds(675, 410, 150, 60);   
-
-        confirmed.addActionListener( (e) -> {
-                clearPanel(panel);
-                Integer nbPlayers = Integer.parseInt(playersText.getText());
-                if (nbPlayers >= 2){
-                    this.clearPanel(panel);
-                    this.addPlayers(panel, nbPlayers);
-                }
-            });
-
-        panel.add(playersLabel);
-        panel.add(playersText);
-        panel.add(confirmed);
-    }
-
-    private void addPlayers(JPanel panel, Integer id){
-        if (id == 0){
-            this.clearPanel(panel);
-            //TO DO next state
-        }
-        else{
-            JLabel player = new JLabel("Player " + id);
-            player.setBounds(675, 290, 80, 60);
-
-            JLabel nameLabel = new JLabel("Name:");
-            nameLabel.setBounds(625, 350, 50, 60);
-
-            JTextField nameText = new JTextField("Player " + id);
-            nameText.setBounds(675, 365, 150, 30);
-
-            JButton confirmed = new JButton("Confirmed");
-            confirmed.setBounds(675, 410, 150, 60); 
-
-            confirmed.addActionListener( (e) -> {
-                clearPanel(panel);
-                String namePlayer = nameText.getText();
-                //TO DO add namePlayer to the list of players
-                this.clearPanel(panel);
-                this.addPlayers(panel, id-1);
-
-            });
-
-            panel.add(player);
-            panel.add(nameLabel);
-            panel.add(nameText);
-            panel.add(confirmed);
-        }  
+        launch(args);
     }
 }
