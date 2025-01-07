@@ -15,6 +15,8 @@ import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import main.java.model.*;
 
+import java.util.Objects;
+
 public class FeuilleWindow extends Application implements FeuilleListener {
 
     private static final int CASE_SIZE = 45;
@@ -103,6 +105,7 @@ public class FeuilleWindow extends Application implements FeuilleListener {
         primaryStage.setTitle("Feuille de jeu - Troyes Dice");
         primaryStage.setScene(scene);
         primaryStage.show();
+        System.out.println("this.feuille : " + feuille);
         feuille.addListener(this);
     }
 
@@ -133,10 +136,9 @@ public class FeuilleWindow extends Application implements FeuilleListener {
         } else if (cssClass.equals("panel-enseignant")) {
             imagePath = "/note.png";
         }
-        ImageView imageView = new ImageView(new Image(getClass().getResourceAsStream(imagePath)));
+        ImageView imageView = new ImageView(new Image(Objects.requireNonNull(getClass().getResourceAsStream(imagePath))));
         imageView.setFitWidth(30);
         imageView.setFitHeight(30);
-
 
         VBox textBox = new VBox(5);
         textBox.setAlignment(Pos.CENTER_LEFT);
@@ -144,19 +146,19 @@ public class FeuilleWindow extends Application implements FeuilleListener {
             Label imageSpace;
             if (cssClass.equals("panel-administration") && i == 1) {
                 imageSpace = new Label();
-                ImageView specialImage = new ImageView(new Image(getClass().getResourceAsStream("/tour_penchee.png")));
+                ImageView specialImage = new ImageView(new Image(Objects.requireNonNull(getClass().getResourceAsStream("/tour_penchee.png"))));
                 specialImage.setFitWidth(30);
                 specialImage.setFitHeight(30);
                 imageSpace.setGraphic(specialImage);
             } else if (cssClass.equals("panel-etudiant") && i == 1) {
                 imageSpace = new Label();
-                ImageView specialImage = new ImageView(new Image(getClass().getResourceAsStream("/amphitheatre.png")));
+                ImageView specialImage = new ImageView(new Image(Objects.requireNonNull(getClass().getResourceAsStream("/amphitheatre.png"))));
                 specialImage.setFitWidth(30);
                 specialImage.setFitHeight(30);
                 imageSpace.setGraphic(specialImage);
             } else if (cssClass.equals("panel-enseignant") && i == 1) {
                 imageSpace = new Label();
-                ImageView specialImage = new ImageView(new Image(getClass().getResourceAsStream("/laboratoire.png")));
+                ImageView specialImage = new ImageView(new Image(Objects.requireNonNull(getClass().getResourceAsStream("/laboratoire.png"))));
                 specialImage.setFitWidth(30);
                 specialImage.setFitHeight(30);
                 imageSpace.setGraphic(specialImage);
@@ -191,7 +193,7 @@ public class FeuilleWindow extends Application implements FeuilleListener {
                     case "panel-administration:2":
                         // Add images to the third row of the red panel
                         String image3 = "/BatF1-Recompense.png";
-                        ImageView cellImageView3 = new ImageView(new Image(getClass().getResourceAsStream(image3)));
+                        ImageView cellImageView3 = new ImageView(new Image(Objects.requireNonNull(getClass().getResourceAsStream(image3))));
                         cellImageView3.setFitWidth(CASE_SIZE);
                         cellImageView3.setFitHeight(CASE_SIZE);
                         cell = new Label();
@@ -201,7 +203,7 @@ public class FeuilleWindow extends Application implements FeuilleListener {
                     case "panel-etudiant:1":
                         // Add images to the second row of the yellow panel
                         String[] image4 = {"/deAdministration.png", "/deRouge.png", "/deEcts.png", "/deJaune.png", "/dePotion.png", "/deBlanc.png"};
-                        ImageView cellImageView4 = new ImageView(new Image(getClass().getResourceAsStream(image4[j - 1])));
+                        ImageView cellImageView4 = new ImageView(new Image(Objects.requireNonNull(getClass().getResourceAsStream(image4[j - 1]))));
                         cellImageView4.setFitWidth(CASE_SIZE);
                         cellImageView4.setFitHeight(CASE_SIZE);
                         cell = new Label();
@@ -211,7 +213,7 @@ public class FeuilleWindow extends Application implements FeuilleListener {
                     case "panel-etudiant:2":
                         // Add images to the third row of the yellow panel
                         String image5 = "/BatF2-Recompense.png";
-                        ImageView cellImageView5 = new ImageView(new Image(getClass().getResourceAsStream(image5)));
+                        ImageView cellImageView5 = new ImageView(new Image(Objects.requireNonNull(getClass().getResourceAsStream(image5))));
                         cellImageView5.setFitWidth(CASE_SIZE);
                         cellImageView5.setFitHeight(CASE_SIZE);
                         cell = new Label();
@@ -233,7 +235,7 @@ public class FeuilleWindow extends Application implements FeuilleListener {
                     case "panel-enseignant:2":
                         // Add images to the third row of the white panel
                         String image9 = "/BatF3-Recompense.png";
-                        ImageView cellImageView9 = new ImageView(new Image(getClass().getResourceAsStream(image9)));
+                        ImageView cellImageView9 = new ImageView(new Image(Objects.requireNonNull(getClass().getResourceAsStream(image9))));
                         cellImageView9.setFitWidth(CASE_SIZE);
                         cellImageView9.setFitHeight(CASE_SIZE);
                         cell = new Label();
