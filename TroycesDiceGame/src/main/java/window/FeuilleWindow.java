@@ -17,6 +17,8 @@ import javafx.stage.Stage;
 import main.java.model.*;
 
 public class FeuilleWindow extends Application implements FeuilleListener {
+
+    private static final int CASE_SIZE = 45;
     private static Feuille feuille;
     private GridPane leftTable;
     private GridPane rightTable;
@@ -179,8 +181,8 @@ public class FeuilleWindow extends Application implements FeuilleListener {
                         // Add images to the third row of the red panel
                         String image3 = "/BatF1-Recompense.png";
                         ImageView cellImageView3 = new ImageView(new Image(getClass().getResourceAsStream(image3)));
-                        cellImageView3.setFitWidth(30);
-                        cellImageView3.setFitHeight(30);
+                        cellImageView3.setFitWidth(CASE_SIZE);
+                        cellImageView3.setFitHeight(CASE_SIZE);
                         cell = new Label();
                         cell.setGraphic(cellImageView3);
                         break;
@@ -189,8 +191,8 @@ public class FeuilleWindow extends Application implements FeuilleListener {
                         // Add images to the second row of the yellow panel
                         String[] image4 = {"/deAdministration.png", "/deRouge.png", "/deEcts.png", "/deJaune.png", "/dePotion.png", "/deBlanc.png"};
                         ImageView cellImageView4 = new ImageView(new Image(getClass().getResourceAsStream(image4[j - 1])));
-                        cellImageView4.setFitWidth(30);
-                        cellImageView4.setFitHeight(30);
+                        cellImageView4.setFitWidth(CASE_SIZE);
+                        cellImageView4.setFitHeight(CASE_SIZE);
                         cell = new Label();
                         cell.setGraphic(cellImageView4);
                         break;
@@ -199,8 +201,8 @@ public class FeuilleWindow extends Application implements FeuilleListener {
                         // Add images to the third row of the yellow panel
                         String image5 = "/BatF2-Recompense.png";
                         ImageView cellImageView5 = new ImageView(new Image(getClass().getResourceAsStream(image5)));
-                        cellImageView5.setFitWidth(30);
-                        cellImageView5.setFitHeight(30);
+                        cellImageView5.setFitWidth(CASE_SIZE);
+                        cellImageView5.setFitHeight(CASE_SIZE);
                         cell = new Label();
                         cell.setGraphic(cellImageView5);
                         break;
@@ -209,8 +211,8 @@ public class FeuilleWindow extends Application implements FeuilleListener {
                         // Add images to the third row of the red panel
                         String image9 = "/BatF3-Recompense.png";
                         ImageView cellImageView9 = new ImageView(new Image(getClass().getResourceAsStream(image9)));
-                        cellImageView9.setFitWidth(30);
-                        cellImageView9.setFitHeight(30);
+                        cellImageView9.setFitWidth(CASE_SIZE);
+                        cellImageView9.setFitHeight(CASE_SIZE);
                         cell = new Label();
                         cell.setGraphic(cellImageView9);
                         break;
@@ -220,7 +222,7 @@ public class FeuilleWindow extends Application implements FeuilleListener {
                         break;
                 }
                 cell.getStyleClass().add("grid-cell");
-                cell.setMinSize(30, 30); // Taille réduite
+                cell.setMinSize(CASE_SIZE, CASE_SIZE); // Taille réduite
                 if (i == 1 && j == 6) {
                     cell.getStyleClass().add("special-cell");
                 }
