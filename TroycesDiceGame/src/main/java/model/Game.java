@@ -1,5 +1,7 @@
 package main.java.model;
 
+import main.java.exceptions.InvalidColorException;
+
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
@@ -89,15 +91,16 @@ public class Game implements Runnable {
     private void assignDiceToCases() {
         int dieIndex = 0;
         DemiJournee demiJourneeActuelle = plateau.getCompteurDemiJournee() % 2 == 0 ? DemiJournee.MATIN : DemiJournee.APRES_MIDI;
-
-        for (int i = 0; i < plateau.getRoue().size(); i++) {
-            Case currentCase = plateau.getRoue().get(i);
-            if (currentCase.getDemiJournee() == demiJourneeActuelle && dieIndex < listDE.size()) {
-                listDE.get(dieIndex).setCouleur(currentCase.getSenseCase() == 1 ? currentCase.getCouleurRecto() : currentCase.getCouleurVerso());
-                currentCase.setValDe(listDE.get(dieIndex));
-                dieIndex++;
+        try {
+            for (int i = 0; i < plateau.getRoue().size(); i++) {
+                Case currentCase = plateau.getRoue().get(i);
+                if (currentCase.getDemiJournee() == demiJourneeActuelle && dieIndex < listDE.size()) {
+                    listDE.get(dieIndex).setCouleur(currentCase.getSenseCase() == 1 ? currentCase.getCouleurRecto() : currentCase.getCouleurVerso());
+                    currentCase.setValDe(listDE.get(dieIndex));
+                    dieIndex++;
+                }
             }
-        }
+        } catch (InvalidColorException e) {}
     }
 
     public List<De> lancerDe() {

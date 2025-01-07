@@ -154,7 +154,7 @@ public class FeuilleWindow extends Application implements FeuilleListener {
                 imageSpace.setGraphic(specialImage);
             } else if (cssClass.equals("panel-enseignant") && i == 1) {
                 imageSpace = new Label();
-                ImageView specialImage = new ImageView(new Image(getClass().getResourceAsStream("/Laboratoire.png")));
+                ImageView specialImage = new ImageView(new Image(getClass().getResourceAsStream("/laboratoire.png")));
                 specialImage.setFitWidth(30);
                 specialImage.setFitHeight(30);
                 imageSpace.setGraphic(specialImage);
@@ -173,16 +173,51 @@ public class FeuilleWindow extends Application implements FeuilleListener {
         for (int i = 0; i < 3; i++) {
             for (int j = 1; j <= 6; j++) {
                 Label cell;
-                if (cssClass.equals("panel-etudiant") && i == 1) {
-                    // Add images to the second row of the yellow panel
-                    String[] imagePaths = {"/deAdministration.png", "/deRouge.png", "/deEcts.png", "/deJaune.png", "/dePotion.png", "/deBlanc.png"};
-                    ImageView cellImageView = new ImageView(new Image(getClass().getResourceAsStream(imagePaths[j - 1])));
-                    cellImageView.setFitWidth(30);
-                    cellImageView.setFitHeight(30);
-                    cell = new Label();
-                    cell.setGraphic(cellImageView);
-                } else {
-                    cell = new Label(" ");
+                String key = cssClass + ":" + i;
+                switch (key) {
+                    case "panel-administration:2":
+                        // Add images to the third row of the red panel
+                        String image3 = "/BatF1-Recompense.png";
+                        ImageView cellImageView3 = new ImageView(new Image(getClass().getResourceAsStream(image3)));
+                        cellImageView3.setFitWidth(30);
+                        cellImageView3.setFitHeight(30);
+                        cell = new Label();
+                        cell.setGraphic(cellImageView3);
+                        break;
+
+                    case "panel-etudiant:1":
+                        // Add images to the second row of the yellow panel
+                        String[] image4 = {"/deAdministration.png", "/deRouge.png", "/deEcts.png", "/deJaune.png", "/dePotion.png", "/deBlanc.png"};
+                        ImageView cellImageView4 = new ImageView(new Image(getClass().getResourceAsStream(image4[j - 1])));
+                        cellImageView4.setFitWidth(30);
+                        cellImageView4.setFitHeight(30);
+                        cell = new Label();
+                        cell.setGraphic(cellImageView4);
+                        break;
+
+                    case "panel-etudiant:2":
+                        // Add images to the third row of the yellow panel
+                        String image5 = "/BatF2-Recompense.png";
+                        ImageView cellImageView5 = new ImageView(new Image(getClass().getResourceAsStream(image5)));
+                        cellImageView5.setFitWidth(30);
+                        cellImageView5.setFitHeight(30);
+                        cell = new Label();
+                        cell.setGraphic(cellImageView5);
+                        break;
+
+                    case "panel-enseignant:2":
+                        // Add images to the third row of the red panel
+                        String image9 = "/BatF3-Recompense.png";
+                        ImageView cellImageView9 = new ImageView(new Image(getClass().getResourceAsStream(image9)));
+                        cellImageView9.setFitWidth(30);
+                        cellImageView9.setFitHeight(30);
+                        cell = new Label();
+                        cell.setGraphic(cellImageView9);
+                        break;
+
+                    default:
+                        cell = new Label(" ");
+                        break;
                 }
                 cell.getStyleClass().add("grid-cell");
                 cell.setMinSize(30, 30); // Taille réduite

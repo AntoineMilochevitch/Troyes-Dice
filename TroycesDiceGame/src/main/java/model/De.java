@@ -1,5 +1,7 @@
 package main.java.model;
 
+import main.java.exceptions.InvalidColorException;
+
 public class De {
     private int valeur;
     private Couleur couleur;
@@ -17,8 +19,10 @@ public class De {
         return couleur;
     }
 
-    public void setCouleur(Couleur couleur) {
-        this.couleur = couleur;
+    public void setCouleur(Couleur couleur) throws InvalidColorException {
+        if(couleur == Couleur.VIDE){
+            throw new InvalidColorException();
+        }
     }
 
     public void setValeur(int valeur) {
