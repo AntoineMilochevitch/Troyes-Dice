@@ -1,17 +1,38 @@
 package main.java.model;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class Feuille {
     private Panel etudiant;
     private Panel administration;
     private Panel enseignant;
     private int nbPointEtudiant;
     private int nbPointAdministration;
-    private int nbPointEnseignant;  
+    private int nbPointEnseignant;
+    private List<FeuilleListener> listeners = new ArrayList<>();
 
     public Feuille(){
         this.etudiant = new PanelEtudiant(this);
         this.administration = new PanelAdministration(this);
         this.enseignant = new PanelEnseignant(this);
+    }
+
+    public void addListener(FeuilleListener listener) {
+        listeners.add(listener);
+        System.out.println("Listener added");
+    }
+
+    private void notifyListeners() {
+        System.out.println("SIZE listeners : " + listeners.size());
+        try {
+            for (FeuilleListener listener : listeners) {
+                System.out.println("Feuille updated");
+                listener.onFeuilleUpdated(this);
+            }
+        } catch (Exception e) {
+            System.out.println("Error while notifying listeners");
+        }
     }
     
     public void utiliserRessource(Couleur type, int cout, int ressourceDepense) {
@@ -34,6 +55,7 @@ public class Feuille {
             default:
                 break;
         }
+        notifyListeners();
     }
 
     public void detruireColonne(int col){
@@ -41,6 +63,19 @@ public class Feuille {
         etudiant.rendreInconstructible(col);
         administration.rendreInconstructible(col);
         enseignant.rendreInconstructible(col);
+        notifyListeners();
+    }
+
+    public int getNbPointEtudiant() {
+        return nbPointEtudiant;
+    }
+
+    public int getNbPointAdministration() {
+        return nbPointAdministration;
+    }
+
+    public int getNbPointEnseignant() {
+        return nbPointEnseignant;
     }
 
     public Panel getEtudiant() {
@@ -125,5 +160,7 @@ public class Feuille {
             default:
                 break;
         }
+        notifyListeners();
     }
+
 }

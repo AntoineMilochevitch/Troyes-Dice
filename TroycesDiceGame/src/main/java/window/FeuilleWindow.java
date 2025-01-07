@@ -1,19 +1,34 @@
+// FeuilleWindow.java
 package main.java.window;
 
 import javafx.application.Application;
+import javafx.application.Platform;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
+import main.java.model.*;
 
-public class FeuilleWindow extends Application {
+public class FeuilleWindow extends Application implements FeuilleListener {
+    private static Feuille feuille;
+    private GridPane leftTable;
+    private GridPane rightTable;
+    private VBox enseignantPanel;
+    private VBox AdministrationPanel;
+    private VBox EtudiantPanel;
+
+
+    public static void setFeuilleStatic(Feuille feuille) {
+        FeuilleWindow.feuille = feuille;
+    }
+
     @Override
     public void start(Stage primaryStage) {
         // Création du titre
@@ -21,27 +36,27 @@ public class FeuilleWindow extends Application {
         titleLabel.getStyleClass().add("panel-title");
 
         // Création des panneaux principaux
-        VBox buildingsPanel = createPanel("Administration", "panel-buildings");
-        VBox citizensPanel = createPanel("Elèves", "panel-citizens");
-        VBox resourcesPanel = createPanel("Enseignants", "panel-resources");
+        AdministrationPanel = createPanel("panel-administration");
+        EtudiantPanel= createPanel("panel-etudiant");
+        enseignantPanel = createPanel("panel-enseignant");
 
         // Réduire la largeur des panneaux
-        buildingsPanel.setMinWidth(200);
-        citizensPanel.setMinWidth(200);
-        resourcesPanel.setMinWidth(200);
+        AdministrationPanel.setMinWidth(200);
+        EtudiantPanel.setMinWidth(200);
+        enseignantPanel.setMinWidth(200);
 
         // Layout principal
         VBox mainLayout = new VBox(10);
         mainLayout.setPadding(new Insets(10));
         mainLayout.setStyle("-fx-alignment: center;");
-        mainLayout.getChildren().addAll(titleLabel, buildingsPanel, citizensPanel, resourcesPanel);
+        mainLayout.getChildren().addAll(titleLabel, AdministrationPanel, EtudiantPanel, enseignantPanel);
 
         HBox additionalContent = new HBox(10);
         additionalContent.setPadding(new Insets(10));
         additionalContent.setStyle("-fx-alignment: center;");
 
         // Tableau de 3x3 à gauche
-        GridPane leftTable = new GridPane();
+        leftTable = new GridPane();
         leftTable.setAlignment(Pos.CENTER);
         int[][] numbers = {{1, 3, 5}, {2, 4, 6}};
         for (int i = 0; i < 3; i++) {
@@ -86,17 +101,20 @@ public class FeuilleWindow extends Application {
         primaryStage.setTitle("Feuille de jeu - Troyes Dice");
         primaryStage.setScene(scene);
         primaryStage.show();
+        feuille.addListener(this);
+    }
+
+    @Override
+    public void onFeuilleUpdated(Feuille feuille) {
+        System.out.println("Listener reçu");
+        Platform.runLater(() -> updateFeuille(feuille));
     }
 
     // Méthode utilitaire pour créer un panneau
-    private VBox createPanel(String title, String cssClass) {
+    private VBox createPanel(String cssClass) {
         VBox panel = new VBox();
         panel.getStyleClass().add(cssClass);
         panel.setStyle("-fx-alignment: center;");
-
-        // Titre du panneau
-        Label titleLabel = new Label(title);
-        titleLabel.getStyleClass().add("panel-title");
 
         // Contenu du tableau avec images
         GridPane table = new GridPane();
@@ -106,38 +124,56 @@ public class FeuilleWindow extends Application {
 
         // Image à gauche
         String imagePath = "";
-        if (cssClass.equals("panel-buildings")) {
+        if (cssClass.equals("panel-administration")) {
             imagePath = "/pierre.png";
-        } else if (cssClass.equals("panel-citizens")) {
+        } else if (cssClass.equals("panel-etudiant")) {
             imagePath = "/ECTS.png";
-        } else if (cssClass.equals("panel-resources")) {
+        } else if (cssClass.equals("panel-enseignant")) {
             imagePath = "/note.png";
         }
         ImageView imageView = new ImageView(new Image(getClass().getResourceAsStream(imagePath)));
         imageView.setFitWidth(30);
         imageView.setFitHeight(30);
 
-        VBox imageBox = new VBox(imageView);
-        imageBox.setAlignment(Pos.CENTER);
 
         VBox textBox = new VBox(5);
         textBox.setAlignment(Pos.CENTER_LEFT);
         for (int i = 0; i < 3; i++) {
-            Label imageSpace = new Label("Image");
-            imageSpace.setMinSize(30, 30); // Taille réduite
+            Label imageSpace;
+            if (cssClass.equals("panel-administration") && i == 1) {
+                imageSpace = new Label();
+                ImageView specialImage = new ImageView(new Image(getClass().getResourceAsStream("/tour_penchee.png")));
+                specialImage.setFitWidth(30);
+                specialImage.setFitHeight(30);
+                imageSpace.setGraphic(specialImage);
+            } else if (cssClass.equals("panel-etudiant") && i == 1) {
+                imageSpace = new Label();
+                ImageView specialImage = new ImageView(new Image(getClass().getResourceAsStream("/amphitheatre.png")));
+                specialImage.setFitWidth(30);
+                specialImage.setFitHeight(30);
+                imageSpace.setGraphic(specialImage);
+            } else if (cssClass.equals("panel-enseignant") && i == 1) {
+                imageSpace = new Label();
+                ImageView specialImage = new ImageView(new Image(getClass().getResourceAsStream("/Laboratoire.png")));
+                specialImage.setFitWidth(30);
+                specialImage.setFitHeight(30);
+                imageSpace.setGraphic(specialImage);
+            } else {
+                imageSpace = new Label("Image");
+                imageSpace.setMinSize(30, 30); // Taille réduite
+            }
             textBox.getChildren().add(imageSpace);
         }
 
         HBox row = new HBox(5);
         row.setAlignment(Pos.CENTER_LEFT);
-        row.getChildren().addAll(imageBox, textBox);
         table.add(row, 0, 0, 1, 3); // Span the row across 3 rows
 
         // Cellules du tableau
         for (int i = 0; i < 3; i++) {
             for (int j = 1; j <= 6; j++) {
                 Label cell;
-                if (cssClass.equals("panel-citizens") && i == 1) {
+                if (cssClass.equals("panel-etudiant") && i == 1) {
                     // Add images to the second row of the yellow panel
                     String[] imagePaths = {"/deAdministration.png", "/deRouge.png", "/deEcts.png", "/deJaune.png", "/dePotion.png", "/deBlanc.png"};
                     ImageView cellImageView = new ImageView(new Image(getClass().getResourceAsStream(imagePaths[j - 1])));
@@ -173,11 +209,98 @@ public class FeuilleWindow extends Application {
         }
 
         // Ajouter le titre, le tableau, l'espace et les ressources au panneau
-        panel.getChildren().addAll(titleLabel, table, spacer, resources);
+        panel.getChildren().addAll(table, spacer, resources);
         return panel;
     }
 
     public static void main(String[] args) {
         launch(args);
+    }
+
+    public void updateFeuille(Feuille feuille) {
+        System.out.println("Feuille mise à jour");
+        // Update points
+        //updatePoints(feuille.getNbPointEtudiant(), rightTable, 0);
+        //updatePoints(feuille.getNbPointAdministration(), rightTable, 1);
+        //updatePoints(feuille.getNbPointEnseignant(), rightTable, 2);
+
+        // Update resources
+        updateResources(feuille.getEtudiant(), EtudiantPanel);
+        updateResources(feuille.getAdministration(), AdministrationPanel);
+        updateResources(feuille.getEnseignant(), enseignantPanel);
+
+        // Update buildings
+        updateBuildings(feuille.getEtudiant(), EtudiantPanel, 0);
+        updateBuildings(feuille.getAdministration(), AdministrationPanel, 1);
+        updateBuildings(feuille.getEnseignant(), enseignantPanel, 2);
+    }
+
+    private void updatePoints(int points, GridPane table, int row) {
+        for (int i = 0; i < 20; i++) {
+            Label cell = (Label) table.getChildren().get(row * 20 + i);
+            if (i < points) {
+                cell.setText("●");
+            } else {
+                cell.setText(" ");
+            }
+        }
+    }
+
+    private void updateResources(Panel panel, VBox Panel) {
+        HBox resources = (HBox) Panel.getChildren().get(2);
+        Platform.runLater(() -> {
+            for (int i = 0; i < 18; i++) {
+                Label cell = (Label) resources.getChildren().get(i);
+                if (i < panel.getRessource()) {
+                    cell.setText("●");
+                } else {
+                    cell.setText(" ");
+                }
+            }
+        });
+    }
+
+    private void updateBuildings(Panel panel, VBox Panel, int panelIndex) {
+        GridPane table = (GridPane) Panel.getChildren().get(0);
+        Platform.runLater(() -> {
+            // Clear previous buildings
+            for (int i = 0; i < table.getChildren().size(); i++) {
+                if (table.getChildren().get(i) instanceof Label) {
+                    ((Label) table.getChildren().get(i)).setText(" ");
+                }
+            }
+
+            // Update function buildings in the second row
+            for (int i = 0; i < panel.getBatimentsFonction().size(); i++) {
+                BatimentFonction batiment = panel.getBatimentsFonction().get(i);
+                Label cell = (Label) table.getChildren().get(7 + i); // Second row
+                updateBuildingCell(batiment, cell);
+            }
+
+            // Update prestige buildings in the third row
+            for (int i = 0; i < panel.getBatimentsPrestige().size(); i++) {
+                BatimentPrestige batiment = panel.getBatimentsPrestige().get(i);
+                Label cell = (Label) table.getChildren().get(13 + i); // Third row
+                updateBuildingCell(batiment, cell);
+            }
+        });
+    }
+
+    private void updateBuildingCell(Batiment batiment, Label cell) {
+        switch (batiment.getEtat()) {
+            case CONSTRUIT:
+                cell.setText("X");
+                cell.setStyle("-fx-font-size: 24px; -fx-font-weight: bold; -fx-alignment: center;");
+                break;
+            case INCONSTRUCTIBLE:
+                cell.setStyle("-fx-background-color: black;");
+                break;
+            case PROTEGE:
+                cell.setStyle("-fx-background-color: blue;");
+                break;
+            default:
+                cell.setStyle("");
+                break;
+        }
     }
 }

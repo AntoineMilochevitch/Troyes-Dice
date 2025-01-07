@@ -3,7 +3,7 @@ package main.java.model;
 import java.util.ArrayList;
 import java.util.List;
 
-abstract class Panel {
+public abstract class Panel {
     private int ressource;
     protected List<BatimentPrestige> batimentsPrestige;
     protected List<BatimentFonction> batimentsFonction;
@@ -172,6 +172,14 @@ abstract class Panel {
         }
         System.out.println("Multiplicateur 1 : " + multiplicateur1);
         System.out.println("Multiplicateur 2 : " + multiplicateur2);
+    }
+
+    public List<BatimentPrestige> getBatimentsPrestige() {
+        return batimentsPrestige;
+    }
+
+    public List<BatimentFonction> getBatimentsFonction() {
+        return batimentsFonction;
     }
     
 }

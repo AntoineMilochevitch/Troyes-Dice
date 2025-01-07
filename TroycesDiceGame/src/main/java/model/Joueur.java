@@ -14,7 +14,6 @@ public class Joueur implements Actionnable {
     private static final Scanner scanner = new Scanner(System.in); // Single Scanner instance
 
     public Joueur(String nom, int id) {
-        System.out.println("HERE2");
         this.nom = nom;
         this.id = id;
         feuille = new Feuille();

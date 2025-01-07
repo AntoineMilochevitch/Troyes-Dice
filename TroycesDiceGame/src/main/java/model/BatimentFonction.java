@@ -11,6 +11,7 @@ public class BatimentFonction extends Batiment{
         this.couleur = couleur;
         this.nombre = nombre;
     }
+
     
     public Couleur getCouleur(){
         return couleur;

@@ -7,7 +7,7 @@
 }
 
 /* Style des panneaux */
-.panel-buildings {
+.panel-administration {
     -fx-background-color: #ff6666; /* Rouge */
     -fx-padding: 10;
     -fx-border-color: #000000;
@@ -15,7 +15,7 @@
     -fx-alignment: center; /* Centre le contenu */
 }
 
-.panel-citizens {
+.panel-etudiant {
     -fx-background-color: #ffff99; /* Jaune */
     -fx-padding: 10;
     -fx-border-color: #000000;
@@ -23,7 +23,7 @@
     -fx-alignment: center; /* Centre le contenu */
 }
 
-.panel-resources {
+.panel-enseignant {
     -fx-background-color: #ffffff; /* Blanc */
     -fx-padding: 10;
     -fx-border-color: #000000;
@@ -40,7 +40,7 @@
 }
 
 /* Style des petites ressources */
-.panel-resources .resource-cell {
+.panel-enseignant .resource-cell {
     -fx-background-color: transparent;
     -fx-border-color: transparent;
     -fx-background-image: url("/sciences.png");
@@ -48,7 +48,7 @@
 }
 
 /* Style des petites ressources dans le panneau rouge */
-.panel-buildings .resource-cell {
+.panel-administration .resource-cell {
     -fx-background-color: transparent;
     -fx-border-color: transparent;
     -fx-background-image: url("/AcademincCredi.png");
@@ -56,7 +56,7 @@
 }
 
 /* Style des petites ressources dans le panneau blanc */
-.panel-resources .resource-cell {
+.panel-enseignant .resource-cell {
     -fx-background-color: transparent;
     -fx-border-color: transparent;
     -fx-background-image: url("/sciences.png");
@@ -64,14 +64,14 @@
 }
 
 /* Style for the special cell in the white panel */
-.panel-resources .special-cell {
+.panel-enseignant .special-cell {
     -fx-background-color: transparent;
     -fx-background-image: url("/pierre.png");
     -fx-background-size: cover;
 }
 
 /* Style des petites ressources dans le panneau jaune */
-.panel-citizens .resource-cell {
+.panel-etudiant .resource-cell {
     -fx-background-color: transparent;
     -fx-border-color: transparent;
     -fx-background-image: url("/ECTS.png");

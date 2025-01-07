@@ -2,20 +2,22 @@ package main.java.model;
 
 import java.util.ArrayList;
 import java.util.Comparator;
-import java.util.InputMismatchException;
 import java.util.List;
+import java.util.concurrent.CountDownLatch;
 
-public class Game implements Runnable{
+public class Game implements Runnable {
     private List<Joueur> joueurs;
     private Plateau plateau;
     private boolean deNoirActif;
     private List<De> listDE;
     private int indexDeNoir;
+    private CountDownLatch latch;
 
-    public Game(List<Joueur> joueurs, Plateau plateau) {
+    public Game(List<Joueur> joueurs, Plateau plateau, CountDownLatch latch) {
         this.joueurs = joueurs;
         this.plateau = plateau;
         this.deNoirActif = false;
+        this.latch = latch;
     }
 
     @Override
@@ -26,10 +28,9 @@ public class Game implements Runnable{
     public void startGame() {
         Joueur joueur1 = new Joueur("Joueur 1", 1);
         Joueur joueur2 = new Joueur("Joueur 2", 2);
-        //Joueur joueur3 = new Joueur("Joueur 3", 3);
         this.joueurs.add(joueur1);
         this.joueurs.add(joueur2);
-        //this.joueurs.add(joueur3);
+        latch.countDown(); // Signal that the initialization is complete
         gameLoop();
     }
 
