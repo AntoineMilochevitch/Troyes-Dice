@@ -1,18 +1,31 @@
 package main.java.window;
 
 import javafx.application.Application;
+import javafx.application.Platform;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.layout.*;
 import javafx.stage.Stage;
+import main.java.model.*;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.concurrent.CountDownLatch;
 
 public class MenuWindow extends Application {
 
     private GameInstance game;
+    private List<Joueur> joueurs;
+    private Plateau plateau;
+    private CountDownLatch latch;
+    private Button startButton;
 
     @Override
     public void start(Stage primaryStage) {
         game = GameInstance.getInstance();
+        joueurs = new ArrayList<>();
+        plateau = new Plateau(new ArrayList<>());
+        latch = new CountDownLatch(1);
 
         primaryStage.setTitle("Troyes Dice");
         primaryStage.setWidth(1500);
@@ -28,7 +41,7 @@ public class MenuWindow extends Application {
         Label statusLabel = new Label("Game Status: Not Started");
         statusLabel.getStyleClass().add("status-label");
 
-        Button startButton = new Button("Start Game");
+        startButton = new Button("Start Game");
         startButton.getStyleClass().add("start-button");
 
         startButton.setOnAction(e -> {
@@ -69,31 +82,66 @@ public class MenuWindow extends Application {
 
     private void addPlayers(Pane panel, Integer id) {
         if (id == 0) {
-            panel.getChildren().clear();
-            // TODO: next state
-        } else {
-            Label player = new Label("Player " + id);
-            player.getStyleClass().add("player-label");
-
-            Label nameLabel = new Label("Name:");
-            nameLabel.getStyleClass().add("name-label");
-
-            TextField nameText = new TextField("Player " + id);
-            nameText.getStyleClass().add("name-text");
-
-            Button confirmed = new Button("Confirmed");
-            confirmed.getStyleClass().add("confirmed-button");
-
-            confirmed.setOnAction(e -> {
-                panel.getChildren().clear();
-                String namePlayer = nameText.getText();
-                // TODO: add namePlayer to the list of players
-                panel.getChildren().clear();
-                addPlayers(panel, id - 1);
-            });
-
-            panel.getChildren().addAll(player, nameLabel, nameText, confirmed);
+            startGame();
+            return;
         }
+
+        Label nameLabel = new Label("Enter name for Player " + id + ":");
+        nameLabel.getStyleClass().add("name-label");
+
+        TextField nameText = new TextField();
+        nameText.getStyleClass().add("name-text");
+
+        Button confirmed = new Button("Confirmed");
+        confirmed.getStyleClass().add("confirmed-button");
+
+        confirmed.setOnAction(e -> {
+            String namePlayer = nameText.getText();
+            joueurs.add(new Joueur(namePlayer, id));
+            System.out.println("name : " + namePlayer);
+            panel.getChildren().clear();
+            addPlayers(panel, id - 1);
+        });
+
+        panel.getChildren().addAll(nameLabel, nameText, confirmed);
+    }
+
+    private void startGame() {
+        Game game = new Game(joueurs, plateau, latch);
+        Thread gameThread = new Thread(game);
+        gameThread.start();
+
+        try {
+            latch.await(); // Wait for the game initialization to complete
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+
+        // Add listeners to each player's Feuille
+        for (Joueur joueur : joueurs) {
+            joueur.getFeuille().addListener(new FeuilleListener() {
+                @Override
+                public void onFeuilleUpdated(Feuille feuille) {
+                    // Update the FeuilleWindow if it is open
+                    Platform.runLater(() -> {
+                        if (FeuilleWindow.isOpen()) {
+                            FeuilleWindow.updateFeuille(feuille);
+                        }
+                    });
+                }
+            });
+        }
+
+        // Launch the main game window
+        Platform.runLater(() -> {
+            Stage gameStage = new Stage();
+            GameWindow gameWindow = new GameWindow(joueurs);
+            try {
+                gameWindow.start(gameStage);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        });
     }
 
     public static void main(String[] args) {

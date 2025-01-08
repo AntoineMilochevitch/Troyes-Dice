@@ -196,4 +196,8 @@ public class Joueur implements Actionnable {
     public void setListDe(List<De> des) {
         this.des = des;
     }
+
+    public String getNom() {
+        return nom;
+    }
 }

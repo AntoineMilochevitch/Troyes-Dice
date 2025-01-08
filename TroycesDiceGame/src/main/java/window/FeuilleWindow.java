@@ -1,4 +1,3 @@
-// FeuilleWindow.java
 package main.java.window;
 
 import javafx.application.Application;
@@ -22,21 +21,31 @@ public class FeuilleWindow extends Application implements FeuilleListener {
     private static final int CASE_SIZE = 45;
     private static final int RESOURCE_PANEL_SIZE = 20;
     private static Feuille feuille;
+    private static String playerName;
     private GridPane leftTable;
     private GridPane rightTable;
-    private VBox enseignantPanel;
-    private VBox AdministrationPanel;
-    private VBox EtudiantPanel;
+    private static VBox enseignantPanel;
+    private static VBox AdministrationPanel;
+    private static VBox EtudiantPanel;
+    private static boolean isOpen = false;
 
-
-    public static void setFeuilleStatic(Feuille feuille) {
+    public static void setFeuilleStatic(Feuille feuille, String playerName) {
         FeuilleWindow.feuille = feuille;
+        FeuilleWindow.playerName = playerName;
+    }
+
+    public static boolean isOpen() {
+        return isOpen;
     }
 
     @Override
     public void start(Stage primaryStage) {
+        isOpen = true;
+        primaryStage.setOnCloseRequest(event -> {
+            isOpen = false;
+        });
         // Création du titre
-        Label titleLabel = new Label("Feuille Joueur 1");
+        Label titleLabel = new Label("Feuille de " + playerName);
         titleLabel.getStyleClass().add("panel-title");
 
         // Création des panneaux principaux
@@ -107,12 +116,17 @@ public class FeuilleWindow extends Application implements FeuilleListener {
         primaryStage.show();
         System.out.println("this.feuille : " + feuille);
         feuille.addListener(this);
+        updateAll(feuille); // Update all information when the window is opened
     }
 
     @Override
     public void onFeuilleUpdated(Feuille feuille) {
         System.out.println("Listener reçu");
         Platform.runLater(() -> updateFeuille(feuille));
+    }
+
+    public static void updateAll(Feuille feuille) {
+        updateFeuille(feuille);
     }
 
     // Méthode utilitaire pour créer un panneau
@@ -275,11 +289,7 @@ public class FeuilleWindow extends Application implements FeuilleListener {
         return panel;
     }
 
-    public static void main(String[] args) {
-        launch(args);
-    }
-
-    public void updateFeuille(Feuille feuille) {
+    public static void updateFeuille(Feuille feuille) {
         System.out.println("Feuille mise à jour");
         // Update points
         //updatePoints(feuille.getNbPointEtudiant(), rightTable, 0);
@@ -308,7 +318,7 @@ public class FeuilleWindow extends Application implements FeuilleListener {
         }
     }
 
-    private void updateResources(Panel panel, VBox Panel) {
+    private static void updateResources(Panel panel, VBox Panel) {
         HBox resources = (HBox) Panel.getChildren().get(2);
         Platform.runLater(() -> {
             for (int i = 0; i < 18; i++) {
@@ -322,7 +332,7 @@ public class FeuilleWindow extends Application implements FeuilleListener {
         });
     }
 
-    private void updateBuildings(Panel panel, VBox Panel, int panelIndex) {
+    private static void updateBuildings(Panel panel, VBox Panel, int panelIndex) {
         GridPane table = (GridPane) Panel.getChildren().get(0);
         Platform.runLater(() -> {
             // Clear previous buildings
@@ -348,7 +358,7 @@ public class FeuilleWindow extends Application implements FeuilleListener {
         });
     }
 
-    private void updateBuildingCell(Batiment batiment, Label cell) {
+    private static void updateBuildingCell(Batiment batiment, Label cell) {
         switch (batiment.getEtat()) {
             case CONSTRUIT:
                 cell.setText("X");

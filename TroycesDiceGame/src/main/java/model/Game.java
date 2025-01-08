@@ -28,10 +28,6 @@ public class Game implements Runnable {
     }
 
     public void startGame() {
-        Joueur joueur1 = new Joueur("Joueur 1", 1);
-        Joueur joueur2 = new Joueur("Joueur 2", 2);
-        this.joueurs.add(joueur1);
-        this.joueurs.add(joueur2);
         latch.countDown(); // Signal that the initialization is complete
         gameLoop();
     }
