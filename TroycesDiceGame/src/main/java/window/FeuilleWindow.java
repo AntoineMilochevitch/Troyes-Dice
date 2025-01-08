@@ -29,6 +29,7 @@ public class FeuilleWindow extends Application implements FeuilleListener {
     private GridPane rightTable;
 
     private static Map<String, Label> multiplierLabels = new HashMap<>();
+    private static Map<String, Label> valueLabels = new HashMap<>();
     private static boolean isOpen = false;
 
     private static GridPane enseignant;
@@ -132,13 +133,25 @@ public class FeuilleWindow extends Application implements FeuilleListener {
         totalTable.setAlignment(Pos.CENTER);
         subtotal.setAlignment(Pos.CENTER);
         for (int i = 0; i < 2; i++) {
-            Label cell = new Label(" ");
+            Label cell = new Label("0");
+            cell.setStyle("-fx-alignment: center; -fx-font-size: 16; -fx-font-weight: bold;");
+            cell.setMaxWidth(Double.MAX_VALUE);
+            cell.setMaxHeight(Double.MAX_VALUE);
+            cell.setAlignment(Pos.CENTER);
             cell.getStyleClass().add("grid-cell");
+            String key = ("TOTAL_" + i);
+            valueLabels.put(key, cell);
             cell.setMinSize(CASE_SIZE*0.75, CASE_SIZE*0.75);
             subtotal.add(cell, i, 0);
         }
-        Label cell = new Label(" ");
+        Label cell = new Label("1");
+        cell.setStyle("-fx-alignment: center; -fx-font-size: 16; -fx-font-weight: bold;");
+        cell.setMaxWidth(Double.MAX_VALUE);
+        cell.setMaxHeight(Double.MAX_VALUE);
+        cell.setAlignment(Pos.CENTER);
         cell.getStyleClass().add("grid-cell");
+        String key = ("GRAND_TOTAL");
+        valueLabels.put(key, cell);
         cell.setMinSize(CASE_SIZE*1.5, CASE_SIZE*1.5);
         totalTable.add(subtotal, 0, 0);
         totalTable.add(cell, 0, 1);
@@ -240,14 +253,35 @@ public class FeuilleWindow extends Application implements FeuilleListener {
                         multiplier.setMaxWidth(Double.MAX_VALUE);
                         multiplier.setMaxHeight(Double.MAX_VALUE);
                         multiplier.setAlignment(Pos.CENTER);
-                        switch (couleur){
-                            case ROUGE -> multiplier.setText("X : 0");
-                            case JAUNE -> multiplier.setText("X : 0");
-                            case BLANC -> multiplier.setText("X : 0");
-                            default -> multiplier.setText("X");
-                        }
+                        multiplier.setText("X 0");
                         String key = couleur.name() + "_MULTIPLIER1";
                         multiplierLabels.put(key, multiplier);
+                        VBox.setVgrow(multiplier, Priority.ALWAYS);
+                        box.getChildren().add(multiplier);
+                    }
+
+                    if(col == 1 && row == 0){
+                        Label multiplier = new Label();
+                        multiplier.setStyle("-fx-alignment: center; -fx-font-size: 16; -fx-font-weight: bold;");
+                        multiplier.setMaxWidth(Double.MAX_VALUE);
+                        multiplier.setMaxHeight(Double.MAX_VALUE);
+                        multiplier.setAlignment(Pos.CENTER);
+                        multiplier.setText("0");
+                        String key = couleur.name() + "_VALUE1";
+                        valueLabels.put(key, multiplier);
+                        VBox.setVgrow(multiplier, Priority.ALWAYS);
+                        box.getChildren().add(multiplier);
+                    }
+
+                    if(col == 1 && row == 1){
+                        Label multiplier = new Label();
+                        multiplier.setStyle("-fx-alignment: center; -fx-font-size: 16; -fx-font-weight: bold;");
+                        multiplier.setMaxWidth(Double.MAX_VALUE);
+                        multiplier.setMaxHeight(Double.MAX_VALUE);
+                        multiplier.setAlignment(Pos.CENTER);
+                        multiplier.setText("0");
+                        String key = couleur.name() + "_VALUE2";
+                        valueLabels.put(key, multiplier);
                         VBox.setVgrow(multiplier, Priority.ALWAYS);
                         box.getChildren().add(multiplier);
                     }
@@ -258,14 +292,22 @@ public class FeuilleWindow extends Application implements FeuilleListener {
                         multiplier.setMaxWidth(Double.MAX_VALUE);
                         multiplier.setMaxHeight(Double.MAX_VALUE);
                         multiplier.setAlignment(Pos.CENTER);
-                        switch (couleur){
-                            case ROUGE -> multiplier.setText("X : 0");
-                            case JAUNE -> multiplier.setText("X : 0");
-                            case BLANC -> multiplier.setText("X : 0");
-                            default -> multiplier.setText("X");
-                        }
-                        String key = couleur.name() + "_MULTIPLIER1";
+                        multiplier.setText("X 0");
+                        String key = couleur.name() + "_MULTIPLIER2";
                         multiplierLabels.put(key, multiplier);
+                        VBox.setVgrow(multiplier, Priority.ALWAYS);
+                        box.getChildren().add(multiplier);
+                    }
+
+                    if(col == 1 && row == 2){
+                        Label multiplier = new Label();
+                        multiplier.setStyle("-fx-alignment: center; -fx-font-size: 16; -fx-font-weight: bold;");
+                        multiplier.setMaxWidth(Double.MAX_VALUE);
+                        multiplier.setMaxHeight(Double.MAX_VALUE);
+                        multiplier.setAlignment(Pos.CENTER);
+                        multiplier.setText("0");
+                        String key = couleur.name() + "_TOTAL";
+                        valueLabels.put(key, multiplier);
                         VBox.setVgrow(multiplier, Priority.ALWAYS);
                         box.getChildren().add(multiplier);
                     }
@@ -463,15 +505,16 @@ public class FeuilleWindow extends Application implements FeuilleListener {
         updateBuildings(feuille.getEtudiant(), EtudiantPanel, 0);
         updateBuildings(feuille.getAdministration(), AdministrationPanel, 1);
         updateBuildings(feuille.getEnseignant(), enseignantPanel, 2);
-
-        updateMultiplier();
+        updateValues();
+        updateMultipliers();
+        updateValues();
     }
 
     private void updatePoints(int points, GridPane table, int row) {
         for (int i = 0; i < 20; i++) {
             Label cell = (Label) table.getChildren().get(row * 20 + i);
             if (i < points) {
-                cell.setText("●");
+                cell.setText("○");
             } else {
                 cell.setText(" ");
             }
@@ -484,10 +527,11 @@ public class FeuilleWindow extends Application implements FeuilleListener {
             for (int i = 0; i < 18; i++) {
                 Label cell = (Label) resources.getChildren().get(i);
                 if (i < panel.getRessource()) {
-                    cell.setText("●");
+                    cell.setText("○");
                 } else {
                     cell.setText(" ");
                 }
+                cell.setStyle("-fx-alignment: center; -fx-font-size: 25px;"); // Adjust font size as needed
             }
         });
     }
@@ -518,19 +562,45 @@ public class FeuilleWindow extends Application implements FeuilleListener {
         });
     }
 
-    private static void updateMultiplier(){
+    private static void updateMultipliers(){
         updateMultiplierLabel("ROUGE_MULTIPLIER1", feuille.getMultiplier(Couleur.ROUGE, 1));
         updateMultiplierLabel("ROUGE_MULTIPLIER2", feuille.getMultiplier(Couleur.ROUGE, 2));
         updateMultiplierLabel("JAUNE_MULTIPLIER1", feuille.getMultiplier(Couleur.JAUNE, 1));
         updateMultiplierLabel("JAUNE_MULTIPLIER2", feuille.getMultiplier(Couleur.JAUNE, 2));
         updateMultiplierLabel("BLANC_MULTIPLIER1", feuille.getMultiplier(Couleur.BLANC, 1));
-        updateMultiplierLabel("BLANC_MULTIPLIER1", feuille.getMultiplier(Couleur.BLANC, 2));
+        updateMultiplierLabel("BLANC_MULTIPLIER2", feuille.getMultiplier(Couleur.BLANC, 2));
     }
 
-    public static void updateMultiplierLabel(String key, int newValue) {
+    private static void updateMultiplierLabel(String key, int newValue) {
         Label label = multiplierLabels.get(key);
         if (label != null) {
             label.setText("X " + newValue);
+        }
+    }
+
+    private static void updateValues(){
+        updateValueLabel("ROUGE_VALUE1", feuille.getAdministration().nbBatimentPrestige() * feuille.getMultiplier(Couleur.ROUGE, 1));
+        updateValueLabel("ROUGE_VALUE2", feuille.getAdministration().nbBatimentFonction() * feuille.getMultiplier(Couleur.ROUGE, 2));
+        updateValueLabel("JAUNE_VALUE1", feuille.getEtudiant().nbBatimentPrestige() * feuille.getMultiplier(Couleur.JAUNE, 1));
+        updateValueLabel("JAUNE_VALUE2", feuille.getEtudiant().nbBatimentFonction() * feuille.getMultiplier(Couleur.JAUNE, 2));
+        updateValueLabel("BLANC_VALUE1", feuille.getEnseignant().nbBatimentFonction() * feuille.getMultiplier(Couleur.BLANC, 1));
+        updateValueLabel("BLANC_VALUE2", feuille.getEnseignant().nbBatimentFonction() * feuille.getMultiplier(Couleur.BLANC, 2));
+
+        updateValueLabel("ROUGE_TOTAL", feuille.getAdministration().getRessource()/2);
+        updateValueLabel("JAUNE_TOTAL", feuille.getEtudiant().getRessource()/2);
+        updateValueLabel("BLANC_TOTAL", feuille.getEnseignant().getRessource()/2);
+
+        System.out.println(feuille.calculerPoints());
+
+        updateValueLabel("TOTAL_0", feuille.calculerHabitantsPoints());
+        updateValueLabel("TOTAL_1", feuille.calculerSousTotPoints());
+        updateValueLabel("GRAND_TOTAL", feuille.calculerPoints());
+    }
+
+    private static void updateValueLabel(String key, int newValue) {
+        Label label = valueLabels.get(key);
+        if (label != null) {
+            label.setText(String.valueOf(newValue));
         }
     }
 

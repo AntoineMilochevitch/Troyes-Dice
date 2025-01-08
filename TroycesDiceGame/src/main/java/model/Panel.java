@@ -25,13 +25,11 @@ public abstract class Panel {
 
     abstract void initLists();
 
-    public Panel(int ressource, Feuille feuille, List<BatimentPrestige> batimentsPrestige, List<BatimentFonction> batimentsFonction, int multiplicateur1, int multiplicateur2) {
+    public Panel(int ressource, Feuille feuille, List<BatimentPrestige> batimentsPrestige, List<BatimentFonction> batimentsFonction) {
         this.ressource = ressource;
         this.feuille = feuille;
         this.batimentsPrestige = batimentsPrestige;
         this.batimentsFonction = batimentsFonction;
-        Panel.multiplicateur1 = multiplicateur1;
-        Panel.multiplicateur2 = multiplicateur2;
         initLists();
     }
 
@@ -58,9 +56,11 @@ public abstract class Panel {
                 nbBF++;
             }
         }
-        int points = nbBF * multiplicateur1 + nbBP * multiplicateur2 + ressource;
+        int points = nbBF * multiplicateur1 + nbBP * multiplicateur2 + ressource/2;
         return points;
     }
+
+
 
     public void rendreInconstructible(int col){
         batimentsFonction.get(col).rendreInconstructible();
@@ -158,14 +158,24 @@ public abstract class Panel {
         feuille.multiplierHandler(valDe, mult);
     }
 
-    private int nbBatimentPrestige(){
-        int nbCathédrale = 0;
+    public int nbBatimentPrestige(){
+        int nbPres = 0;
         for (Batiment batiment : batimentsPrestige){
             if (batiment.getEtat() == Etat.CONSTRUIT){
-                nbCathédrale++;
+                nbPres++;
             }
         }
-        return nbCathédrale;
+        return nbPres;
+    }
+
+    public int nbBatimentFonction(){
+        int nbFonc = 0;
+        for (Batiment batiment : batimentsFonction){
+            if (batiment.getEtat() == Etat.CONSTRUIT){
+                nbFonc++;
+            }
+        }
+        return nbFonc;
     }
 
     public final void afficherPanel() {

@@ -110,11 +110,19 @@ public class Feuille {
         System.out.println("Nb point enseignant : " + nbPointEnseignant);
     }
 
-    public int calculerPoints() {
+    public int calculerSousTotPoints() {
         int pointsEtudiant = etudiant.decomptePoints();
         int pointsAdministration = administration.decomptePoints();
         int pointsEnseignant = enseignant.decomptePoints();
         return pointsEtudiant + pointsAdministration + pointsEnseignant;
+    }
+
+    public int calculerHabitantsPoints() {
+        return getNbPointAdministration() + getNbPointEtudiant() + getNbPointEnseignant();
+    }
+
+    public int calculerPoints(){
+        return calculerHabitantsPoints() + calculerSousTotPoints();
     }
 
     private void addNBPointEtudiant(int points) {
