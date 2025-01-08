@@ -10,10 +10,13 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import main.java.model.*;
 
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Objects;
 
 public class FeuilleWindow extends Application implements FeuilleListener {
@@ -25,11 +28,12 @@ public class FeuilleWindow extends Application implements FeuilleListener {
     private GridPane leftTable;
     private GridPane rightTable;
 
+    private static Map<String, Label> multiplierLabels = new HashMap<>();
     private static boolean isOpen = false;
 
-    private GridPane enseignant;
-    private GridPane administration;
-    private GridPane etudiant;
+    private static GridPane enseignant;
+    private static GridPane administration;
+    private static GridPane etudiant;
     private static VBox enseignantPanel;
     private static VBox AdministrationPanel;
     private static VBox EtudiantPanel;
@@ -215,7 +219,56 @@ public class FeuilleWindow extends Application implements FeuilleListener {
                         imageSpace.setGraphic(specialImage);
                         box.getChildren().add(imageSpace);
                     }
+                    if(col == 0 && row == 2){
+                        Label imageSpace = new Label();
+                        ImageView specialImage;
+                        switch (couleur){
+                            case ROUGE -> specialImage = new ImageView(new Image(Objects.requireNonNull(getClass().getResourceAsStream("/Rec1.png"))));
+                            case JAUNE -> specialImage = new ImageView(new Image(Objects.requireNonNull(getClass().getResourceAsStream("/Rec2.png"))));
+                            case BLANC -> specialImage = new ImageView(new Image(Objects.requireNonNull(getClass().getResourceAsStream("/Rec3.png"))));
+                            default -> specialImage = new ImageView(new Image(Objects.requireNonNull(getClass().getResourceAsStream("/Rec1.png"))));
+                        }
+                        box.setStyle("");
+                        specialImage.setFitWidth(CASE_SIZE);
+                        specialImage.setFitHeight(CASE_SIZE);
+                        imageSpace.setGraphic(specialImage);
+                        box.getChildren().add(imageSpace);
+                    }
+                    if(col == 0 && row == 0){
+                        Label multiplier = new Label();
+                        multiplier.setStyle("-fx-alignment: center; -fx-font-size: 16; -fx-font-weight: bold;");
+                        multiplier.setMaxWidth(Double.MAX_VALUE);
+                        multiplier.setMaxHeight(Double.MAX_VALUE);
+                        multiplier.setAlignment(Pos.CENTER);
+                        switch (couleur){
+                            case ROUGE -> multiplier.setText("X : 0");
+                            case JAUNE -> multiplier.setText("X : 0");
+                            case BLANC -> multiplier.setText("X : 0");
+                            default -> multiplier.setText("X");
+                        }
+                        String key = couleur.name() + "_MULTIPLIER1";
+                        multiplierLabels.put(key, multiplier);
+                        VBox.setVgrow(multiplier, Priority.ALWAYS);
+                        box.getChildren().add(multiplier);
+                    }
 
+                    if(col == 0 && row == 1){
+                        Label multiplier = new Label();
+                        multiplier.setStyle("-fx-alignment: center; -fx-font-size: 16; -fx-font-weight: bold;");
+                        multiplier.setMaxWidth(Double.MAX_VALUE);
+                        multiplier.setMaxHeight(Double.MAX_VALUE);
+                        multiplier.setAlignment(Pos.CENTER);
+                        switch (couleur){
+                            case ROUGE -> multiplier.setText("X : 0");
+                            case JAUNE -> multiplier.setText("X : 0");
+                            case BLANC -> multiplier.setText("X : 0");
+                            default -> multiplier.setText("X");
+                        }
+                        String key = couleur.name() + "_MULTIPLIER1";
+                        multiplierLabels.put(key, multiplier);
+                        VBox.setVgrow(multiplier, Priority.ALWAYS);
+                        box.getChildren().add(multiplier);
+                    }
                     grid.add(box, col, row);
                 }
             }
@@ -410,6 +463,8 @@ public class FeuilleWindow extends Application implements FeuilleListener {
         updateBuildings(feuille.getEtudiant(), EtudiantPanel, 0);
         updateBuildings(feuille.getAdministration(), AdministrationPanel, 1);
         updateBuildings(feuille.getEnseignant(), enseignantPanel, 2);
+
+        updateMultiplier();
     }
 
     private void updatePoints(int points, GridPane table, int row) {
@@ -461,6 +516,22 @@ public class FeuilleWindow extends Application implements FeuilleListener {
                 updateBuildingCell(batiment, cell);
             }
         });
+    }
+
+    private static void updateMultiplier(){
+        updateMultiplierLabel("ROUGE_MULTIPLIER1", feuille.getMultiplier(Couleur.ROUGE, 1));
+        updateMultiplierLabel("ROUGE_MULTIPLIER2", feuille.getMultiplier(Couleur.ROUGE, 2));
+        updateMultiplierLabel("JAUNE_MULTIPLIER1", feuille.getMultiplier(Couleur.JAUNE, 1));
+        updateMultiplierLabel("JAUNE_MULTIPLIER2", feuille.getMultiplier(Couleur.JAUNE, 2));
+        updateMultiplierLabel("BLANC_MULTIPLIER1", feuille.getMultiplier(Couleur.BLANC, 1));
+        updateMultiplierLabel("BLANC_MULTIPLIER1", feuille.getMultiplier(Couleur.BLANC, 2));
+    }
+
+    public static void updateMultiplierLabel(String key, int newValue) {
+        Label label = multiplierLabels.get(key);
+        if (label != null) {
+            label.setText("X " + newValue);
+        }
     }
 
     private static void updateBuildingCell(Batiment batiment, Label cell) {

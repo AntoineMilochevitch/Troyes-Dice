@@ -4,9 +4,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Feuille {
-    private Panel etudiant;
-    private Panel administration;
-    private Panel enseignant;
+    private static Panel etudiant;
+    private static Panel administration;
+    private static Panel enseignant;
     private int nbPointEtudiant;
     private int nbPointAdministration;
     private int nbPointEnseignant;
@@ -21,6 +21,15 @@ public class Feuille {
     public void addListener(FeuilleListener listener) {
         listeners.add(listener);
         System.out.println("Listener added");
+    }
+
+    public static int getMultiplier(Couleur couleur, int index){
+        return switch (couleur){
+            case ROUGE -> administration.getMultiplier(index);
+            case JAUNE -> etudiant.getMultiplier(index);
+            case BLANC -> enseignant.getMultiplier(index);
+            default -> 0;
+        };
     }
 
     private void notifyListeners() {
@@ -59,7 +68,6 @@ public class Feuille {
     }
 
     public void detruireColonne(int col){
-        
         etudiant.rendreInconstructible(col);
         administration.rendreInconstructible(col);
         enseignant.rendreInconstructible(col);

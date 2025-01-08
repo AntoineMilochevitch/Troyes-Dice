@@ -10,16 +10,16 @@ public abstract class Panel {
 
     private final Feuille feuille;
 
-    private int multiplicateur1;
-    private int multiplicateur2;
+    private static int multiplicateur1;
+    private static int multiplicateur2;
 
     public Panel(Feuille feuille) {
         this.ressource = 3;
         this.feuille = feuille;
         this.batimentsPrestige = new ArrayList<>();
         this.batimentsFonction = new ArrayList<>();
-        this.multiplicateur1 = 0;
-        this.multiplicateur2 = 0;
+        multiplicateur1 = 0;
+        multiplicateur2 = 0;
         initLists();
     }
 
@@ -30,9 +30,17 @@ public abstract class Panel {
         this.feuille = feuille;
         this.batimentsPrestige = batimentsPrestige;
         this.batimentsFonction = batimentsFonction;
-        this.multiplicateur1 = multiplicateur1;
-        this.multiplicateur2 = multiplicateur2;
+        Panel.multiplicateur1 = multiplicateur1;
+        Panel.multiplicateur2 = multiplicateur2;
         initLists();
+    }
+
+    public static int getMultiplier(int i){
+        return switch (i) {
+            case 1 -> multiplicateur1;
+            case 2 -> multiplicateur2;
+            default -> 0;
+        };
     }
 
     public int decomptePoints(){
