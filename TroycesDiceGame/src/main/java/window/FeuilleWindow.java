@@ -24,10 +24,15 @@ public class FeuilleWindow extends Application implements FeuilleListener {
     private static String playerName;
     private GridPane leftTable;
     private GridPane rightTable;
+
+    private static boolean isOpen = false;
+
+    private GridPane enseignant;
+    private GridPane administration;
+    private GridPane etudiant;
     private static VBox enseignantPanel;
     private static VBox AdministrationPanel;
     private static VBox EtudiantPanel;
-    private static boolean isOpen = false;
 
     public static void setFeuilleStatic(Feuille feuille, String playerName) {
         FeuilleWindow.feuille = feuille;
@@ -50,7 +55,7 @@ public class FeuilleWindow extends Application implements FeuilleListener {
 
         // Création des panneaux principaux
         AdministrationPanel = createPanel("panel-administration");
-        EtudiantPanel= createPanel("panel-etudiant");
+        EtudiantPanel = createPanel("panel-etudiant");
         enseignantPanel = createPanel("panel-enseignant");
 
         // Réduire la largeur des panneaux
@@ -58,11 +63,29 @@ public class FeuilleWindow extends Application implements FeuilleListener {
         EtudiantPanel.setMinWidth(200);
         enseignantPanel.setMinWidth(200);
 
+        //Include les Panels dans leur Grid Respectif.
+        administration = new GridPane();
+        etudiant = new GridPane();
+        enseignant = new GridPane();
+
+        GridPane adminGrid = create3x3Grid(Couleur.ROUGE);
+        GridPane etudiantGrid = create3x3Grid(Couleur.JAUNE);
+        GridPane enseignantGrid = create3x3Grid(Couleur.BLANC);
+
+        administration.add(AdministrationPanel, 0, 0);
+        administration.add(adminGrid, 1, 0);
+
+        etudiant.add(EtudiantPanel, 0, 0);
+        etudiant.add(etudiantGrid, 1, 0);
+
+        enseignant.add(enseignantPanel, 0, 0);
+        enseignant.add(enseignantGrid, 1, 0);
+
         // Layout principal
         VBox mainLayout = new VBox(10);
         mainLayout.setPadding(new Insets(10));
         mainLayout.setStyle("-fx-alignment: center;");
-        mainLayout.getChildren().addAll(titleLabel, AdministrationPanel, EtudiantPanel, enseignantPanel);
+        mainLayout.getChildren().addAll(titleLabel, administration, etudiant, enseignant);
 
         HBox additionalContent = new HBox(10);
         additionalContent.setPadding(new Insets(10));
@@ -95,12 +118,28 @@ public class FeuilleWindow extends Application implements FeuilleListener {
                 Label cell = new Label(" ");
                 cell.getStyleClass().add("grid-cell");
                 cell.getStyleClass().add("pion-" + colors[i]);
-                cell.setMinSize(25, 25); // Taille réduite
+                cell.setMinSize(20, 25); // Taille réduite
                 rightTable.add(cell, j, i);
             }
         }
 
-        additionalContent.getChildren().addAll(leftTable, rightTable);
+        GridPane subtotal = new GridPane();
+        GridPane totalTable = new GridPane();
+        totalTable.setAlignment(Pos.CENTER);
+        subtotal.setAlignment(Pos.CENTER);
+        for (int i = 0; i < 2; i++) {
+            Label cell = new Label(" ");
+            cell.getStyleClass().add("grid-cell");
+            cell.setMinSize(CASE_SIZE*0.75, CASE_SIZE*0.75);
+            subtotal.add(cell, i, 0);
+        }
+        Label cell = new Label(" ");
+        cell.getStyleClass().add("grid-cell");
+        cell.setMinSize(CASE_SIZE*1.5, CASE_SIZE*1.5);
+        totalTable.add(subtotal, 0, 0);
+        totalTable.add(cell, 0, 1);
+
+        additionalContent.getChildren().addAll(leftTable, rightTable, totalTable);
         mainLayout.getChildren().add(additionalContent);
 
         // Style global
@@ -129,6 +168,61 @@ public class FeuilleWindow extends Application implements FeuilleListener {
         updateFeuille(feuille);
     }
 
+    private GridPane create3x3Grid(Couleur couleur) {
+        GridPane grid = new GridPane();
+        grid.setHgap(10);
+        grid.setVgap(5);
+        grid.setStyle("-fx-alignment: down;");
+        grid.setPadding(new Insets(10));
+
+        // Adding placeholders or components to the grid
+        for (int row = 0; row < 3; row++) {
+            for (int col = 0; col < 3; col++) {
+                if(row != 2 || col != 2) {
+                    VBox box = new VBox();
+                    box.setMinSize(CASE_SIZE, CASE_SIZE);  // Example size
+                    switch (couleur){
+                        case ROUGE -> box.setStyle("-fx-border-color: black; -fx-background-color: #ff6666;");
+                        case JAUNE -> box.setStyle("-fx-border-color: black; -fx-background-color: #ffff99;");
+                        case BLANC -> box.setStyle("-fx-border-color: black; -fx-background-color: #ffffff;");
+                    }
+
+                    if(col == 2 && row == 0){
+                        Label imageSpace = new Label();
+                        ImageView specialImage;
+                        switch (couleur){
+                            case ROUGE -> specialImage = new ImageView(new Image(Objects.requireNonNull(getClass().getResourceAsStream("/administration_1.png"))));
+                            case JAUNE -> specialImage = new ImageView(new Image(Objects.requireNonNull(getClass().getResourceAsStream("/etudiant-1.png"))));
+                            case BLANC -> specialImage = new ImageView(new Image(Objects.requireNonNull(getClass().getResourceAsStream("/enseignant-1.png"))));
+                            default -> specialImage = new ImageView(new Image(Objects.requireNonNull(getClass().getResourceAsStream("/etudiant-2.png"))));
+                        }
+                        specialImage.setFitWidth(CASE_SIZE);
+                        specialImage.setFitHeight(CASE_SIZE);
+                        imageSpace.setGraphic(specialImage);
+                        box.getChildren().add(imageSpace);
+                    }
+                    if(col == 2 && row == 1){
+                        Label imageSpace = new Label();
+                        ImageView specialImage;
+                        switch (couleur){
+                            case ROUGE -> specialImage = new ImageView(new Image(Objects.requireNonNull(getClass().getResourceAsStream("/administration-2.png"))));
+                            case JAUNE -> specialImage = new ImageView(new Image(Objects.requireNonNull(getClass().getResourceAsStream("/etudiant-2.png"))));
+                            case BLANC -> specialImage = new ImageView(new Image(Objects.requireNonNull(getClass().getResourceAsStream("/enseignant-2.png"))));
+                            default -> specialImage = new ImageView(new Image(Objects.requireNonNull(getClass().getResourceAsStream("/etudiant-2.png"))));
+                        }
+                        specialImage.setFitWidth(CASE_SIZE);
+                        specialImage.setFitHeight(CASE_SIZE);
+                        imageSpace.setGraphic(specialImage);
+                        box.getChildren().add(imageSpace);
+                    }
+
+                    grid.add(box, col, row);
+                }
+            }
+        }
+        return grid;
+    }
+
     // Méthode utilitaire pour créer un panneau
     private VBox createPanel(String cssClass) {
         VBox panel = new VBox();
@@ -144,7 +238,7 @@ public class FeuilleWindow extends Application implements FeuilleListener {
         // Image à gauche
         String imagePath = "";
         if (cssClass.equals("panel-administration")) {
-            imagePath = "/pierre.png";
+            imagePath = "/etudiant-2.png";
         } else if (cssClass.equals("panel-etudiant")) {
             imagePath = "/ECTS.png";
         } else if (cssClass.equals("panel-enseignant")) {
@@ -246,6 +340,17 @@ public class FeuilleWindow extends Application implements FeuilleListener {
                         cell.setGraphic(cellImageView8);
                         break;
 
+                    case "panel-enseignant:1":
+                        // Add images to the second row of the yellow panel
+                        String[] image7 = {"/administration_1.png", "/administration-2.png", "/etudiant-1.png", "/etudiant-2.png", "/enseignant-1.png", "/enseignant-2.png"};
+                        System.out.println(image7[j-1]);
+                        ImageView cellImageView7 = new ImageView(new Image(getClass().getResourceAsStream(image7[j-1])));
+                        cellImageView7.setFitWidth(CASE_SIZE);
+                        cellImageView7.setFitHeight(CASE_SIZE);
+                        cell = new Label();
+                        cell.setGraphic(cellImageView7);
+                        break;
+
                     case "panel-enseignant:2":
                         // Add images to the third row of the white panel
                         String image9 = "/BatF3-Recompense.png";
@@ -271,7 +376,7 @@ public class FeuilleWindow extends Application implements FeuilleListener {
 
         // Espace entre le tableau et les ressources
         VBox spacer = new VBox();
-        spacer.setMinHeight(20); // Hauteur de l'espace
+        spacer.setMinHeight(RESOURCE_PANEL_SIZE/3); // Hauteur de l'espace
 
         // Contenu des petites ressources
         HBox resources = new HBox();
@@ -301,7 +406,7 @@ public class FeuilleWindow extends Application implements FeuilleListener {
         updateResources(feuille.getAdministration(), AdministrationPanel);
         updateResources(feuille.getEnseignant(), enseignantPanel);
 
-        // Update buildings
+        // Update buildingsd
         updateBuildings(feuille.getEtudiant(), EtudiantPanel, 0);
         updateBuildings(feuille.getAdministration(), AdministrationPanel, 1);
         updateBuildings(feuille.getEnseignant(), enseignantPanel, 2);
