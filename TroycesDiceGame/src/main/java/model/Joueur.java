@@ -1,6 +1,6 @@
 package main.java.model;
 
-import java.util.*;
+import java.util.List;
 
 public class Joueur implements Actionnable {
     private String nom;
@@ -11,7 +11,6 @@ public class Joueur implements Actionnable {
     private Couleur couleurLocal;
     private Actionnable actionChoisie;
     private List<De> des;
-    private static final Scanner scanner = new Scanner(System.in); // Single Scanner instance
 
     public Joueur(String nom, int id) {
         this.nom = nom;
@@ -24,59 +23,13 @@ public class Joueur implements Actionnable {
         des = null;
     }
 
-    public Case choisirCase(Plateau plateau) {
-        System.out.println("Entrez le numéro de la case choisie : ");
-        int numCase = scanner.nextInt();
-
-        if (numCase >= 0 && numCase < plateau.getRoue().size()) {
-            Case caseChoisie = plateau.getCase(numCase);
-            DemiJournee demiJourneeActuelle = plateau.getCompteurDemiJournee() % 2 == 1 ? DemiJournee.APRES_MIDI : DemiJournee.MATIN;
-
-            if (caseChoisie.getDemiJournee() == DemiJournee.NEUTRE) {
-                System.out.println("Impossible de choisir une case NEUTRE. Veuillez réessayer.");
-                return choisirCase(plateau);
-            }
-
-            if (caseChoisie.getDemiJournee() != demiJourneeActuelle) {
-                System.out.println("Vous ne pouvez choisir que les cases correspondant à la demi-journée actuelle (" + demiJourneeActuelle + "). Veuillez réessayer.");
-                return choisirCase(plateau);
-            }
-
-            this.caseChoisie = caseChoisie;
-            couleurLocal = caseChoisie.getSenseCase() == 1 ? caseChoisie.getCouleurRecto() : caseChoisie.getCouleurVerso();
-            valDeLocal = caseChoisie.getValDe();
-            System.out.println("Valeur du dé : " + valDeLocal.getValeur());
-            Panel panel = choosePanel();
-
-            if (panel.getRessource() < caseChoisie.getCout()) {
-                System.out.println("Pas assez de ressources pour cette case. Veuillez réessayer.");
-                return choisirCase(plateau);
-            } else {
-                panel.setRessource(panel.getRessource() - caseChoisie.getCout());
-                System.out.println("Voulez-vous utiliser une ressource supplémentaire ? (oui/non)");
-                String reponse = scanner.next();
-                if (reponse.equalsIgnoreCase("oui")) {
-                    int ressourceDepense = 0;
-                    if (couleurLocal == Couleur.BLANC) {
-                        modifierCouleurDe();
-                    } else if (couleurLocal == Couleur.ROUGE) {
-                        System.out.println("Combien de ressource voulez vous dépenser ? : ");
-                        ressourceDepense = scanner.nextInt();
-                        modifierValeurDe(ressourceDepense);
-                    }
-                    feuille.utiliserRessource(couleurLocal, caseChoisie.getCout(), ressourceDepense);
-                }
-            }
-        } else {
-            System.out.println("Numéro de case invalide. Veuillez réessayer.");
-            return choisirCase(plateau);
-        }
-        return caseChoisie;
+    public void choisirCase(Case caseChoisie) {
+        this.caseChoisie = caseChoisie;
+        couleurLocal = caseChoisie.getSenseCase() == 1 ? caseChoisie.getCouleurRecto() : caseChoisie.getCouleurVerso();
+        valDeLocal = caseChoisie.getValDe();
     }
 
-    public void modifierCouleurDe() {
-        System.out.println("Vous avez utilisé une ressource blanche. Choisissez la nouvelle couleur du dé : 1. Rouge, 2. Jaune, 3. Blanc");
-        int choix = scanner.nextInt();
+    public void modifierCouleurDe(int choix) {
         switch (choix) {
             case 1:
                 couleurLocal = Couleur.ROUGE;
@@ -88,30 +41,24 @@ public class Joueur implements Actionnable {
                 couleurLocal = Couleur.BLANC;
                 break;
             default:
-                System.out.println("Choix invalide. Veuillez réessayer.");
-                modifierCouleurDe();
+                throw new IllegalArgumentException("Choix invalide");
         }
     }
 
-    public void modifierValeurDe(int ressourceDepense) {
-        System.out.println("Vous avez utilisé une ressource rouge. Choisissez l'action : 1. Augmenter la valeur du dé, 2. Diminuer la valeur du dé");
-        int choix = scanner.nextInt();
+    public void modifierValeurDe(int ressourceDepense, int choix) {
         switch (choix) {
             case 1:
-                valDeLocal.setValeur( Math.min(valDeLocal.getValeur() + ressourceDepense, 6)); // La valeur maximale d'un dé est 6
+                valDeLocal.setValeur(Math.min(valDeLocal.getValeur() + ressourceDepense, 6));
                 break;
             case 2:
-                valDeLocal.setValeur(Math.max(valDeLocal.getValeur() - ressourceDepense, 1)); // La valeur minimale d'un dé est 1
+                valDeLocal.setValeur(Math.max(valDeLocal.getValeur() - ressourceDepense, 1));
                 break;
             default:
-                System.out.println("Choix invalide. Veuillez réessayer.");
-                modifierValeurDe(ressourceDepense);
+                throw new IllegalArgumentException("Choix invalide");
         }
     }
 
-    public Actionnable choisirAction() {
-        System.out.println("Choisissez une action : 1. Construire un bâtiment de prestige, 2. Construire un bâtiment de fonction, 3. Récolter des ressources");
-        int choix = scanner.nextInt();
+    public void choisirAction(int choix) {
         switch (choix) {
             case 1:
                 actionChoisie = this::buildBP;
@@ -123,10 +70,24 @@ public class Joueur implements Actionnable {
                 actionChoisie = this::getRessource;
                 break;
             default:
-                System.out.println("Choix invalide. Veuillez réessayer.");
-                return choisirAction();
+                throw new IllegalArgumentException("Choix invalide");
         }
-        return actionChoisie;
+    }
+
+    public void buildBP() {
+        Panel panel = choosePanel();
+        Panel panelMultiplicateur = chooseMultiplicateurPanel();
+        panel.buildBP(valDeLocal, panelMultiplicateur, feuille, des);
+    }
+
+    public void buildBF() {
+        Panel panel = choosePanel();
+        panel.buildBF(valDeLocal);
+    }
+
+    public void getRessource() {
+        Panel panel = choosePanel();
+        panel.addRessource(valDeLocal.getValeur());
     }
 
     public Panel choosePanel() {
@@ -145,37 +106,17 @@ public class Joueur implements Actionnable {
     public Panel chooseMultiplicateurPanel() {
         switch (valDeLocal.getValeur()) {
             case 1:
-                return feuille.getAdministration();
             case 2:
                 return feuille.getAdministration();
             case 3:
-                return feuille.getEtudiant();
             case 4:
                 return feuille.getEtudiant();
             case 5:
-                return feuille.getEnseignant();
             case 6:
                 return feuille.getEnseignant();
             default:
                 return null;
         }
-    }
-
-    public void buildBP() {
-        Panel panel = choosePanel();
-        Panel panelMultiplicateur = chooseMultiplicateurPanel();
-        panel.buildBP(valDeLocal, panelMultiplicateur, feuille, des);
-    }
-
-    public void buildBF() {
-        Panel panel = choosePanel();
-        System.out.println("Valeur de dé : " + valDeLocal);
-        panel.buildBF(valDeLocal);
-    }
-
-    public void getRessource() {
-        Panel panel = choosePanel();
-        panel.addRessource(valDeLocal.getValeur());
     }
 
     public Feuille getFeuille() {
@@ -188,16 +129,23 @@ public class Joueur implements Actionnable {
         }
     }
 
-    public void afficherFeuille() {
-        System.out.println("Feuille de " + nom + " : ");
-        feuille.afficherFeuille();
-    }
-
     public void setListDe(List<De> des) {
         this.des = des;
     }
 
     public String getNom() {
         return nom;
+    }
+
+    public void setCaseChoisie(Case caseChoisie) {
+        this.caseChoisie = caseChoisie;
+    }
+
+    public void setCouleurLocal(Couleur couleurLocal) {
+        this.couleurLocal = couleurLocal;
+    }
+
+    public void setValDeLocal(De valDeLocal) {
+        this.valDeLocal = valDeLocal;
     }
 }

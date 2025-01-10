@@ -46,7 +46,7 @@ public class MenuWindow extends Application {
 
         startButton.setOnAction(e -> {
             menu.getChildren().clear();
-            numberPlayers(menu);
+            numberPlayers(menu, primaryStage);
         });
 
         menu.getChildren().addAll(startButton, statusLabel);
@@ -58,7 +58,8 @@ public class MenuWindow extends Application {
         primaryStage.show();
     }
 
-    private void numberPlayers(Pane panel) {
+
+    private void numberPlayers(Pane panel, Stage primaryStage) {
         Label playersLabel = new Label("Number of Players:");
         playersLabel.getStyleClass().add("players-label");
 
@@ -70,23 +71,22 @@ public class MenuWindow extends Application {
 
         confirmed.setOnAction(e -> {
             panel.getChildren().clear();
-            Integer nbPlayers = Integer.parseInt(playersText.getText());
+            int nbPlayers = Integer.parseInt(playersText.getText());
             if (nbPlayers >= 2) {
-                panel.getChildren().clear();
-                addPlayers(panel, nbPlayers);
+                addPlayers(panel, nbPlayers, primaryStage);
             }
         });
 
         panel.getChildren().addAll(playersLabel, playersText, confirmed);
     }
 
-    private void addPlayers(Pane panel, Integer id) {
+    private void addPlayers(Pane panel, Integer id, Stage primaryStage) {
         if (id == 0) {
-            startGame();
+            startGame(primaryStage);
             return;
         }
 
-        Label nameLabel = new Label("Enter name for Player " + id + ":");
+        Label nameLabel = new Label("Enter name for Player " + (joueurs.size() + 1) + ":");
         nameLabel.getStyleClass().add("name-label");
 
         TextField nameText = new TextField();
@@ -97,16 +97,15 @@ public class MenuWindow extends Application {
 
         confirmed.setOnAction(e -> {
             String namePlayer = nameText.getText();
-            joueurs.add(new Joueur(namePlayer, id));
-            System.out.println("name : " + namePlayer);
+            joueurs.add(new Joueur(namePlayer, joueurs.size() + 1));
             panel.getChildren().clear();
-            addPlayers(panel, id - 1);
+            addPlayers(panel, id - 1, primaryStage);
         });
 
         panel.getChildren().addAll(nameLabel, nameText, confirmed);
     }
 
-    private void startGame() {
+    private void startGame(Stage primaryStage) {
         Game game = new Game(joueurs, plateau, latch);
         Thread gameThread = new Thread(game);
         gameThread.start();
@@ -117,15 +116,13 @@ public class MenuWindow extends Application {
             e.printStackTrace();
         }
 
-        // Add listeners to each player's Feuille
         for (Joueur joueur : joueurs) {
             joueur.getFeuille().addListener(new FeuilleListener() {
                 @Override
                 public void onFeuilleUpdated(Feuille feuille) {
-                    // Update the FeuilleWindow if it is open
                     Platform.runLater(() -> {
-                        if (FeuilleWindow.isOpen()) {
-                            FeuilleWindow.updateFeuille(feuille);
+                        if (FeuilleWindow.isOpen() && feuille == joueur.getFeuille()) {
+                            FeuilleWindow.updateFeuilleStatic(feuille);
                         }
                     });
                 }
@@ -135,9 +132,10 @@ public class MenuWindow extends Application {
         // Launch the main game window
         Platform.runLater(() -> {
             Stage gameStage = new Stage();
-            GameWindow gameWindow = new GameWindow(joueurs, plateau);
+            GameWindow gameWindow = new GameWindow(joueurs, plateau, game, gameStage); // Pass game instance
             try {
                 gameWindow.start(gameStage);
+                primaryStage.close(); // Close the MenuWindow stage
             } catch (Exception e) {
                 e.printStackTrace();
             }

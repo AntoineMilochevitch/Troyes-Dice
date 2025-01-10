@@ -23,10 +23,11 @@ public class FeuilleWindow extends Application implements FeuilleListener {
 
     private static final int CASE_SIZE = 45;
     private static final int RESOURCE_PANEL_SIZE = 20;
-    private static Feuille feuille;
-    private static String playerName;
+    private static FeuilleWindow instance;
+    private Feuille feuille;
+    private String playerName;
     private GridPane leftTable;
-    private GridPane rightTable;
+    private static GridPane rightTable;
 
     private static Map<String, Label> multiplierLabels = new HashMap<>();
     private static Map<String, Label> valueLabels = new HashMap<>();
@@ -39,22 +40,35 @@ public class FeuilleWindow extends Application implements FeuilleListener {
     private static VBox AdministrationPanel;
     private static VBox EtudiantPanel;
 
-    public static void setFeuilleStatic(Feuille feuille, String playerName) {
-        FeuilleWindow.feuille = feuille;
-        FeuilleWindow.playerName = playerName;
+    public void setFeuille(Feuille feuille, String playerName) {
+        this.feuille = feuille;
+        this.playerName = playerName;
+    }
+
+    public static FeuilleWindow getInstance() {
+        if (instance == null) {
+            instance = new FeuilleWindow();
+        }
+        return instance;
     }
 
     public static boolean isOpen() {
         return isOpen;
     }
 
+    public static void updateFeuilleStatic(Feuille feuille) {
+        if (instance != null) {
+            instance.updateFeuille(feuille);
+        }
+    }
     @Override
     public void start(Stage primaryStage) {
+        instance = this;
         isOpen = true;
         primaryStage.setOnCloseRequest(event -> {
-            isOpen = false;
+            FeuilleWindow.isOpen = false;
         });
-        // Création du titre
+        // Use instance variables instead of static ones
         Label titleLabel = new Label("Feuille de " + playerName);
         titleLabel.getStyleClass().add("panel-title");
 
@@ -115,7 +129,7 @@ public class FeuilleWindow extends Application implements FeuilleListener {
         }
 
         // Tableau de 3x20 à droite
-        GridPane rightTable = new GridPane();
+        rightTable = new GridPane();
         rightTable.setAlignment(Pos.CENTER);
         String[] colors = {"red", "yellow", "white"};
         for (int i = 0; i < 3; i++) {
@@ -172,24 +186,26 @@ public class FeuilleWindow extends Application implements FeuilleListener {
         primaryStage.show();
         System.out.println("this.feuille : " + feuille);
         feuille.addListener(this);
-        updateAll(feuille); // Update all information when the window is opened
+        updateAll(); // Update all information when the window is opened
     }
 
     @Override
     public void onFeuilleUpdated(Feuille feuille) {
         System.out.println("Listener reçu");
-        Platform.runLater(() -> updateFeuille(feuille));
+        Platform.runLater(() -> this.updateFeuille(feuille));
     }
 
-    public static void updateAll(Feuille feuille) {
+    public void updateAll() {
         updateFeuille(feuille);
+        updateValues();
+        updateMultipliers();
     }
 
     private GridPane create3x3Grid(Couleur couleur) {
         GridPane grid = new GridPane();
         grid.setHgap(10);
         grid.setVgap(5);
-        grid.setStyle("-fx-alignment: down;");
+        grid.setStyle("-fx-alignment: center;");
         grid.setPadding(new Insets(10));
 
         // Adding placeholders or components to the grid
@@ -489,28 +505,29 @@ public class FeuilleWindow extends Application implements FeuilleListener {
         return panel;
     }
 
-    public static void updateFeuille(Feuille feuille) {
+    void updateFeuille(Feuille feuille) {
         System.out.println("Feuille mise à jour");
         // Update points
-        //updatePoints(feuille.getNbPointEtudiant(), rightTable, 0);
-        //updatePoints(feuille.getNbPointAdministration(), rightTable, 1);
-        //updatePoints(feuille.getNbPointEnseignant(), rightTable, 2);
+        updatePoints(feuille.getNbPointEtudiant(), rightTable, 0);
+        updatePoints(feuille.getNbPointAdministration(), rightTable, 1);
+        updatePoints(feuille.getNbPointEnseignant(), rightTable, 2);
 
         // Update resources
         updateResources(feuille.getEtudiant(), EtudiantPanel);
         updateResources(feuille.getAdministration(), AdministrationPanel);
         updateResources(feuille.getEnseignant(), enseignantPanel);
 
-        // Update buildingsd
-        updateBuildings(feuille.getEtudiant(), EtudiantPanel, 0);
-        updateBuildings(feuille.getAdministration(), AdministrationPanel, 1);
-        updateBuildings(feuille.getEnseignant(), enseignantPanel, 2);
-        updateValues();
-        updateMultipliers();
-        updateValues();
+        // Update buildings
+        updateBuildings(feuille.getEtudiant(), EtudiantPanel);
+        updateBuildings(feuille.getAdministration(), AdministrationPanel);
+        updateBuildings(feuille.getEnseignant(), enseignantPanel);
+
+        // Call non-static methods using an instance
+        this.updateValues();
+        this.updateMultipliers();
     }
 
-    private void updatePoints(int points, GridPane table, int row) {
+    private static void updatePoints(int points, GridPane table, int row) {
         for (int i = 0; i < 20; i++) {
             Label cell = (Label) table.getChildren().get(row * 20 + i);
             if (i < points) {
@@ -536,7 +553,7 @@ public class FeuilleWindow extends Application implements FeuilleListener {
         });
     }
 
-    private static void updateBuildings(Panel panel, VBox Panel, int panelIndex) {
+    private static void updateBuildings(Panel panel, VBox Panel) {
         GridPane table = (GridPane) Panel.getChildren().get(0);
         Platform.runLater(() -> {
             // Clear previous buildings
@@ -549,20 +566,20 @@ public class FeuilleWindow extends Application implements FeuilleListener {
             // Update function buildings in the second row
             for (int i = 0; i < panel.getBatimentsFonction().size(); i++) {
                 BatimentFonction batiment = panel.getBatimentsFonction().get(i);
-                Label cell = (Label) table.getChildren().get(7 + i); // Second row
+                Label cell = (Label) table.getChildren().get(13 + i); // Second row
                 updateBuildingCell(batiment, cell);
             }
 
             // Update prestige buildings in the third row
             for (int i = 0; i < panel.getBatimentsPrestige().size(); i++) {
                 BatimentPrestige batiment = panel.getBatimentsPrestige().get(i);
-                Label cell = (Label) table.getChildren().get(13 + i); // Third row
+                Label cell = (Label) table.getChildren().get(7 + i); // Third row
                 updateBuildingCell(batiment, cell);
             }
         });
     }
 
-    private static void updateMultipliers(){
+    private void updateMultipliers() {
         updateMultiplierLabel("ROUGE_MULTIPLIER1", feuille.getMultiplier(Couleur.ROUGE, 1));
         updateMultiplierLabel("ROUGE_MULTIPLIER2", feuille.getMultiplier(Couleur.ROUGE, 2));
         updateMultiplierLabel("JAUNE_MULTIPLIER1", feuille.getMultiplier(Couleur.JAUNE, 1));
@@ -578,7 +595,7 @@ public class FeuilleWindow extends Application implements FeuilleListener {
         }
     }
 
-    private static void updateValues(){
+    private void updateValues() {
         updateValueLabel("ROUGE_VALUE1", feuille.getAdministration().nbBatimentPrestige() * feuille.getMultiplier(Couleur.ROUGE, 1));
         updateValueLabel("ROUGE_VALUE2", feuille.getAdministration().nbBatimentFonction() * feuille.getMultiplier(Couleur.ROUGE, 2));
         updateValueLabel("JAUNE_VALUE1", feuille.getEtudiant().nbBatimentPrestige() * feuille.getMultiplier(Couleur.JAUNE, 1));
@@ -586,9 +603,9 @@ public class FeuilleWindow extends Application implements FeuilleListener {
         updateValueLabel("BLANC_VALUE1", feuille.getEnseignant().nbBatimentFonction() * feuille.getMultiplier(Couleur.BLANC, 1));
         updateValueLabel("BLANC_VALUE2", feuille.getEnseignant().nbBatimentFonction() * feuille.getMultiplier(Couleur.BLANC, 2));
 
-        updateValueLabel("ROUGE_TOTAL", feuille.getAdministration().getRessource()/2);
-        updateValueLabel("JAUNE_TOTAL", feuille.getEtudiant().getRessource()/2);
-        updateValueLabel("BLANC_TOTAL", feuille.getEnseignant().getRessource()/2);
+        updateValueLabel("ROUGE_TOTAL", feuille.getAdministration().getRessource() / 2);
+        updateValueLabel("JAUNE_TOTAL", feuille.getEtudiant().getRessource() / 2);
+        updateValueLabel("BLANC_TOTAL", feuille.getEnseignant().getRessource() / 2);
 
         System.out.println(feuille.calculerPoints());
 

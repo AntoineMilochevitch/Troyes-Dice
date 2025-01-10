@@ -19,8 +19,10 @@ public class Feuille {
     }
 
     public void addListener(FeuilleListener listener) {
-        listeners.add(listener);
-        System.out.println("Listener added");
+        if (!listeners.contains(listener)) {
+            listeners.add(listener);
+            System.out.println("Listener added");
+        }
     }
 
     public static int getMultiplier(Couleur couleur, int index){

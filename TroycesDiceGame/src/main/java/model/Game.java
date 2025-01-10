@@ -14,12 +14,14 @@ public class Game implements Runnable {
     private List<De> listDE;
     private int indexDeNoir;
     private CountDownLatch latch;
+    private int currentPlayerIndex;
 
     public Game(List<Joueur> joueurs, Plateau plateau, CountDownLatch latch) {
         this.joueurs = joueurs;
         this.plateau = plateau;
         this.deNoirActif = false;
         this.latch = latch;
+        this.currentPlayerIndex = 0;
     }
 
     @Override
@@ -38,49 +40,63 @@ public class Game implements Runnable {
         System.out.println("Dé noir actif : " + deNoirActif);
         listDE = lancerDe();
         listDE.sort(Comparator.comparingInt(De::getValeur)); // Trier les dés par valeur croissante
-        System.out.println("Les dés sont : " + listDE);
+        System.out.print("Les dés sont : " );
+        for (De de : listDE) {
+            System.out.print(de.getValeur() + " ");
+        }
 
         assignDiceToCases();
 
         // AFFICHE LA ROUE
         plateau.afficherRoue();
         while (!finDePartie()) {
+            Joueur currentPlayer = joueurs.get(currentPlayerIndex);
+            System.out.println("Tour du joueur " + currentPlayer.getNom());
+            currentPlayer.setListDe(listDE);
 
-            // ACTION POUR CHAQUE JOUEURS
-            for (Joueur joueur : joueurs) {
-                joueur.setListDe(listDE);
-                Case caseChoisie = joueur.choisirCase(plateau);
-                joueur.choisirAction();
-                joueur.execute();
-                joueur.afficherFeuille();
-            }
-
-            // INCREMENTE COMPTEUR DE DEMI-JOURNéES
-            plateau.incrementerCompteurDemiJournee();
-            if (plateau.getCompteurDemiJournee() % 2 == 0) {
-                System.out.println("Tourner la roue");
-                plateau.tournerRoue();
-            }
-
-            // LOGIQUE LANCE DES DéS
-            listDE = lancerDe();
-            listDE.sort(Comparator.comparingInt(De::getValeur)); // Trier les dés par valeur croissante
-            assignDiceToCases();
-
-            // LOGIQUE DES NOIR
-            if (plateau.getCompteurDemiJournee() > 3) {
-                indexDeNoir = tirerDeNoir();
-                System.out.println("Dé noir actif et la colonne " + indexDeNoir + " a été détruite !");
-                plateau.retournerCase(indexDeNoir);
-                for (Joueur joueur : joueurs) {
-                    joueur.getFeuille().detruireColonne(indexDeNoir);
+            // Wait for the player to make a move via the GUI
+            synchronized (this) {
+                try {
+                    wait();
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
                 }
-                deNoirActif = true;
             }
 
-            // AFFICHE LA ROUE
-            System.out.println("Compteur de demi-journée : " + plateau.getCompteurDemiJournee());
-            plateau.afficherRoue();
+            // Execute the player's action
+            currentPlayer.execute();
+
+            // Move to the next player
+            currentPlayerIndex = (currentPlayerIndex + 1) % joueurs.size();
+
+            // If all players have played, move to the next half-day
+            if (currentPlayerIndex == 0) {
+                plateau.incrementerCompteurDemiJournee();
+                if (plateau.getCompteurDemiJournee() % 2 == 0) {
+                    System.out.println("Tourner la roue");
+                    plateau.tournerRoue();
+                }
+
+                // LOGIQUE DES NOIR
+                if (plateau.getCompteurDemiJournee() > 3) {
+                    indexDeNoir = tirerDeNoir();
+                    System.out.println("Dé noir actif et la colonne " + indexDeNoir + " a été détruite !");
+                    plateau.retournerCase(indexDeNoir);
+                    for (Joueur joueur : joueurs) {
+                        joueur.getFeuille().detruireColonne(indexDeNoir);
+                    }
+                    deNoirActif = true;
+                }
+
+                // LOGIQUE LANCE DES DéS
+                listDE = lancerDe();
+                listDE.sort(Comparator.comparingInt(De::getValeur)); // Trier les dés par valeur croissante
+                assignDiceToCases();
+
+                // AFFICHE LA ROUE
+                System.out.println("Compteur de demi-journée : " + plateau.getCompteurDemiJournee());
+                plateau.afficherRoue();
+            }
         }
     }
 
@@ -121,5 +137,9 @@ public class Game implements Runnable {
             return true;
         }
         return false;
+    }
+
+    public synchronized void notifyPlayerAction() {
+        notify();
     }
 }

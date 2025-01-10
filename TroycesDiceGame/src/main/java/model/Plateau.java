@@ -12,7 +12,6 @@ public class Plateau {
         this.roue = roue;
         this.compteurDemiJournee = 0;
         initialiserCases(9);
-        afficherRoue();
     }
 
     public final void initialiserCases(int nombreDeCases) {
@@ -42,7 +41,6 @@ public class Plateau {
             int jour = compteurDemiJournee / 2;
             // Calcule l'index de départ en fonction du jour actuel
             int indexDepart = jour % roue.size();
-            System.out.println("Index de départ : " + indexDepart);
             Case temp = roue.get((indexDepart + roue.size() - 1) % roue.size()).clone();
             Case premiereApresMidi = roue.get((indexDepart + 4) % roue.size()).clone();
             Case caseNeutrePrecedente = roue.get(indexDepart).clone();
@@ -50,11 +48,9 @@ public class Plateau {
             for (int i = roue.size() - 1; i > 0; i--) {
                 // Calcule l'index actuel et l'index suivant de manière circulaire
                 int currentIndex = (indexDepart + i) % roue.size();
-                System.out.println("Index actuel : " + currentIndex);
                 int previousIndex = (indexDepart + i - 1) % roue.size();
                 // Met à jour le coût de la case actuelle avec le coût de la case suivante
                 roue.get(currentIndex).setCout(roue.get(previousIndex).getCout());
-                System.out.println("Cout de la case " + currentIndex + " : " + roue.get(currentIndex).getCout());
             }
 
             roue.get((indexDepart + 4) % roue.size()).setCout(premiereApresMidi.getCout());
