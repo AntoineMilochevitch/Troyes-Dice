@@ -59,13 +59,7 @@ public class GameWindow extends Application {
         gridPane.setVgap(10);
 
         for (int i = 0; i < 9; i++) {
-            Button dayButton = new Button("Day " + (i + 1));
-            switch (plateau.getCase(i).getUprightColor()) {
-                case ROUGE -> dayButton.getStyleClass().add("dayRedButton");
-                case JAUNE -> dayButton.getStyleClass().add("dayYellowButton");
-                default -> dayButton.getStyleClass().add("dayWhiteButton");
-            }
-
+            Button dayButton = new Button("Case : " + (i + 1));
             Label valDeLabel = new Label("");
             Label costLabel = new Label("");;
 
@@ -78,6 +72,11 @@ public class GameWindow extends Application {
             } else {
                 valDeLabel = new Label("Val Dé : " + plateau.getCase(i).getValDe().getValeur());
                 costLabel = new Label("Coût : " + plateau.getCase(i).getCout());
+                switch (plateau.getCase(i).getUprightColor()) {
+                    case ROUGE -> dayButton.getStyleClass().add("dayRedButton");
+                    case JAUNE -> dayButton.getStyleClass().add("dayYellowButton");
+                    default -> dayButton.getStyleClass().add("dayWhiteButton");
+                }
             }
             VBox buttonWithLabels = new VBox(5);
             buttonWithLabels.setAlignment(Pos.CENTER);
@@ -93,7 +92,6 @@ public class GameWindow extends Application {
 
         return root;
     }
-
 
 
     @Override
