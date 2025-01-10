@@ -112,13 +112,22 @@ public class GameWindow extends Application {
         actionBox.setAlignment(Pos.CENTER);
 
         Button buildBPButton = new Button("Construire un bâtiment de prestige");
-        buildBPButton.setOnAction(e -> handleActionSelection(() -> currentPlayer.buildBP()));
+        buildBPButton.setOnAction(e -> handleActionSelection(() -> {
+            currentPlayer.buildBP();
+            game.notifyPlayerAction(); // Notify the Game class that the player has completed their action
+        }));
 
         Button buildBFButton = new Button("Construire un bâtiment de fonction");
-        buildBFButton.setOnAction(e -> handleActionSelection(() -> currentPlayer.buildBF()));
+        buildBFButton.setOnAction(e -> handleActionSelection(() -> {
+            currentPlayer.buildBF();
+            game.notifyPlayerAction(); // Notify the Game class that the player has completed their action
+        }));
 
         Button getRessourceButton = new Button("Récolter des ressources");
-        getRessourceButton.setOnAction(e -> handleActionSelection(() -> currentPlayer.getRessource()));
+        getRessourceButton.setOnAction(e -> handleActionSelection(() -> {
+            currentPlayer.getRessource();
+            game.notifyPlayerAction(); // Notify the Game class that the player has completed their action
+        }));
 
         actionBox.getChildren().addAll(buildBPButton, buildBFButton, getRessourceButton);
 
@@ -131,7 +140,6 @@ public class GameWindow extends Application {
     private void handleActionSelection(Runnable action) {
         action.run();
         updateGameWindow();
-        game.notifyPlayerAction(); // Notify the Game class that the player has completed their action
     }
 
     private void updateGameWindow() {

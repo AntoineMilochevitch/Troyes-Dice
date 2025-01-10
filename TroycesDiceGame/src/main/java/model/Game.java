@@ -55,11 +55,10 @@ public class Game implements Runnable {
             Feuille feuille = currentPlayer.getFeuille();
             currentPlayer.setListDe(listDE);
 
-
             // Wait for the player to make a move via the GUI
             synchronized (this) {
                 try {
-                    wait();
+                    wait(); // Wait for the player's action to be completed
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
@@ -143,6 +142,8 @@ public class Game implements Runnable {
     }
 
     public synchronized void notifyPlayerAction() {
-        notify();
+        if (Thread.holdsLock(this)) {
+            notify();
+        }
     }
 }
