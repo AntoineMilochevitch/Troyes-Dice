@@ -135,7 +135,7 @@ public class MenuWindow extends Application {
         // Launch the main game window
         Platform.runLater(() -> {
             Stage gameStage = new Stage();
-            GameWindow gameWindow = new GameWindow(joueurs);
+            GameWindow gameWindow = new GameWindow(joueurs, plateau);
             try {
                 gameWindow.start(gameStage);
             } catch (Exception e) {

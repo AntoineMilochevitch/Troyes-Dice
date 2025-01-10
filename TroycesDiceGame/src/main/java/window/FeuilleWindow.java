@@ -607,14 +607,13 @@ public class FeuilleWindow extends Application implements FeuilleListener {
     private static void updateBuildingCell(Batiment batiment, Label cell) {
         switch (batiment.getEtat()) {
             case CONSTRUIT:
-                cell.setText("X");
-                cell.setStyle("-fx-font-size: 24px; -fx-font-weight: bold; -fx-alignment: center;");
+                cell.setStyle("-fx-background-color: #63ff63;");
                 break;
             case INCONSTRUCTIBLE:
-                cell.setStyle("-fx-background-color: black;");
+                cell.setStyle("-fx-background-color: #1c1c1c;");
                 break;
             case PROTEGE:
-                cell.setStyle("-fx-background-color: blue;");
+                cell.setStyle("-fx-background-color: #6161ff;");
                 break;
             default:
                 cell.setStyle("");

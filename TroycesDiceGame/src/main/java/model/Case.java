@@ -29,7 +29,6 @@ public class Case implements Cloneable{
     public Couleur getCouleurVerso() {
         return couleurVerso;
     }
-    
 
     public int getSenseCase() {
         return sensCase;
@@ -57,6 +56,14 @@ public class Case implements Cloneable{
 
     public void setSenseCase(int sensCase) {
         this.sensCase = sensCase;
+    }
+
+    public Couleur getUprightColor(){
+        if(sensCase == -1){
+            return couleurRecto;
+        } else {
+            return couleurVerso;
+        }
     }
 
     public void setValDe(De valDe) {

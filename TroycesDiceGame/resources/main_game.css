@@ -1,0 +1,75 @@
+/* Red Button Style */
+.dayRedButton {
+    -fx-background-color: #ff6666;   /* Light Red */
+    -fx-text-fill: #ffffff;          /* White text */
+    -fx-font-size: 16px;             /* Font size */
+    -fx-padding: 15px 30px;          /* Padding to make the button wider and taller */
+    -fx-border-radius: 5px;          /* Rounded corners */
+    -fx-border-color: #e60000;       /* Darker red border */
+    -fx-border-width: 2px;           /* Border width */
+}
+
+/* Yellow Button Style */
+.dayYellowButton {
+    -fx-background-color: #ffff99;   /* Light Yellow */
+    -fx-text-fill: #333333;          /* Dark text for contrast */
+    -fx-font-size: 16px;             /* Font size */
+    -fx-padding: 15px 30px;          /* Padding to make the button wider and taller */
+    -fx-border-radius: 5px;          /* Rounded corners */
+    -fx-border-color: #e6e600;       /* Darker yellow border */
+    -fx-border-width: 2px;           /* Border width */
+}
+
+/* White Button Style */
+.dayWhiteButton {
+    -fx-background-color: #ffffff;   /* White */
+    -fx-text-fill: #333333;          /* Dark text */
+    -fx-font-size: 16px;             /* Font size */
+    -fx-padding: 15px 30px;          /* Padding to make the button wider and taller */
+    -fx-border-radius: 5px;          /* Rounded corners */
+    -fx-border-color: #cccccc;       /* Light gray border */
+    -fx-border-width: 2px;           /* Border width */
+}
+
+.dayGrayRedButton {
+    -fx-background-color: #936565;   /* Light Red */
+    -fx-text-fill: #a4a4a4;          /* White text */
+    -fx-font-size: 16px;             /* Font size */
+    -fx-padding: 15px 30px;          /* Padding to make the button wider and taller */
+    -fx-border-radius: 5px;          /* Rounded corners */
+    -fx-border-color: #7e7e7e;      /* Darker red border */
+    -fx-border-width: 2px;           /* Border width */
+}
+
+/* Yellow Button Style */
+.dayGrayYellowButton {
+    -fx-background-color: #939370;   /* Light Yellow */
+    -fx-text-fill: #333333;          /* Dark text for contrast */
+    -fx-font-size: 16px;             /* Font size */
+    -fx-padding: 15px 30px;          /* Padding to make the button wider and taller */
+    -fx-border-radius: 5px;          /* Rounded corners */
+    -fx-border-color: #7e7e7e;      /* Darker yellow border */
+    -fx-border-width: 2px;           /* Border width */
+}
+
+/* White Button Style */
+.dayGrayWhiteButton {
+    -fx-background-color: #a9a9a9;   /* White */
+    -fx-text-fill: #333333;          /* Dark text */
+    -fx-font-size: 16px;             /* Font size */
+    -fx-padding: 15px 30px;          /* Padding to make the button wider and taller */
+    -fx-border-radius: 5px;          /* Rounded corners */
+    -fx-border-color: #7e7e7e;     /* Light gray border */
+    -fx-border-width: 2px;           /* Border width */
+}
+
+/* Hover effect for all buttons */
+.dayRedButton:hover, .dayYellowButton:hover, .dayWhiteButton:hover {
+    -fx-opacity: 0.8;   /* Slightly fade the button when hovering */
+}
+
+/* Focus effect (when button is clicked or focused) */
+.dayRedButton:focused, .dayYellowButton:focused, .dayWhiteButton:focused {
+    -fx-border-color: #000000;  /* Black border on focus */
+    -fx-border-width: 3px;      /* Thicker border on focus */
+}
