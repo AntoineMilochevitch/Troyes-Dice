@@ -24,14 +24,17 @@ public class FeuilleWindow extends Application implements FeuilleListener {
     private static final int CASE_SIZE = 45;
     private static final int RESOURCE_PANEL_SIZE = 20;
     private static FeuilleWindow instance;
+
     private Feuille feuille;
+    private Joueur joueur;
+    private static boolean isOpen = false;
+
     private String playerName;
     private GridPane leftTable;
     private static GridPane rightTable;
 
     private static Map<String, Label> multiplierLabels = new HashMap<>();
     private static Map<String, Label> valueLabels = new HashMap<>();
-    private static boolean isOpen = false;
 
     private static GridPane enseignant;
     private static GridPane administration;
@@ -40,9 +43,14 @@ public class FeuilleWindow extends Application implements FeuilleListener {
     private static VBox AdministrationPanel;
     private static VBox EtudiantPanel;
 
-    public void setFeuille(Feuille feuille, String playerName) {
+    public void setFeuille(Feuille feuille, Joueur joueur) {
         this.feuille = feuille;
-        this.playerName = playerName;
+        this.joueur = joueur;
+        feuille.addListener(this);
+    }
+
+    public static boolean isOpen() {
+        return isOpen;
     }
 
     public static FeuilleWindow getInstance() {
@@ -50,10 +58,6 @@ public class FeuilleWindow extends Application implements FeuilleListener {
             instance = new FeuilleWindow();
         }
         return instance;
-    }
-
-    public static boolean isOpen() {
-        return isOpen;
     }
 
     public static void updateFeuilleStatic(Feuille feuille) {
@@ -191,8 +195,10 @@ public class FeuilleWindow extends Application implements FeuilleListener {
 
     @Override
     public void onFeuilleUpdated(Feuille feuille) {
-        System.out.println("Listener reçu");
-        Platform.runLater(() -> this.updateFeuille(feuille));
+        if (this.feuille == feuille) {
+            System.out.println("Feuille mise à jour");
+            Platform.runLater(() -> this.updateFeuille(feuille));
+        }
     }
 
     public void updateAll() {

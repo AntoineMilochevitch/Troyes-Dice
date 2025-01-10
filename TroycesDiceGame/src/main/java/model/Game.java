@@ -52,7 +52,9 @@ public class Game implements Runnable {
         while (!finDePartie()) {
             Joueur currentPlayer = joueurs.get(currentPlayerIndex);
             System.out.println("Tour du joueur " + currentPlayer.getNom());
+            Feuille feuille = currentPlayer.getFeuille();
             currentPlayer.setListDe(listDE);
+
 
             // Wait for the player to make a move via the GUI
             synchronized (this) {
@@ -65,6 +67,7 @@ public class Game implements Runnable {
 
             // Execute the player's action
             currentPlayer.execute();
+            feuille.afficherFeuille();
 
             // Move to the next player
             currentPlayerIndex = (currentPlayerIndex + 1) % joueurs.size();

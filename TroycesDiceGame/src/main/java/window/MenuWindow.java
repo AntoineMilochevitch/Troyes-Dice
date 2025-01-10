@@ -122,7 +122,9 @@ public class MenuWindow extends Application {
                 public void onFeuilleUpdated(Feuille feuille) {
                     Platform.runLater(() -> {
                         if (FeuilleWindow.isOpen() && feuille == joueur.getFeuille()) {
-                            FeuilleWindow.updateFeuilleStatic(feuille);
+                            FeuilleWindow feuilleWindow = new FeuilleWindow();
+                            feuilleWindow.setFeuille(feuille, joueur);
+                            feuilleWindow.updateFeuille(feuille);
                         }
                     });
                 }

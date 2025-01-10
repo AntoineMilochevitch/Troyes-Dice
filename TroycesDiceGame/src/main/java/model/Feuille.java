@@ -4,9 +4,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Feuille {
-    private static Panel etudiant;
-    private static Panel administration;
-    private static Panel enseignant;
+    private Panel etudiant;
+    private Panel administration;
+    private Panel enseignant;
     private int nbPointEtudiant;
     private int nbPointAdministration;
     private int nbPointEnseignant;
@@ -25,7 +25,7 @@ public class Feuille {
         }
     }
 
-    public static int getMultiplier(Couleur couleur, int index){
+    public int getMultiplier(Couleur couleur, int index){
         return switch (couleur){
             case ROUGE -> administration.getMultiplier(index);
             case JAUNE -> etudiant.getMultiplier(index);

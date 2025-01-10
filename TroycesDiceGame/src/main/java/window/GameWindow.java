@@ -103,6 +103,9 @@ public class GameWindow extends Application {
         currentPlayer.setCaseChoisie(selectedCase);
         currentPlayer.setCouleurLocal(selectedCase.getCouleurRecto()); // Set couleurLocal
         currentPlayer.setValDeLocal(selectedCase.getValDe()); // Set valDeLocal
+        Feuille feuille = currentPlayer.getFeuille();
+        Couleur couleur = Couleur.JAUNE;
+        feuille.utiliserRessource(couleur, selectedCase.getCout(),0);
 
         // Afficher les boutons d'action
         VBox actionBox = new VBox(10);
@@ -166,8 +169,8 @@ public class GameWindow extends Application {
     }
 
     private void openFeuilleWindow(Joueur joueur) {
-        FeuilleWindow feuilleWindow = FeuilleWindow.getInstance();
-        feuilleWindow.setFeuille(joueur.getFeuille(), joueur.getNom());
+        FeuilleWindow feuilleWindow = new FeuilleWindow();
+        feuilleWindow.setFeuille(joueur.getFeuille(), joueur);
         if (!FeuilleWindow.isOpen()) {
             Stage feuilleStage = new Stage();
             try {
