@@ -137,6 +137,10 @@ public class Joueur implements Actionnable {
         return nom;
     }
 
+    public List<De> getDe(){
+        return des;
+    }
+
     public void setCaseChoisie(Case caseChoisie) {
         this.caseChoisie = caseChoisie;
     }

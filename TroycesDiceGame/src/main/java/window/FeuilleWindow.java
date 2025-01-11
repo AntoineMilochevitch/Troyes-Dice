@@ -31,17 +31,17 @@ public class FeuilleWindow extends Application implements FeuilleListener {
 
     private String playerName;
     private GridPane leftTable;
-    private static GridPane rightTable;
+    private GridPane rightTable;
 
     private static Map<String, Label> multiplierLabels = new HashMap<>();
     private static Map<String, Label> valueLabels = new HashMap<>();
 
-    private static GridPane enseignant;
-    private static GridPane administration;
-    private static GridPane etudiant;
-    private static VBox enseignantPanel;
-    private static VBox AdministrationPanel;
-    private static VBox EtudiantPanel;
+    private GridPane enseignant;
+    private GridPane administration;
+    private GridPane etudiant;
+    private VBox enseignantPanel;
+    private VBox AdministrationPanel;
+    private VBox EtudiantPanel;
 
     public void setFeuille(Feuille feuille, Joueur joueur) {
         this.feuille = feuille;
@@ -608,7 +608,6 @@ public class FeuilleWindow extends Application implements FeuilleListener {
         updateValueLabel("JAUNE_VALUE2", feuille.getEtudiant().nbBatimentFonction() * feuille.getMultiplier(Couleur.JAUNE, 2));
         updateValueLabel("BLANC_VALUE1", feuille.getEnseignant().nbBatimentFonction() * feuille.getMultiplier(Couleur.BLANC, 1));
         updateValueLabel("BLANC_VALUE2", feuille.getEnseignant().nbBatimentFonction() * feuille.getMultiplier(Couleur.BLANC, 2));
-
         updateValueLabel("ROUGE_TOTAL", feuille.getAdministration().getRessource() / 2);
         updateValueLabel("JAUNE_TOTAL", feuille.getEtudiant().getRessource() / 2);
         updateValueLabel("BLANC_TOTAL", feuille.getEnseignant().getRessource() / 2);

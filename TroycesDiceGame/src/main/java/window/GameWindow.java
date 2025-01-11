@@ -81,27 +81,23 @@ public class GameWindow extends Application {
                     case JAUNE -> dayButton.getStyleClass().add("dayYellowButton");
                     default -> dayButton.getStyleClass().add("dayWhiteButton");
                 }
+                dayButton.setOnAction(e -> handleCaseSelection(caseIndex));
             }
-
-            dayButton.setOnAction(e -> handleCaseSelection(caseIndex));
-
             VBox buttonWithLabels = new VBox(5);
             buttonWithLabels.setAlignment(Pos.CENTER);
             buttonWithLabels.getChildren().addAll(dayButton, valDeLabel, costLabel);
             gridPane.add(buttonWithLabels, i, 0);
         }
-
         root.setAlignment(Pos.CENTER);
         root.getChildren().add(gridPane);
         root.setPadding(new Insets(50, 0, 50, 0));
-
         return root;
     }
 
     private void handleCaseSelection(int caseIndex) {
         Case selectedCase = plateau.getCase(caseIndex);
         currentPlayer.setCaseChoisie(selectedCase);
-        currentPlayer.setCouleurLocal(selectedCase.getCouleurRecto()); // Set couleurLocal
+        currentPlayer.setCouleurLocal(selectedCase.getUprightColor()); // Set couleurLocal
         currentPlayer.setValDeLocal(selectedCase.getValDe()); // Set valDeLocal
         Feuille feuille = currentPlayer.getFeuille();
         Couleur couleur = Couleur.JAUNE;
@@ -111,28 +107,35 @@ public class GameWindow extends Application {
         VBox actionBox = new VBox(10);
         actionBox.setAlignment(Pos.CENTER);
 
+        Stage actionStage = new Stage();
+        Scene actionScene = new Scene(actionBox, 300, 200);
+
         Button buildBPButton = new Button("Construire un bâtiment de prestige");
         buildBPButton.setOnAction(e -> handleActionSelection(() -> {
             currentPlayer.buildBP();
             game.notifyPlayerAction(); // Notify the Game class that the player has completed their action
+            actionStage.close();
+            changePlayer();
         }));
 
         Button buildBFButton = new Button("Construire un bâtiment de fonction");
         buildBFButton.setOnAction(e -> handleActionSelection(() -> {
             currentPlayer.buildBF();
             game.notifyPlayerAction(); // Notify the Game class that the player has completed their action
+            actionStage.close();
+            changePlayer();
         }));
 
         Button getRessourceButton = new Button("Récolter des ressources");
         getRessourceButton.setOnAction(e -> handleActionSelection(() -> {
             currentPlayer.getRessource();
             game.notifyPlayerAction(); // Notify the Game class that the player has completed their action
+            actionStage.close();
+            changePlayer();
         }));
 
         actionBox.getChildren().addAll(buildBPButton, buildBFButton, getRessourceButton);
 
-        Stage actionStage = new Stage();
-        Scene actionScene = new Scene(actionBox, 300, 200);
         actionStage.setScene(actionScene);
         actionStage.show();
     }
@@ -140,6 +143,12 @@ public class GameWindow extends Application {
     private void handleActionSelection(Runnable action) {
         action.run();
         updateGameWindow();
+    }
+
+    private void changePlayer() {
+        int currentIndex = joueurs.indexOf(currentPlayer); // Find the current player's index
+        int nextIndex = (currentIndex + 1) % joueurs.size(); // Calculate the next index, wrapping around using modulus
+        currentPlayer = joueurs.get(nextIndex); // Set the current player to the next player
     }
 
     private void updateGameWindow() {
