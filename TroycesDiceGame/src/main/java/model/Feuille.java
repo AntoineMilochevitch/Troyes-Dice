@@ -1,5 +1,7 @@
 package main.java.model;
 
+import main.java.exceptions.InvalidColorException;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -12,28 +14,20 @@ public class Feuille {
     private int nbPointEnseignant;
     private List<FeuilleListener> listeners = new ArrayList<>();
 
+    // Constructeur
     public Feuille(){
         this.etudiant = new PanelEtudiant(this);
         this.administration = new PanelAdministration(this);
         this.enseignant = new PanelEnseignant(this);
     }
 
+    // Listeners
     public void addListener(FeuilleListener listener) {
         if (!listeners.contains(listener)) {
             listeners.add(listener);
             System.out.println("Listener added");
         }
     }
-
-    public int getMultiplier(Couleur couleur, int index){
-        return switch (couleur){
-            case ROUGE -> administration.getMultiplier(index);
-            case JAUNE -> etudiant.getMultiplier(index);
-            case BLANC -> enseignant.getMultiplier(index);
-            default -> 0;
-        };
-    }
-
     private void notifyListeners() {
         System.out.println("SIZE listeners : " + listeners.size());
         try {
@@ -45,30 +39,32 @@ public class Feuille {
             System.out.println("Error while notifying listeners");
         }
     }
-    
+
+    // Dépenser des ressources
     public void utiliserRessource(Couleur type, int cout, int ressourceDepense) {
         switch (type) {
-            case JAUNE:
+            case JAUNE -> {
                 if (etudiant.getRessource() >= cout) {
                     etudiant.setRessource(etudiant.getRessource() - cout);
                 }
-                break;
-            case BLANC:
+            }
+            case BLANC -> {
                 if (enseignant.getRessource() >= 2) {
                     enseignant.setRessource(enseignant.getRessource() - 2);
                 }
-                break;
-            case ROUGE:
+            }
+            case ROUGE -> {
                 if (administration.getRessource() >= ressourceDepense) {
                     administration.setRessource(administration.getRessource() - ressourceDepense);
                 }
-                break;
-            default:
-                break;
+            }
+            default -> {
+            }
         }
         notifyListeners();
     }
 
+    // Détruire une colonne (dé noir)
     public void detruireColonne(int col){
         etudiant.rendreInconstructible(col);
         administration.rendreInconstructible(col);
@@ -76,30 +72,86 @@ public class Feuille {
         notifyListeners();
     }
 
+    // Getteurs
     public int getNbPointEtudiant() {
         return nbPointEtudiant;
     }
-
     public int getNbPointAdministration() {
         return nbPointAdministration;
     }
-
     public int getNbPointEnseignant() {
         return nbPointEnseignant;
     }
-
     public Panel getEtudiant() {
         return etudiant;
     }
-
     public Panel getAdministration() {
         return administration;
     }
-
     public Panel getEnseignant() {
         return enseignant;
     }
+    public int getMultiplier(Couleur couleur, int index){
+        try {
+            return switch (couleur) {
+                case ROUGE -> administration.getMultiplier(index);
+                case JAUNE -> etudiant.getMultiplier(index);
+                case BLANC -> enseignant.getMultiplier(index);
+                default -> throw new InvalidColorException();
+            };
+        } catch (InvalidColorException e){
+            System.out.println("Feuille : getMultiplier");
+            return 0;
+        }
+    }
 
+    // Calculs des Points
+    public int calculerSousTotPoints() {
+        return etudiant.decomptePoints() + administration.decomptePoints() + enseignant.decomptePoints();
+    }
+    public int calculerHabitantsPoints() {
+        return nbPointEnseignant + nbPointEtudiant + nbPointAdministration;
+    }
+    public int calculerPoints(){
+        return calculerHabitantsPoints() + calculerSousTotPoints();
+    }
+
+    // Attribue les multiplieurs
+    public void multiplierHandler(int valDe, int multiplicateur) {
+        try {
+            switch (valDe) {
+                case 1 -> administration.appliquerMultiplicateur(1, multiplicateur);
+                case 2 -> administration.appliquerMultiplicateur(2, multiplicateur);
+                case 3 -> etudiant.appliquerMultiplicateur(1, multiplicateur);
+                case 4 -> etudiant.appliquerMultiplicateur(2, multiplicateur);
+                case 5 -> enseignant.appliquerMultiplicateur(1, multiplicateur);
+                case 6 -> enseignant.appliquerMultiplicateur(2, multiplicateur);
+                default -> throw new IllegalArgumentException("Unnexpected valDe value.");
+            }
+        } catch (IllegalArgumentException e) {
+            System.out.println(e.getMessage());
+        }
+    }
+
+    // Ajoute des habitants a X type.
+    public void addPoints(Couleur type, int points) {
+        try {
+            if (points < 0) {
+                throw new IllegalArgumentException("Points cannot be negative");
+            }
+            switch (type) {
+                case JAUNE -> nbPointEtudiant += points;
+                case BLANC -> nbPointEnseignant += points;
+                case ROUGE -> nbPointAdministration += points;
+                default -> throw new InvalidColorException();
+            }
+            notifyListeners();
+        } catch (InvalidColorException e){
+            System.out.println("Feuille : addPoints");
+        }
+    }
+
+    // Debug
     public final void afficherFeuille(){
         System.out.println("Feuille de l'étudiant : ");
         etudiant.afficherPanel();
@@ -111,49 +163,5 @@ public class Feuille {
         enseignant.afficherPanel();
         System.out.println("Nb point enseignant : " + nbPointEnseignant);
     }
-
-    public int calculerSousTotPoints() {
-        int pointsEtudiant = etudiant.decomptePoints();
-        int pointsAdministration = administration.decomptePoints();
-        int pointsEnseignant = enseignant.decomptePoints();
-        return pointsEtudiant + pointsAdministration + pointsEnseignant;
-    }
-
-    public int calculerHabitantsPoints() {
-        return getNbPointAdministration() + getNbPointEtudiant() + getNbPointEnseignant();
-    }
-
-    public int calculerPoints(){
-        return calculerHabitantsPoints() + calculerSousTotPoints();
-    }
-
-    private void addNBPointEtudiant(int points) {
-        this.nbPointEtudiant += points;
-    }
-
-    private void addNBPointAdministration(int points) {
-        this.nbPointAdministration += points;
-    }
-
-    private void addNBPointEnseignant(int points) {
-        this.nbPointEnseignant += points;
-    }
-
-    public void addPoints(Couleur type, int points) {
-        switch (type) {
-            case JAUNE:
-                addNBPointEtudiant(points);
-                break;
-            case BLANC:
-                addNBPointEnseignant(points);
-                break;
-            case ROUGE:
-                addNBPointAdministration(points);
-                break;
-            default:
-                break;
-        }
-        notifyListeners();
-    }
-
 }
+
