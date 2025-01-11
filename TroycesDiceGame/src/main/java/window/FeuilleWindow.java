@@ -512,8 +512,8 @@ public class FeuilleWindow extends Application implements FeuilleListener {
     void updateFeuille(Feuille feuille) {
         System.out.println("Feuille mise à jour");
         // Update points
-        updatePoints(feuille.getNbPointEtudiant(), rightTable, 0);
-        updatePoints(feuille.getNbPointAdministration(), rightTable, 1);
+        updatePoints(feuille.getNbPointEtudiant(), rightTable, 1);
+        updatePoints(feuille.getNbPointAdministration(), rightTable, 0);
         updatePoints(feuille.getNbPointEnseignant(), rightTable, 2);
 
         // Update resources
