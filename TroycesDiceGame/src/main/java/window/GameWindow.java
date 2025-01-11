@@ -97,7 +97,7 @@ public class GameWindow extends Application {
     private void handleCaseSelection(int caseIndex) {
         Case selectedCase = plateau.getCase(caseIndex);
         currentPlayer.setCaseChoisie(selectedCase);
-        currentPlayer.setCouleurLocal(selectedCase.getUprightColor()); // Set couleurLocal
+        currentPlayer.setCouleurLocal(selectedCase.getCouleurRecto()); // Set couleurLocal
         currentPlayer.setValDeLocal(selectedCase.getValDe()); // Set valDeLocal
         Feuille feuille = currentPlayer.getFeuille();
         Couleur couleur = Couleur.JAUNE;

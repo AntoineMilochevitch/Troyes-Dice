@@ -63,13 +63,6 @@
     -fx-background-size: cover;
 }
 
-/* Style for the special cell in the white panel */
-.panel-enseignant .special-cell {
-    -fx-background-color: transparent;
-    -fx-background-image: url("/etudiant-2.png");
-    -fx-background-size: cover;
-}
-
 /* Style des petites ressources dans le panneau jaune */
 .panel-etudiant .resource-cell {
     -fx-background-color: transparent;

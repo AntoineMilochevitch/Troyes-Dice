@@ -10,8 +10,8 @@ public abstract class Panel {
 
     private final Feuille feuille;
 
-    private static int multiplicateur1;
-    private static int multiplicateur2;
+    private int multiplicateur1;
+    private int multiplicateur2;
 
     public Panel(Feuille feuille) {
         this.ressource = 3;
@@ -33,7 +33,7 @@ public abstract class Panel {
         initLists();
     }
 
-    public static int getMultiplier(int i){
+    public int getMultiplier(int i){
         return switch (i) {
             case 1 -> multiplicateur1;
             case 2 -> multiplicateur2;
@@ -135,10 +135,10 @@ public abstract class Panel {
         }
     }
 
-    public void ajouterMultiplicateur(int valDe){
-
+    public void ajouterMultiplicateur(int valDe) {
         int nbBat = nbBatimentPrestige();
         int mult;
+        System.out.println("Nombre de batiments de prestige : " + nbBat);
         switch (nbBat) {
             case 1:
             case 2:
@@ -155,7 +155,28 @@ public abstract class Panel {
             default:
                 mult = 0;
         }
-        feuille.multiplierHandler(valDe, mult);
+        System.out.println("Multiplicateur : " + mult);
+
+        switch (valDe) {
+            case 1:
+                feuille.getAdministration().appliquerMultiplicateur(1, mult);
+                break;
+            case 2:
+                feuille.getAdministration().appliquerMultiplicateur(2, mult);
+                break;
+            case 3:
+                feuille.getEtudiant().appliquerMultiplicateur(1, mult);
+                break;
+            case 4:
+                feuille.getEtudiant().appliquerMultiplicateur(2, mult);
+                break;
+            case 5:
+                feuille.getEnseignant().appliquerMultiplicateur(1, mult);
+                break;
+            case 6:
+                feuille.getEnseignant().appliquerMultiplicateur(2, mult);
+                break;
+        }
     }
 
     public int nbBatimentPrestige(){

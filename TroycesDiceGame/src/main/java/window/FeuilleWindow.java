@@ -188,7 +188,6 @@ public class FeuilleWindow extends Application implements FeuilleListener {
         primaryStage.setTitle("Feuille de jeu - Troyes Dice");
         primaryStage.setScene(scene);
         primaryStage.show();
-        System.out.println("this.feuille : " + feuille);
         feuille.addListener(this);
         updateAll(); // Update all information when the window is opened
     }
@@ -460,7 +459,6 @@ public class FeuilleWindow extends Application implements FeuilleListener {
                     case "panel-enseignant:1":
                         // Add images to the second row of the yellow panel
                         String[] image7 = {"/administration_1.png", "/administration-2.png", "/etudiant-1.png", "/etudiant-2.png", "/enseignant-1.png", "/enseignant-2.png"};
-                        System.out.println(image7[j-1]);
                         ImageView cellImageView7 = new ImageView(new Image(getClass().getResourceAsStream(image7[j-1])));
                         cellImageView7.setFitWidth(CASE_SIZE);
                         cellImageView7.setFitHeight(CASE_SIZE);

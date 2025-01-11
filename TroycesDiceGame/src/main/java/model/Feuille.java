@@ -139,31 +139,6 @@ public class Feuille {
         this.nbPointEnseignant += points;
     }
 
-    public void multiplierHandler(int valDe, int multiplicateur) {
-        switch (valDe) {
-            case 1:
-                administration.appliquerMultiplicateur(1, multiplicateur);
-                break;
-            case 2:
-                administration.appliquerMultiplicateur(2, multiplicateur);
-                break;
-            case 3:
-                etudiant.appliquerMultiplicateur(1, multiplicateur);
-                break;
-            case 4:
-                etudiant.appliquerMultiplicateur(2, multiplicateur);
-                break;
-            case 5: 
-                enseignant.appliquerMultiplicateur(1, multiplicateur);
-                break;
-            case 6:
-                enseignant.appliquerMultiplicateur(2, multiplicateur);
-                break;
-            default:
-                break;
-        }
-    }
-
     public void addPoints(Couleur type, int points) {
         switch (type) {
             case JAUNE:

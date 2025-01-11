@@ -76,8 +76,7 @@ public class Joueur implements Actionnable {
 
     public void buildBP() {
         Panel panel = choosePanel();
-        Panel panelMultiplicateur = chooseMultiplicateurPanel();
-        panel.buildBP(valDeLocal, panelMultiplicateur, feuille, des);
+        panel.buildBP(valDeLocal, panel, feuille, des);
     }
 
     public void buildBF() {
@@ -98,22 +97,6 @@ public class Joueur implements Actionnable {
                 return feuille.getEnseignant();
             case ROUGE:
                 return feuille.getAdministration();
-            default:
-                return null;
-        }
-    }
-
-    public Panel chooseMultiplicateurPanel() {
-        switch (valDeLocal.getValeur()) {
-            case 1:
-            case 2:
-                return feuille.getAdministration();
-            case 3:
-            case 4:
-                return feuille.getEtudiant();
-            case 5:
-            case 6:
-                return feuille.getEnseignant();
             default:
                 return null;
         }
