@@ -59,7 +59,7 @@ public class Case implements Cloneable{
     }
 
     public Couleur getUprightColor(){
-        if(sensCase == -1){
+        if(sensCase == 1){
             return couleurRecto;
         } else {
             return couleurVerso;
