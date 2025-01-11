@@ -23,6 +23,7 @@ public class De {
         if(couleur == Couleur.VIDE){
             throw new InvalidColorException();
         }
+        this.couleur = couleur;
     }
 
     public void setValeur(int valeur) {

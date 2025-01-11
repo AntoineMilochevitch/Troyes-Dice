@@ -98,6 +98,7 @@ public abstract class Panel {
     }
 
     public void buildBP(De valDe, Panel panel, Feuille feuille, List<De> des) {
+
         if (valDe.getValeur() >= 1 && valDe.getValeur() <= batimentsPrestige.size()) {
             BatimentPrestige bat = batimentsPrestige.get(valDe.getValeur() - 1); // Adjusting index to be 0-based
             if (bat.getEtat() == Etat.VIDE || bat.getEtat() == Etat.PROTEGE) {

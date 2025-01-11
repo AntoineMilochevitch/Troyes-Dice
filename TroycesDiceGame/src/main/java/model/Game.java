@@ -44,6 +44,7 @@ public class Game implements Runnable {
         for (De de : listDE) {
             System.out.print(de.getValeur() + " ");
         }
+        System.out.println();
 
         assignDiceToCases();
 
@@ -53,6 +54,7 @@ public class Game implements Runnable {
             Joueur currentPlayer = joueurs.get(currentPlayerIndex);
             System.out.println("Tour du joueur " + currentPlayer.getNom());
             Feuille feuille = currentPlayer.getFeuille();
+            listDE.sort(Comparator.comparingInt(De::getValeur)); // Trier les dés par valeur croissante
             currentPlayer.setListDe(listDE);
 
             // Wait for the player to make a move via the GUI
@@ -114,17 +116,19 @@ public class Game implements Runnable {
                     dieIndex++;
                 }
             }
-        } catch (InvalidColorException e) {}
+        } catch (InvalidColorException e) {
+            e.printStackTrace();
+        }
     }
 
     public List<De> lancerDe() {
-        List<De> des = new ArrayList<>();
+        listDE = new ArrayList<>(); // Clear the list before adding new dice
         for (int i = 0; i < 4; i++) {
             int valeur = (int) (Math.random() * 6 + 1);
             Couleur couleur = Couleur.VIDE;
-            des.add(new De(valeur, couleur));
+            listDE.add(new De(valeur, couleur));
         }
-        return des;
+        return listDE;
     }
 
     public int tirerDeNoir() {
@@ -136,6 +140,15 @@ public class Game implements Runnable {
     public boolean finDePartie() {
         if (plateau.getCompteurDemiJournee() == 14) {
             System.out.println("Fin de partie");
+            Joueur gagnant = joueurs.get(0);
+            for (Joueur joueur : joueurs) {
+                int point = joueur.getFeuille().calculerPoints();
+                if (point > gagnant.getFeuille().calculerPoints()) {
+                    gagnant = joueur;
+                }
+                System.out.println("Le joueur " + joueur.getNom() + " a " + point + " points");
+            }
+            System.out.println("Le gagnant est " + gagnant.getNom());
             return true;
         }
         return false;
