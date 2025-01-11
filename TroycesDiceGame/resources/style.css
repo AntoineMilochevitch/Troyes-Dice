@@ -1,22 +1,70 @@
+/* General style for the menu */
 .root {
-    -fx-background-color: #fff3e6;
+    -fx-background-color: #ffffff;   /* White background */
+    -fx-padding: 20px;               /* Padding around the menu */
+    -fx-alignment: center;           /* Center alignment */
 }
 
-.status-label {
-    -fx-font-size: 16px;
-    -fx-text-alignment: center;
+/* Style for all buttons in the menu */
+.button {
+    -fx-background-color: #ffffff;   /* White background */
+    -fx-text-fill: #000000;          /* Black text */
+    -fx-font-size: 14px;             /* Font size */
+    -fx-padding: 8px 16px;           /* Padding to make the button wider and taller */
+    -fx-border-radius: 5px;          /* Rounded corners */
+    -fx-border-color: #1386d8;       /* Blue border */
+    -fx-border-width: 2px;           /* Border width */
 }
 
-.start-button, .confirmed-button {
-    -fx-font-size: 14px;
-    -fx-padding: 10px 20px;
+/* Hover effect for all buttons */
+.button:hover {
+    -fx-background-color: #e0f0ff;   /* Light blue background on hover */
+    -fx-border-color: #0f6bbd;       /* Darker blue border on hover */
 }
 
-.players-label, .player-label, .name-label {
-    -fx-font-size: 14px;
+/* Style for all labels in the menu */
+.label {
+    -fx-font-size: 18px;             /* Larger font size */
+    -fx-text-fill: #000000;          /* Black text */
+    -fx-padding: 10px 0;             /* Padding to add space above and below */
 }
 
-.players-text, .name-text {
-    -fx-font-size: 14px;
-    -fx-padding: 5px;
+/* Style for text fields in the menu */
+.text-field {
+    -fx-font-size: 14px;             /* Font size */
+    -fx-padding: 5px;                /* Padding inside the text field */
+    -fx-border-color: #1386d8;       /* Blue border */
+    -fx-border-width: 2px;           /* Border width */
+    -fx-border-radius: 5px;          /* Rounded corners */
+    -fx-background-color: #f0f8ff;   /* Light blue background */
+    -fx-max-width: 200px;            /* Max width to make the text field smaller */
+}
+
+/* Style for specific labels */
+.players-label, .name-label {
+    -fx-font-size: 18px;             /* Larger font size */
+    -fx-text-fill: #000000;          /* Black text */
+    -fx-padding: 10px 0;             /* Padding to add space above and below */
+}
+
+/* Style for specific text fields */
+.name-text {
+    -fx-font-size: 14px;             /* Font size */
+    -fx-padding: 5px;                /* Padding inside the text field */
+    -fx-border-color: #1386d8;       /* Blue border */
+    -fx-border-width: 2px;           /* Border width */
+    -fx-border-radius: 5px;          /* Rounded corners */
+    -fx-background-color: #f0f8ff;   /* Light blue background */
+    -fx-max-width: 200px;            /* Max width to make the text field smaller */
+}
+
+/* Style for specific buttons */
+.confirmed-button {
+    -fx-background-color: #ffffff;   /* White background */
+    -fx-text-fill: #000000;          /* Black text */
+    -fx-font-size: 14px;             /* Font size */
+    -fx-padding: 8px 16px;           /* Padding to make the button wider and taller */
+    -fx-border-radius: 5px;          /* Rounded corners */
+    -fx-border-color: #1386d8;       /* Blue border */
+    -fx-border-width: 2px;           /* Border width */
 }

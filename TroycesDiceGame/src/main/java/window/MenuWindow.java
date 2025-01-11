@@ -2,6 +2,7 @@ package main.java.window;
 
 import javafx.application.Application;
 import javafx.application.Platform;
+import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.layout.*;
@@ -28,21 +29,21 @@ public class MenuWindow extends Application {
         latch = new CountDownLatch(1);
 
         primaryStage.setTitle("Troyes Dice");
-        primaryStage.setWidth(1500);
-        primaryStage.setHeight(1000);
+        primaryStage.setWidth(800);
+        primaryStage.setHeight(600);
         primaryStage.setResizable(false);
 
         BorderPane root = new BorderPane();
-        root.setStyle("-fx-background-color: #fff3e6;");
+        root.setStyle("-fx-background-color: #ffffff;");
 
         VBox menu = new VBox(10);
-        menu.setStyle("-fx-alignment: center;");
+        menu.setStyle("-fx-alignment: center; -fx-padding: 20px;");
 
         Label statusLabel = new Label("Game Status: Not Started");
-        statusLabel.getStyleClass().add("status-label");
+        statusLabel.getStyleClass().add("label");
 
         startButton = new Button("Start Game");
-        startButton.getStyleClass().add("start-button");
+        startButton.getStyleClass().add("button");
 
         startButton.setOnAction(e -> {
             menu.getChildren().clear();
@@ -58,16 +59,18 @@ public class MenuWindow extends Application {
         primaryStage.show();
     }
 
-
     private void numberPlayers(Pane panel, Stage primaryStage) {
+        VBox container = new VBox(20);
+        container.setAlignment(Pos.TOP_CENTER);
+
         Label playersLabel = new Label("Number of Players:");
         playersLabel.getStyleClass().add("players-label");
 
         TextField playersText = new TextField("2");
-        playersText.getStyleClass().add("players-text");
+        playersText.getStyleClass().add("text-field");
 
         Button confirmed = new Button("Confirmed");
-        confirmed.getStyleClass().add("confirmed-button");
+        confirmed.getStyleClass().add("button");
 
         confirmed.setOnAction(e -> {
             panel.getChildren().clear();
@@ -77,7 +80,8 @@ public class MenuWindow extends Application {
             }
         });
 
-        panel.getChildren().addAll(playersLabel, playersText, confirmed);
+        container.getChildren().addAll(playersLabel, playersText, confirmed);
+        panel.getChildren().add(container);
     }
 
     private void addPlayers(Pane panel, Integer id, Stage primaryStage) {
@@ -85,6 +89,9 @@ public class MenuWindow extends Application {
             startGame(primaryStage);
             return;
         }
+
+        VBox container = new VBox(20);
+        container.setAlignment(Pos.TOP_CENTER);
 
         Label nameLabel = new Label("Enter name for Player " + (joueurs.size() + 1) + ":");
         nameLabel.getStyleClass().add("name-label");
@@ -102,7 +109,8 @@ public class MenuWindow extends Application {
             addPlayers(panel, id - 1, primaryStage);
         });
 
-        panel.getChildren().addAll(nameLabel, nameText, confirmed);
+        container.getChildren().addAll(nameLabel, nameText, confirmed);
+        panel.getChildren().add(container);
     }
 
     private void startGame(Stage primaryStage) {

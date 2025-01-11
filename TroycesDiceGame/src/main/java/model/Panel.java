@@ -75,11 +75,9 @@ public abstract class Panel {
     public void buildBF(De valDe) {
         if (valDe.getValeur() >= 1 && valDe.getValeur() <= batimentsFonction.size()) {
             BatimentFonction bat = batimentsFonction.get(valDe.getValeur() - 1); // Adjusting index to be 0-based
-            System.out.println("valDe : " + valDe);
             // Si le batiment est vide ou la parcelle est protégée (donc implicitement non construite)
             if (bat.getEtat() == Etat.VIDE || bat.getEtat() == Etat.PROTEGE) {
                 bat.onBuild();
-                System.out.println("Batiment construit");
                 feuille.addPoints(bat.getCouleur(), bat.getNombre());
             }
         } else {
@@ -139,7 +137,6 @@ public abstract class Panel {
     public void ajouterMultiplicateur(int valDe) {
         int nbBat = nbBatimentPrestige();
         int mult;
-        System.out.println("Nombre de batiments de prestige : " + nbBat);
         switch (nbBat) {
             case 1:
             case 2:
@@ -156,7 +153,6 @@ public abstract class Panel {
             default:
                 mult = 0;
         }
-        System.out.println("Multiplicateur : " + mult);
 
         switch (valDe) {
             case 1:

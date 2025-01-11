@@ -73,3 +73,26 @@
     -fx-border-color: #000000;  /* Black border on focus */
     -fx-border-width: 3px;      /* Thicker border on focus */
 }
+
+/* Style for feuille buttons */
+.feuilleButton {
+    -fx-background-color: #ffffff;   /* White background */
+    -fx-text-fill: #000000;          /* Black text */
+    -fx-font-size: 16px;             /* Font size */
+    -fx-padding: 10px 20px;          /* Padding to make the button wider and taller */
+    -fx-border-radius: 5px;          /* Rounded corners */
+    -fx-border-color: #1386d8;       /* Blue border */
+    -fx-border-width: 2px;           /* Border width */
+}
+
+/* Hover effect for feuille buttons */
+.feuilleButton:hover {
+    -fx-background-color: #e0f0ff;   /* Light blue background on hover */
+    -fx-border-color: #0f6bbd;       /* Darker blue border on hover */
+}
+
+/* Style for labels */
+.label {
+    -fx-font-size: 16px;             /* Font size */
+    -fx-text-fill: #000000;          /* Black text */
+}

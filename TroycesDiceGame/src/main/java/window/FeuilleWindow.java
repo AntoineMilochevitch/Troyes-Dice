@@ -195,7 +195,6 @@ public class FeuilleWindow extends Application implements FeuilleListener {
     @Override
     public void onFeuilleUpdated(Feuille feuille) {
         if (this.feuille == feuille) {
-            System.out.println("Feuille mise à jour");
             Platform.runLater(() -> this.updateFeuille(feuille));
         }
     }
@@ -510,7 +509,6 @@ public class FeuilleWindow extends Application implements FeuilleListener {
     }
 
     void updateFeuille(Feuille feuille) {
-        System.out.println("Feuille mise à jour");
         // Update points
         updatePoints(feuille.getNbPointEtudiant(), rightTable, 1);
         updatePoints(feuille.getNbPointAdministration(), rightTable, 0);
@@ -610,7 +608,7 @@ public class FeuilleWindow extends Application implements FeuilleListener {
         updateValueLabel("JAUNE_TOTAL", feuille.getEtudiant().getRessource() / 2);
         updateValueLabel("BLANC_TOTAL", feuille.getEnseignant().getRessource() / 2);
 
-        System.out.println(feuille.calculerPoints());
+
 
         updateValueLabel("TOTAL_0", feuille.calculerHabitantsPoints());
         updateValueLabel("TOTAL_1", feuille.calculerSousTotPoints());

@@ -25,7 +25,6 @@ public class Feuille {
     public void addListener(FeuilleListener listener) {
         if (!listeners.contains(listener)) {
             listeners.add(listener);
-            System.out.println("Listener added");
         }
     }
     private void notifyListeners() {
