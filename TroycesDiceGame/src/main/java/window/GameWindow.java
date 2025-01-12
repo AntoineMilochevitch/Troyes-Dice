@@ -73,37 +73,55 @@ public class GameWindow extends Application {
 
         root.getChildren().add(imageView); // Add the image first
 
+        int activeCaseCount = 0;
         for (int i = 0; i < 9; i++) {
             final int caseIndex = i;
+            Case currentCase = plateau.getCase(i);
             Button dayButton = new Button("Case : " + (i + 1));
-            Label valDeLabel = new Label("");
-            Label costLabel = new Label("");
 
-            if (plateau.getCase(i).getDemiJournee() != demiJourneeActuelle) {
-                switch (plateau.getCase(i).getCouleurRecto()) {
-                    case ROUGE -> dayButton.getStyleClass().add("dayGrayRedButton");
-                    case JAUNE -> dayButton.getStyleClass().add("dayGrayYellowButton");
-                    default -> dayButton.getStyleClass().add("dayGrayWhiteButton");
-                }
-            } else {
-                valDeLabel = new Label("Val Dé : " + plateau.getCase(i).getValDe().getValeur());
-                costLabel = new Label("Coût : " + plateau.getCase(i).getCout());
-                switch (plateau.getCase(i).getCouleurRecto()) {
+            if (currentCase.getDemiJournee() == demiJourneeActuelle && activeCaseCount < 4) {
+                activeCaseCount++;
+                Label valDeLabel = new Label("Val Dé : " + currentCase.getValDe().getValeur());
+                Label costLabel = new Label("Coût : " + currentCase.getCout());
+
+                switch (currentCase.getCouleurRecto()) {
                     case ROUGE -> dayButton.getStyleClass().add("dayRedButton");
                     case JAUNE -> dayButton.getStyleClass().add("dayYellowButton");
                     default -> dayButton.getStyleClass().add("dayWhiteButton");
                 }
                 dayButton.setOnAction(e -> handleCaseSelection(caseIndex));
+
+                double angle = 2 * Math.PI * i / 9; // Calculate angle for each button
+                double x = centerX + radius * Math.cos(angle) - 50; // Calculate X position
+                double y = centerY + radius * Math.sin(angle) - 50; // Calculate Y position
+
+                dayButton.setLayoutX(x);
+                dayButton.setLayoutY(y);
+
+                valDeLabel.setLayoutX(x - 70); // Shift text to the left
+                valDeLabel.setLayoutY(y + 30); // Position below the button
+
+                costLabel.setLayoutX(x - 70); // Shift text to the left
+                costLabel.setLayoutY(y + 50); // Position below the value label
+
+                buttonGroup.getChildren().addAll(dayButton, valDeLabel, costLabel); // Add buttons and labels to the group
+            } else {
+                switch (currentCase.getCouleurRecto()) {
+                    case ROUGE -> dayButton.getStyleClass().add("dayGrayRedButton");
+                    case JAUNE -> dayButton.getStyleClass().add("dayGrayYellowButton");
+                    default -> dayButton.getStyleClass().add("dayGrayWhiteButton");
+                }
+                dayButton.setOnAction(e -> handleCaseSelection(caseIndex));
+
+                double angle = 2 * Math.PI * i / 9; // Calculate angle for each button
+                double x = centerX + radius * Math.cos(angle) - 50; // Calculate X position
+                double y = centerY + radius * Math.sin(angle) - 50; // Calculate Y position
+
+                dayButton.setLayoutX(x);
+                dayButton.setLayoutY(y);
+
+                buttonGroup.getChildren().add(dayButton); // Add button to the group
             }
-
-            double angle = 2 * Math.PI * i / 9; // Calculate angle for each button
-            double x = centerX + radius * Math.cos(angle) - 50; // Calculate X position
-            double y = centerY + radius * Math.sin(angle) - 50; // Calculate Y position
-
-            dayButton.setLayoutX(x);
-            dayButton.setLayoutY(y);
-
-            buttonGroup.getChildren().add(dayButton); // Add buttons to the group
         }
 
         root.getChildren().add(buttonGroup); // Add the button group to the root

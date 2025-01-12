@@ -46,6 +46,7 @@ public class FeuilleWindow extends Application implements FeuilleListener {
     public void setFeuille(Feuille feuille, Joueur joueur) {
         this.feuille = feuille;
         this.joueur = joueur;
+        this.playerName = joueur.getNom();
         feuille.addListener(this);
     }
 
@@ -72,7 +73,6 @@ public class FeuilleWindow extends Application implements FeuilleListener {
         primaryStage.setOnCloseRequest(event -> {
             FeuilleWindow.isOpen = false;
         });
-        // Use instance variables instead of static ones
         Label titleLabel = new Label("Feuille de " + playerName);
         titleLabel.getStyleClass().add("panel-title");
 
